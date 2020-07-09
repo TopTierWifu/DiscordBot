@@ -16,7 +16,7 @@ module.exports = class MessageCreate{
     }
 
     getArgs(msg){
-        if(isCommand(msg)){
+        if(this.isCommand(msg)){
             return msg.trim().slice(this.prefix.length).split(/ +/g);
         }
     }
