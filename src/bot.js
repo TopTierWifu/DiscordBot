@@ -5,10 +5,11 @@ module.exports = class DiscordBot extends Base{
     constructor(bot){
         super(bot);
 
-       // this.config = require("../config.json");
+        this.config = require("../config.json");
+        this.prefix = this.config.prefix;
     }
 
     launch(){
-       // this.eventHandler = new EventHander(this);
+        this.eventHandler = new EventHander(this);
     }
 }
