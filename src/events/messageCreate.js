@@ -1,15 +1,16 @@
 const CommandHander = require("../commands/CommandHandler")
 
 module.exports = class MessageCreate{
-    constructor(bot){
-        this.bot = bot;
-        this.prefix = bot.prefix;
-        this.command = new CommandHander(bot);
+    constructor(main){
+        this.main = main;
+        this.prefix = main.prefix;
+        this.command = new CommandHander(main);
     }
 
     handle(msg){
         if(msg.author.bot) {return;}
         msg.args = this.getArgs(msg.content);
+        msg.bot = this.main.bot;
         if(msg.args){
             this.command.execute(msg.args[0],msg);
         }
@@ -22,9 +23,6 @@ module.exports = class MessageCreate{
     }
     
     isCommand(msg){
-        if(msg.toLowerCase().trim().startsWith(this.prefix)){
-            return true;
-        }
-        return false;
+        return msg.toLowerCase().trim().startsWith(this.prefix);
     }
 }

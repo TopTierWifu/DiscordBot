@@ -10,8 +10,9 @@ module.exports = class EventHandler{
                 const handler = new dir[file](main);  //Creates an instance of the value (require()'d file) for the key "file" (which is the file's name) 
                 main.bot.on(file, handler.handle.bind(handler));
                 //This takes the instance of the bot that was used in constructor and adds a listener for each of the file's names
-                //By naming the files by the listener they handle, the file name can be used as the name of the listener
-                //The handler instance's handle function is used as the function to be executed whenever the listener is ticked
+                //By naming the files by the listener they handle, the file name can be used as the name of the listener in arg0
+                //The handler instance's handle function is used as the function to be executed whenever the listener is ticked in arg1
+                //.bind is used so that the scope of this is passed on to the listener and not main
             }
         }
     }
