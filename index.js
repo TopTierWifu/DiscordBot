@@ -1,19 +1,16 @@
-const Eris = require("eris");
 const config = require('./config.json');
-let bot = new Eris(config.token);
-const requireDir = require('require-dir');
-const dir = requireDir('./');
-
-bot.on("ready", () => {
-    console.log("Ready!");
+const Sharder = require('eris-sharder').Master;
+const sharder = new Sharder(config.token, "/src/bot.js", {
+  stats: true,
+  debug: true,
+  guildsPerShard: 1500,
+  name: "Wifu Bot",
+  clientOptions: {
+      messageLimit: 150,
+      defaultImageFormat: "png"
+  }
 });
-
-bot.on("messageCreate", (msg) => {
-    for(file in dir){
-        if(file="test"){
-            console.log(new dir[file]("Test passed"));
-        }
-    }
-})
-
-bot.connect();
+ 
+sharder.on("stats", stats => {
+  console.log(stats);
+});
