@@ -10,7 +10,7 @@ module.exports = class MessageCreate{
     handle(msg){
         if(msg.author.bot) {return;}
         msg.args = this.getArgs(msg.content);
-        msg.bot = this.main.bot;
+        msg.main = this.main;
         if(msg.args){
             this.command.execute(msg.args[0],msg);
         }

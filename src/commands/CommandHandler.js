@@ -21,11 +21,13 @@ module.exports = class CommandHandler{
 	getParams(msg){
 		let param = {
 			"msg":msg,
-			"args":msg.args
+			"args":msg.args,
+			"main":msg.main,
+			"bot":msg.main.bot
 		}
 
 		param.send = function(message){
-			param.msg.bot.createMessage(param.msg.channel.id, message);
+			param.bot.createMessage(param.msg.channel.id, message);
 		}
 
 		return param;
