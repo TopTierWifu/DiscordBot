@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 module.exports = {
     async init(password) {
-        mongoose.connect('mongodb+srv://wifu_bot:'+password+'@discordbot.pto6n.mongodb.net/test', {
+        mongoose.connect('mongodb+srv://wifu_bot:'+password+'@discordbot.pto6n.mongodb.net/wifu_bot', {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });

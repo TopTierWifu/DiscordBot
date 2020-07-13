@@ -1,16 +1,29 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const ModelInterface = require("./ModelInterface");
 
-const inventorySchema = new Schema({
-  wifuID: String,
-  hearts: {
+module.exports = new ModelInterface({
+  _id: String,
+  square: {
     type: Number,
     default: 0
   },
-  squares: {
+  heart: {
+    type: Number,
+    default: 0
+  },
+  circle: {
+    type: Number,
+    default: 0
+  },
+  diamond: {
+    type: Number,
+    default: 0
+  },
+  triangle: {
+    type: Number,
+    default: 0
+  },
+  star: {
     type: Number,
     default: 0
   }
-});
-
-module.exports = mongoose.model("Inventory", inventorySchema)
+}, "inventory", "inventories");

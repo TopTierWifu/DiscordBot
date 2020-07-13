@@ -13,9 +13,7 @@ module.exports = class CommandHandler{
 	execute(command, msg){
         if(commands[command]){
 			commands[command].execute(this.getParams(msg));
-		} else {
-			this.main.bot.createMessage(msg.channel.id, "That is not a command!");
-		}		
+		}	
 	}
 
 	getParams(msg){
@@ -23,11 +21,17 @@ module.exports = class CommandHandler{
 			"msg":msg,
 			"args":msg.args,
 			"main":msg.main,
-			"bot":msg.main.bot
+			"bot":msg.main.bot,
+			"prefix":msg.main.prefix,
+			"user":msg.author
 		}
 
 		param.send = function(message){
 			param.bot.createMessage(param.msg.channel.id, message);
+		}
+
+		param.syntax = function(){
+			param.bot.createMessage(param.msg.channel.id, "Wrong syntax!");
 		}
 
 		return param;
