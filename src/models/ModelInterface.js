@@ -8,24 +8,29 @@ module.exports = class ModelInterface{
         this.model = mongoose.model(name, this.schema, collection);
     }
 
-    async get(id){
+    async get(id, data){
         return await this.model.findById(id).then(
             async (doc) =>{
                 if(doc){
                     return doc;
                 }
-                doc = await new this.model({
-                    _id: id
-                });
-                doc.save();
+                if(isEmpty(data)){
+                    doc = await new this.model({
+                        _id: id
+                    });
+                } else {
+                    doc = await new this.model(data);
+                }
                 return doc;
             }
         );
     }
+}
 
-    async set(id, key, value){
-        let doc = await this.get(id);
-        doc[key] = value;
-        await doc.save();
+function isEmpty(data){
+    for(let key in data) {
+        if(data.hasOwnProperty(key))
+            return false;
     }
+    return true;
 }
