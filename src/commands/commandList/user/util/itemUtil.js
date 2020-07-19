@@ -15,3 +15,5 @@ function getIndex(invPart, itemIcon){
     }
   }
 }
+
+//Add some sort of check to addItem() to make sure that it is a part of the items.json list
