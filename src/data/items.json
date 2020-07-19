@@ -7,21 +7,21 @@
     ":smiley:": {
         "type": "helmet",
         "rarity": "common",
-        "health": 1
+        "health": 2
     },
     ":smile:": {
         "type": "helmet",
         "rarity": "common",
-        "health": 1
+        "health": 3
     },
     ":grin:": {
         "type": "helmet",
         "rarity": "common",
-        "health": 1
+        "health": 4
     },
     ":laughing:": {
         "type": "helmet",
         "rarity": "common",
-        "health": 1
+        "health": 5
     }
 }
