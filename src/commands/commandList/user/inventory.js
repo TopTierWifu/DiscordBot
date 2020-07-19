@@ -9,7 +9,12 @@ const numbers = ["⁰","¹","²","³","⁴","⁵","⁶","⁷","⁸","⁹"];
 module.exports = new CommandInterface({
   execute: async function(p){
     if(p.args[1]=="add"){
-      ItemUtil.addItem(await Inventory.get(p.user.id), "helmet", p.args[2], 1);
+      if(Items[p.args[2]]){
+        ItemUtil.addItem(await Inventory.get(p.user.id), Items[p.args[2]].type, p.args[2], 1);
+        p.send("Added " + p.args[2] + " to your inventory!")
+      } else {
+        p.send("That is not a real item!")
+      }
     } else if(p.args[1] && itemTypes.includes(p.args[1].toLowerCase())){
       openInv(p, p.args[1]);
     } else {
@@ -33,11 +38,9 @@ async function openInv(p, type){
   if(!type){
     for(i = 0; i < itemTypes.length; i++){
       let type = itemTypes[i];
-      let name = type.replace(/^./, type[0].toUpperCase()) + "s:"
-      let invPart = await fullInv.get(type);
       embed.fields[i] = {
-        "name": name,
-        "value": await getCount(invPart) + "/" + getTotal(type),
+        "name": type.replace(/^./, type[0].toUpperCase()) + "s:",
+        "value": await getCount(await fullInv.get(type)) + "/" + getTotal(type),
         "inline": true
       };
     }
@@ -51,6 +54,9 @@ async function openInv(p, type){
     let invPart = fullInv.get(type);
     for(item in invPart){
       embed.fields[0].value += invPart[item].icon + toCount(invPart[item].amount) + " ";
+    }
+    if(!embed.fields[0].value){
+      embed.fields[0].value = "<:_:732401376910377100>";
     }
   }
   p.send({embed});

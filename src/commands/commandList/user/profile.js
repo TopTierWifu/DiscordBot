@@ -12,6 +12,8 @@ const stats = {
   // "xp_gain": ":star2:"
 };
 
+let bonusStats = [];
+
 module.exports = new CommandInterface({
   execute: async function(p){
     showProfile(p);

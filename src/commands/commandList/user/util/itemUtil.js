@@ -1,3 +1,5 @@
+const Items = require("../../../../data/items.json");
+
 exports.addItem = async function(fullInv, itemType, itemIcon, amount){
   let invPart = await fullInv.get(itemType);
   if(getIndex(invPart, itemIcon)){
@@ -7,6 +9,12 @@ exports.addItem = async function(fullInv, itemType, itemIcon, amount){
   }
   fullInv.save();
 }
+
+exports.getItem = function(invPart, itemIcon){
+  if(getIndex(invPart, itemIcon)){
+    return invPart[getIndex(invPart, itemIcon)];
+  }
+}
   
 function getIndex(invPart, itemIcon){
   for(itemIndex in invPart){
@@ -15,5 +23,3 @@ function getIndex(invPart, itemIcon){
     }
   }
 }
-
-//Add some sort of check to addItem() to make sure that it is a part of the items.json list

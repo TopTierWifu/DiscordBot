@@ -1,25 +1,25 @@
 {
-    ":grinning:": {
+    "😀": {
         "type": "helmet",
         "rarity": "common",
         "health": 1
     },
-    ":smiley:": {
+    "😃": {
         "type": "helmet",
         "rarity": "common",
         "health": 2
     },
-    ":smile:": {
+    "😄": {
         "type": "helmet",
         "rarity": "common",
         "health": 3
     },
-    ":grin:": {
+    "😁": {
         "type": "helmet",
         "rarity": "common",
         "health": 4
     },
-    ":laughing:": {
+    "😆": {
         "type": "helmet",
         "rarity": "common",
         "health": 5
