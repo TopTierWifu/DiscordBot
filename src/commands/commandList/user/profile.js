@@ -59,5 +59,5 @@ async function showProfile(p){
     i++;
   }
 
-  p.send({embed});
+  p.send(msg);
 }
