@@ -40,9 +40,16 @@ async function openInv(p, type){
       let type = itemTypes[i];
       embed.fields[i] = {
         "name": type.replace(/^./, type[0].toUpperCase()) + "s:",
-        "value": await getCount(await fullInv.get(type)) + "/" + getTotal(type),
-        "inline": true
+        "value": ""//await getCount(await fullInv.get(type)) + "/" + getTotal(type),
+        //"inline": true
       };
+    }
+    for(i=1;i<31;i++){
+      if(i%10==0){
+      embed.fields[0].value += ":black_square_button:\n";
+      } else {
+      embed.fields[0].value += ":black_square_button: ";
+      } 
     }
   } else {
     embed.fields = [
