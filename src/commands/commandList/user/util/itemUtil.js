@@ -1,25 +1,29 @@
+const Inventory = require("../../../../models/user/inventory");
 const Items = require("../../../../data/items.json");
 
-exports.addItem = async function(fullInv, itemType, itemIcon, amount){
-  let invPart = await fullInv.get(itemType);
-  if(getIndex(invPart, itemIcon)){
-    invPart[getIndex(invPart, itemIcon)].amount += amount;
+exports.addItem = async function(p, itemName){
+  if(!itemName){itemName = exports.isItem(p.args[2]);}
+  if(!exports.isItem(itemName)){return;}
+  if(!itemName){p.send("That is not a real item!"); return;}
+  let fullInv = await Inventory.get(p.user.id);
+  let invPart = await fullInv.get("items");
+  if(invPart.length < 30){
+    invPart.push(itemName);
   } else{
-    invPart.push({icon: itemIcon,amount: amount});
+    p.send("Your inventory is full!");
+    return;
   }
   fullInv.save();
+  p.send("Added " + Items[itemName].icon + " to your inventory!")
 }
 
-exports.getItem = function(invPart, itemIcon){
-  if(getIndex(invPart, itemIcon)){
-    return invPart[getIndex(invPart, itemIcon)];
-  }
-}
-  
-function getIndex(invPart, itemIcon){
-  for(itemIndex in invPart){
-    if(invPart[itemIndex].icon == itemIcon){
-    return itemIndex;
+exports.isItem = function(name){
+  if(Items[name]){return name;}
+  for(item in Items){
+    for(alias in Items[item].aliases){
+      if(Items[item].aliases[alias] == name){
+        return item;
+      }
     }
   }
 }

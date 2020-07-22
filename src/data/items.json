@@ -1,27 +1,22 @@
 {
-    "😀": {
+    "grinning": {
+        "icon": "😀",
+        "aliases": ["test"],
         "type": "helmet",
         "rarity": "common",
-        "health": 1
+        "value": 2,
+        "stats": {
+            "health": 1
+        }
     },
-    "😃": {
+    "smiley": {
+        "icon": "😃",
+        "aliases": ["test2"],
         "type": "helmet",
         "rarity": "common",
-        "health": 2
-    },
-    "😄": {
-        "type": "helmet",
-        "rarity": "common",
-        "health": 3
-    },
-    "😁": {
-        "type": "helmet",
-        "rarity": "common",
-        "health": 4
-    },
-    "😆": {
-        "type": "helmet",
-        "rarity": "common",
-        "health": 5
+        "value": 2,
+        "stats": {
+            "health": 1
+        }
     }
 }

@@ -1,30 +1,21 @@
 const CommandInterface = require("../../CommandInterface");
 const Inventory = require("../../../models/user/inventory");
-const Items = require("../../../data/items.json");
 const ItemUtil = require("./util/itemUtil");
-
-const itemTypes = ["helmet"];
-const numbers = ["⁰","¹","²","³","⁴","⁵","⁶","⁷","⁸","⁹"];
+const Items = require("../../../data/items.json");
 
 module.exports = new CommandInterface({
   execute: async function(p){
     if(p.args[1]=="add"){
-      if(Items[p.args[2]]){
-        ItemUtil.addItem(await Inventory.get(p.user.id), Items[p.args[2]].type, p.args[2], 1);
-        p.send("Added " + p.args[2] + " to your inventory!")
-      } else {
-        p.send("That is not a real item!")
-      }
-    } else if(p.args[1] && itemTypes.includes(p.args[1].toLowerCase())){
-      openInv(p, p.args[1]);
+      ItemUtil.addItem(p);
     } else {
       openInv(p);
     }
   }
 });
 
-async function openInv(p, type){
+async function openInv(p){
   let fullInv = await Inventory.get(p.user.id);
+  let items = await fullInv.get("items");
 
   let embed = {
     "color": 13679088,
@@ -32,60 +23,37 @@ async function openInv(p, type){
     "name": p.user.username + "'s Inventory",
     "icon_url": p.user.avatarURL
     },
-    "fields": []
-  };
-
-  if(!type){
-    for(i = 0; i < itemTypes.length; i++){
-      let type = itemTypes[i];
-      embed.fields[i] = {
-        "name": type.replace(/^./, type[0].toUpperCase()) + "s:",
-        "value": ""//await getCount(await fullInv.get(type)) + "/" + getTotal(type),
-        //"inline": true
-      };
-    }
-    for(i=1;i<31;i++){
-      if(i%10==0){
-      embed.fields[0].value += ":black_square_button:\n";
-      } else {
-      embed.fields[0].value += ":black_square_button: ";
-      } 
-    }
-  } else {
-    embed.fields = [
+    "fields": [
       {
-        "name": type.replace(/^./, type[0].toUpperCase()) + "s:",
+        "name": "Inventory",
         "value": ""
       }
-    ];
-    let invPart = fullInv.get(type);
-    for(item in invPart){
-      embed.fields[0].value += invPart[item].icon + toCount(invPart[item].amount) + " ";
+    ],
+    "footer": {
+      "text": items.length + "/30 Slots Used | Worth: " + getValue(items) + " Gold"
+    },
+  };
+
+  for(i=1;i<=30;i++){
+    if(items[i-1]){
+      embed.fields[0].value += Items[items[i-1]].icon;
+    } else {
+      embed.fields[0].value += ":white_small_square:";
     }
-    if(!embed.fields[0].value){
-      embed.fields[0].value = "<:_:732401376910377100>";
-    }
+    if(i%10==0){
+    embed.fields[0].value += "\n";
+    } else {
+    embed.fields[0].value += " ";
+    } 
   }
+
   p.send({embed});
 }
 
-function getTotal(type) {
-  let total = 0;
-  for(item in Items){
-    if(Items[item].type == type){total++;}
+function getValue(items){
+  let value = 0;
+  for(item in items){
+    if(Items[items[item]].value){value += Items[items[item]].value;}
   }
-  return total;
-}
-
-async function getCount(invPart){
-  let total = 0;
-  for(item in invPart){total++;}
-  return total;
-}
-
-function toCount(num){
-  for(i = 0; i < numbers.length; i++){
-    num = num.toString().replace(new RegExp(i, "g"), numbers[i]);
-  }
-  return num;
+  return value;
 }
