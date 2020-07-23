@@ -2,19 +2,22 @@ const Inventory = require("../../../../models/user/inventory");
 const Items = require("../../../../data/items.json");
 
 exports.addItem = async function(p, itemName){
-  if(!itemName){itemName = exports.isItem(p.args[2]);}
-  if(!exports.isItem(itemName)){return;}
-  if(!itemName){p.send("That is not a real item!"); return;}
+  if(!exports.isItem(itemName)){
+    if(itemName != undefined){p.send("That is not a real item!");}
+    return;
+  }
+  itemName = exports.isItem(itemName);
   let fullInv = await Inventory.get(p.user.id);
   let invPart = await fullInv.get("items");
   if(invPart.length < 30){
     invPart.push(itemName);
   } else{
     p.send("Your inventory is full!");
-    return;
+    return false;
   }
   fullInv.save();
-  p.send("Added " + Items[itemName].icon + " to your inventory!")
+  p.send("Added " + Items[itemName].icon + " to your inventory!");
+  return true;
 }
 
 exports.isItem = function(name){

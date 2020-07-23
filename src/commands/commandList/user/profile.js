@@ -14,16 +14,6 @@ const Stats = {
   "xp_gain": ":star2:"
 };
 
-const Defaults = {
-  helmet: "<:hIcon:732820031372656721>",
-  chestplate: "<:cIcon:732821083463614554>",
-  pants: "<:pIcon:732822688258588765>",
-  weapon: ["<:wIcon:732825599319605259>", "<:wIcon:732825599319605259>"],
-  accessory: ["<:rIcon:732828071346044960>", "<:nIcon:732983438298316951>", "<:aIcon:732981186712043600>"],
-};
-
-let bonusStats = [];
-
 module.exports = new CommandInterface({
   execute: async function(p){
     showProfile(p);
@@ -36,22 +26,6 @@ async function showProfile(p){
   let i = 1;
 
   let pf = await Profile.get(p.user.id);
-  for(icon in Defaults){
-    if(ItemUtil.isItem(pf[icon])){
-      pf[icon] = Items[pf[icon]].icon;
-    } else if(!ItemUtil.isItem(pf[icon])){
-      pf[icon] = Defaults[icon];
-    } else if(Array.isArray(pf[icon]) && pf[icon].length == 0){
-      pf[icon] = Defaults[icon];
-    } else if(Array.isArray(pf[icon])){
-      for(item in pf[icon]){
-        pf[icon][item] = ItemUtil.isItem(pf[icon][item]);
-        for(i = pf[icon].length; i < 3; i++){
-          pf[icon].push(Defaults[icon][i]);
-        }
-      }
-    }
-  }
 
   let embed = {
     "color": 13679088,
@@ -65,9 +39,20 @@ async function showProfile(p){
     "fields": [
       {
         "name": "Character",
-        "value":b + pf.helmet + b + pf.accessory[0] + b + nl +
-                pf.weapon[0] + pf.chestplate + pf.weapon[1] + pf.accessory[1] + b + nl +
-                b + pf.pants + b + pf.accessory[2] + b + nl,
+        "value":b + 
+                (Items[pf.helmet] ? Items[pf.helmet].icon : "<:hIcon:732820031372656721>") + 
+                b + 
+                (Items[pf.accessory[0]] ? Items[pf.accessory[0]].icon : "<:rIcon:732828071346044960>") + 
+                b + nl +
+                (Items[pf.weapon[0]] ? Items[pf.weapon[0]].icon :"<:wIcon:732825599319605259>") + 
+                (Items[pf.chestplate] ? Items[pf.chestplate].icon : "<:cIcon:732821083463614554>") + 
+                (Items[pf.weapon[1]] ? Items[pf.weapon[1]].icon : "<:wIcon:732825599319605259>") + 
+                (Items[pf.accessory[1]] ? Items[pf.accessory[1]].icon : "<:nIcon:732983438298316951>") + 
+                b + nl + b + 
+                (Items[pf.pants] ? Items[pf.pants].icon : "<:pIcon:732822688258588765>") + 
+                b + 
+                (Items[pf.accessory[2]] ? Items[pf.accessory[2]].icon : "<:aIcon:732981186712043600>") + 
+                b + nl,
         "inline": true
       },
       {
@@ -85,13 +70,25 @@ async function showProfile(p){
     };
 
   for(stat in Stats){
+    embed.fields[2].value += Stats[stat] + " `" + pf[stat] + "(+" + getBonusStats(pf, stat) + ")` ";
     if(i%3==0){
-      embed.fields[2].value += Stats[stat] + " `" + pf[stat] + "(+" + 0 + ")`" + nl;
-    } else {
-      embed.fields[2].value += Stats[stat] + " `" + pf[stat] + "(+" + 0 + ")` ";
+      embed.fields[2].value += nl;
     }
     i++;
   }
 
   p.send({embed});
+}
+
+function getBonusStats(profile, stat){
+  let bonus = 0;
+  if(Items[profile.helmet] && Items[profile.helmet].stats[stat]){bonus += Items[profile.helmet].stats[stat];}
+  if(Items[profile.chestplate] && Items[profile.chestplate].stats[stat]){bonus += Items[profile.helmet].stats[stat];}
+  if(Items[profile.pants] && Items[profile.pants].stats[stat]){bonus += Items[profile.helmet].stats[stat];}
+  if(Items[profile.weapon[0]] && Items[profile.weapon[0]].stats[stat]){bonus += Items[profile.helmet].stats[stat];}
+  if(Items[profile.weapon[1]] && Items[profile.weapon[1]].stats[stat]){bonus += Items[profile.helmet].stats[stat];}
+  if(Items[profile.accessory[0]] && Items[profile.accessory[0]].stats[stat]){bonus += Items[profile.helmet].stats[stat];}
+  if(Items[profile.accessory[1]] && Items[profile.accessory[1]].stats[stat]){bonus += Items[profile.helmet].stats[stat];}
+  if(Items[profile.accessory[2]] && Items[profile.accessory[2]].stats[stat]){bonus += Items[profile.helmet].stats[stat];}
+  return bonus;
 }

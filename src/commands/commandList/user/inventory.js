@@ -6,7 +6,7 @@ const Items = require("../../../data/items.json");
 module.exports = new CommandInterface({
   execute: async function(p){
     if(p.args[1]=="add"){
-      ItemUtil.addItem(p);
+      ItemUtil.addItem(p, p.args[2]);
     } else {
       openInv(p);
     }
