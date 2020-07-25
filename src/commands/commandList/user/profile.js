@@ -57,7 +57,7 @@ async function showProfile(p){
       },
       {
         "name": b,
-        "value":"Tile: " + pf.tile + " (0%)" + nl +
+        "value":"Tile: " + pf.tile + " (" + pf.tileProgress +"%)" + nl +
                 "Gold: " + pf.gold + nl +
                 "Experience: " + pf.xp + nl,
         "inline": true

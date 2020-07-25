@@ -14,7 +14,7 @@
     "cat": {
         "url": "https://cdn.discordapp.com/attachments/732695357602922596/736370900311736400/upscaledCatGirl.png",
         "stats": {
-            "health": 20,
+            "health": 2,
             "defence": 1,
             "strength": 2
         },
