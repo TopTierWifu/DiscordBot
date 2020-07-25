@@ -1,6 +1,6 @@
 const CommandInterface = require("../../CommandInterface");
 const Inventory = require("../../../models/user/inventory");
-const ItemUtil = require("./util/itemUtil");
+const ItemUtil = require("../util/itemUtil");
 const Items = require("../../../data/items.json");
 
 module.exports = new CommandInterface({

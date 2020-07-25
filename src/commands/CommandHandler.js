@@ -27,7 +27,7 @@ module.exports = class CommandHandler{
 		}
 
 		param.send = function(message){
-			param.bot.createMessage(param.msg.channel.id, message);
+			return param.bot.createMessage(param.msg.channel.id, message);
 		}
 
 		param.syntax = function(){

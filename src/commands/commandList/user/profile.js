@@ -1,6 +1,6 @@
 const CommandInterface = require("../../CommandInterface");
 const Profile = require("../../../models/user/profile");
-const ItemUtil = require("./util/itemUtil");
+const ProfileUtil = require("../util/profileUtil");
 const Items = require("../../../data/items.json");
 
 const Stats = { 
@@ -70,7 +70,7 @@ async function showProfile(p){
     };
 
   for(stat in Stats){
-    embed.fields[2].value += Stats[stat] + " `" + pf[stat] + "(+" + getBonusStats(pf, stat) + ")` ";
+    embed.fields[2].value += Stats[stat] + " `" + pf[stat] + "(+" + ProfileUtil.getBonusStats(pf, stat) + ")` ";
     if(i%3==0){
       embed.fields[2].value += nl;
     }
@@ -78,17 +78,4 @@ async function showProfile(p){
   }
 
   p.send({embed});
-}
-
-function getBonusStats(profile, stat){
-  let bonus = 0;
-  if(Items[profile.helmet] && Items[profile.helmet].stats[stat]){bonus += Items[profile.helmet].stats[stat];}
-  if(Items[profile.chestplate] && Items[profile.chestplate].stats[stat]){bonus += Items[profile.helmet].stats[stat];}
-  if(Items[profile.pants] && Items[profile.pants].stats[stat]){bonus += Items[profile.helmet].stats[stat];}
-  if(Items[profile.weapon[0]] && Items[profile.weapon[0]].stats[stat]){bonus += Items[profile.helmet].stats[stat];}
-  if(Items[profile.weapon[1]] && Items[profile.weapon[1]].stats[stat]){bonus += Items[profile.helmet].stats[stat];}
-  if(Items[profile.accessory[0]] && Items[profile.accessory[0]].stats[stat]){bonus += Items[profile.helmet].stats[stat];}
-  if(Items[profile.accessory[1]] && Items[profile.accessory[1]].stats[stat]){bonus += Items[profile.helmet].stats[stat];}
-  if(Items[profile.accessory[2]] && Items[profile.accessory[2]].stats[stat]){bonus += Items[profile.helmet].stats[stat];}
-  return bonus;
 }

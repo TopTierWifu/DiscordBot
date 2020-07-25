@@ -1,0 +1,26 @@
+{
+    "frog": {
+        "url": "https://cdn.discordapp.com/attachments/732695357602922596/736283844461854820/upscaledGreenGirl.png",
+        "stats": {
+            "health": 2,
+            "defence": 0,
+            "strength": 1
+        },
+        "tiles": [1,2],
+        "drops": [],
+        "gold": 1,
+        "xp": 1
+    },
+    "cat": {
+        "url": "https://cdn.discordapp.com/attachments/732695357602922596/736370900311736400/upscaledCatGirl.png",
+        "stats": {
+            "health": 20,
+            "defence": 1,
+            "strength": 2
+        },
+        "tiles": [1,2],
+        "drops": [],
+        "gold": 64,
+        "xp": 16
+    }
+}

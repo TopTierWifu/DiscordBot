@@ -1,7 +1,7 @@
 const CommandInterface = require("../../CommandInterface");
 const Profile = require("../../../models/user/profile");
 const Items = require("../../../data/items.json");
-const ItemUtil = require("./util/itemUtil");
+const ItemUtil = require("../util/itemUtil");
 
 module.exports = new CommandInterface({
   execute: async function(p){

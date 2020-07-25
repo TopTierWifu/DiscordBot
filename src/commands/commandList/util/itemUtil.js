@@ -1,5 +1,5 @@
-const Inventory = require("../../../../models/user/inventory");
-const Items = require("../../../../data/items.json");
+const Inventory = require("../../../models/user/inventory");
+const Items = require("../../../data/items.json");
 
 exports.addItem = async function(p, itemName){
   if(!exports.isItem(itemName)){

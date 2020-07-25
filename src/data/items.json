@@ -16,7 +16,7 @@
         "rarity": "common",
         "value": 2,
         "stats": {
-            "health": 10
+            "health": 50
         }
     }
 }

@@ -10,6 +10,7 @@ module.exports = new ModelInterface({
   xp: {type: Number, default: 0},
   gold: {type: Number, default: 0},
   tile: {type: Number, default: 1},
+  bestTile: {type: Number, default: 1},
   health: {type: Number, default: 5},
   defence: {type: Number, default: 0},
   strength: {type: Number, default: 2},
