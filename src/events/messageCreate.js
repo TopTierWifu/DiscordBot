@@ -12,7 +12,7 @@ module.exports = class MessageCreate{
         msg.args = this.getArgs(msg.content);
         msg.main = this.main;
         if(msg.args){
-            this.command.execute(msg.args[0],msg);
+            this.command.execute(msg.args[0].toLowerCase(),msg);
         }
     }
 
