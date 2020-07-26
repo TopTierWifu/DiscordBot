@@ -16,6 +16,12 @@ const Stats = {
 
 module.exports = new CommandInterface({
 
+  arguments:"",
+  
+  description: "Displays your profile",
+
+  examples: ["profile"],
+
   category: "User",
   
   execute: async function(p){

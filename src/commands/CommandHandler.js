@@ -3,6 +3,7 @@ const dir = requireDir('./commandList', { recurse: true });
 const CommandInterface = require("./CommandInterface");
 
 const commands = {};
+const categories = {};
 
 module.exports = class CommandHandler{
 	constructor(main){
@@ -24,7 +25,8 @@ module.exports = class CommandHandler{
 			"bot":msg.main.bot,
 			"prefix":msg.main.prefix,
 			"user":msg.author,
-			"commands":commands
+			"commands":commands,
+			"categories":categories 
 		}
 
 		param.send = function(message){
@@ -50,5 +52,12 @@ module.exports = class CommandHandler{
 				}
 			}
 		}
+
+		/**This is for the help message */
+		for(let command in commands){
+			if(!categories[commands[command].category]){categories[commands[command].category] = [];}
+			categories[commands[command].category].push(command);
+		}
 	}
+
 }

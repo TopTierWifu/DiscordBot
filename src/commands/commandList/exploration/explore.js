@@ -3,16 +3,22 @@ const ExploreUtil = require("../util/exploreUtil");
 
 module.exports = new CommandInterface({
 
-    category: "Exploration",
+  arguments:"",
 
-    execute: async function(p){
-        let startingState = await startEncounter(p);
-        if(!startingState){return;}
-        setTimeout(async function(){
-            try{await completeEncounter(startingState);}
-            catch(err){console.error(err);}
-        },3000);
-    }
+  description: "Explore the world to find gold and loot",
+
+  examples: ["explore"],
+
+  category: "Exploration",
+
+  execute: async function(p){
+    let startingState = await startEncounter(p);
+    if(!startingState){return;}
+    setTimeout(async function(){
+        try{await completeEncounter(startingState);}
+        catch(err){console.error(err);}
+    },3000);
+  }
 });
 
 async function startEncounter(p){

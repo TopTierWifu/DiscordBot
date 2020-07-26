@@ -6,6 +6,12 @@ const ItemUtil = require("../util/itemUtil");
 
 module.exports = new CommandInterface({
 
+    arguments:"{item}",
+  
+    description: "Allows you to equip the gear you have",
+  
+    examples: ["equip test2", "equip grinning"],
+
     category: "User",
 
     execute: async function(p){

@@ -4,7 +4,13 @@ const ItemUtil = require("../util/itemUtil");
 const Items = require("../../../data/items.json");
 
 module.exports = new CommandInterface({
+
+  arguments:"{add} {item}",
   
+  description: "Displays your inventory",
+
+  examples: ["inventory add test", "inventory"],
+
   category: "User",
 
   execute: async function(p){

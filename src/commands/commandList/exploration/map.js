@@ -4,13 +4,18 @@ const MapData = require("../../../data/map.json");
 
 module.exports = new CommandInterface({
 
-    category: "Exploration",
+  arguments:"{#}",
 
+  description: "Displays the world map",
 
-    execute: async function(p){
-      openMap(p);
-    }
-  });
+  examples: ["map", "map 2"],
+  
+  category: "Exploration",
+
+  execute: async function(p){
+    openMap(p);
+  }
+});
 
 async function openMap(p){
   let profile = await Profile.get(p.user.id);

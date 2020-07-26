@@ -4,6 +4,12 @@ const { isNumber } = require("util");
 
 module.exports = new CommandInterface({
 
+    arguments:"{#}",
+
+    description: "Allows you to move between tiles on the map",
+
+    examples: ["tile 3"],
+
     category: "Exploration",
 
     execute: async function(p){
@@ -27,4 +33,4 @@ module.exports = new CommandInterface({
             p.send("Please specify a tile number.");
         }
     }
-  });
+});

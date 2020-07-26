@@ -5,6 +5,12 @@ const itemTypes = ["helmet"];
 
 module.exports = new CommandInterface({
 
+  arguments:"{item}",
+  
+  description: "An index for all the items you have encountered",
+
+  examples: ["index", "index smiley"],
+
   category: "User",
 
   execute: async function(p){
