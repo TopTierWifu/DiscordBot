@@ -1,7 +1,6 @@
 const Enemies = require("../../../data/enemies.json");
 const Profile = require("../../../models/user/profile");
 const ProfileUtil = require("../util/profileUtil");
-const { profile } = require("console");
 
 exports.getEncounter = async function(p){
     let pl = await Profile.get(p.user.id);
@@ -47,6 +46,6 @@ exports.giveDrops = function(profile, gold, xp){
 }
 
 exports.addTileProgress = function(profile){
-    profile.tileProgress += 1 + (profile.speed * 0.1);
+    profile.tileProgress += 1 + ((profile.speed + ProfileUtil.getBonusStats(profile, "speed")) * 0.1);
     return profile;
 }
