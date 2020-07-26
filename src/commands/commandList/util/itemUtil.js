@@ -13,7 +13,7 @@ exports.addItem = async function(p, itemName){
     invPart.push(itemName);
   } else{
     p.send("Your inventory is full!");
-    return false;
+    return;
   }
   fullInv.save();
   p.send("Added " + Items[itemName].icon + " to your inventory!");

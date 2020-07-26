@@ -25,20 +25,57 @@ module.exports = new CommandInterface({
   }
 });
 
-async function equipItem(p, name){
+async function equipItem(p, itemName){
     let fullInv = await Inventory.get(p.user.id);
     let items = fullInv.get("items");
     let profile = await Profile.get(p.user.id);
 
-    if(items.includes(name)){
-        oldItem = profile[Items[name].type];
-        profile[Items[name].type] = name;
-        items.splice(items.indexOf(name), 1);
-        await fullInv.save();
-        await ItemUtil.addItem(p, oldItem);
-        await profile.save();
-        p.send("Equipped " + Items[name].icon);
+    if(items.includes(itemName)){
+        let type = Items[itemName].type;
+        if(type == "helmet"||type == "chestplate"||type == "pants"){
+            let oldItem = profile[type];
+            profile[type] = itemName;
+            items.splice(items.indexOf(itemName), 1);
+            await fullInv.save();
+            await ItemUtil.addItem(p, oldItem);
+            await profile.save();
+            p.send("Equipped " + Items[itemName].icon);
+        } else if(type == "weapon"){
+            if(profile[type].length < 2){
+                profile[type].push(itemName);
+                items.splice(items.indexOf(itemName), 1);
+                await fullInv.save();
+                await profile.save();
+                p.send("Equipped " + Items[itemName].icon);
+            } else {
+                let oldItem = profile[type].shift();
+                profile[type].push(itemName);
+                items.splice(items.indexOf(itemName), 1);
+                await fullInv.save();
+                await ItemUtil.addItem(p, oldItem);
+                await profile.save();
+                p.send("Equipped " + Items[itemName].icon);
+            }
+        } else if(type == "accessory"){
+            if(profile[type].length < 3){
+                profile[type].push(itemName);
+                items.splice(items.indexOf(itemName), 1);
+                await fullInv.save();
+                await profile.save();
+                p.send("Equipped " + Items[itemName].icon);
+            } else {
+                let oldItem = profile[type].shift();
+                profile[type].push(itemName);
+                items.splice(items.indexOf(itemName), 1);
+                await fullInv.save();
+                await ItemUtil.addItem(p, oldItem);
+                await profile.save();
+                p.send("Equipped " + Items[itemName].icon);
+            }
+        } else {
+            p.send("You can't wear that, silly");
+        }
     } else {
-        p.send("You do not have " + Items[name].icon);
+        p.send("You do not have " + Items[itemName].icon);
     }
 }

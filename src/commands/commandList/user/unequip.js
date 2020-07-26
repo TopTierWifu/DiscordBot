@@ -30,16 +30,24 @@ async function unequipItem(p, itemName){
 
     if(t == "helmet" || t == "chestplate" || t == "pants" ){
         if(profile[t] == itemName){
-            if(ItemUtil.addItem(p, itemName)){
+            if(await ItemUtil.addItem(p, itemName)){
                 profile[t] = undefined;
+                profile.save();
+                p.send("Unequipped " + Items[itemName].icon);
+            } else {
+                p.send("There is no room in your inventory!");
+            }
+        }
+    } else if(t == "weapon" || t == "accessory") {
+        if(profile[t].includes(itemName)){
+            if(await ItemUtil.addItem(p, itemName)){
+                profile[t].splice(profile[t].indexOf(itemName), 1);
                 profile.save();
                 p.send("Unequipped " + Items[itemName].icon);
             }
         } else {
-            p.send("You are not wearing " + Items[itemName].icon);
+            p.send("You are not using " + Items[itemName].icon);
         }
-    } else if(t == "weapon" || t == "accessory") {
-
     } else {
         p.send("You can't wear that, silly");
     }
