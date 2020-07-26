@@ -2,6 +2,9 @@ const CommandInterface = require("../../CommandInterface");
 const ExploreUtil = require("../util/exploreUtil");
 
 module.exports = new CommandInterface({
+
+    category: "Exploration",
+
     execute: async function(p){
         let startingState = await startEncounter(p);
         if(!startingState){return;}

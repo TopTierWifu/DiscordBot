@@ -3,6 +3,9 @@ const Profile = require("../../../models/user/profile");
 const { isNumber } = require("util");
 
 module.exports = new CommandInterface({
+
+    category: "Exploration",
+
     execute: async function(p){
         if(parseInt(p.args[1])){
             let tile = parseInt(p.args[1]);

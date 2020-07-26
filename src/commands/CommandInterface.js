@@ -1,6 +1,7 @@
 module.exports = class CommandInterface{
 
 	constructor(args){
+    this.category = args.category;
 		this.executeCommand = args.execute;
     }
 

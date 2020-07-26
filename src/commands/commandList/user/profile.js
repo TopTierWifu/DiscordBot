@@ -15,6 +15,9 @@ const Stats = {
 };
 
 module.exports = new CommandInterface({
+
+  category: "User",
+  
   execute: async function(p){
     showProfile(p);
   }

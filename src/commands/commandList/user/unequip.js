@@ -4,6 +4,9 @@ const Items = require("../../../data/items.json");
 const ItemUtil = require("../util/itemUtil");
 
 module.exports = new CommandInterface({
+
+  category: "User",
+
   execute: async function(p){
     if(p.args[1] && ItemUtil.isItem(p.args[1])){
         unequipItem(p, ItemUtil.isItem(p.args[1]));

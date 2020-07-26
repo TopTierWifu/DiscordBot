@@ -4,6 +4,9 @@ const ItemUtil = require("../util/itemUtil");
 const Items = require("../../../data/items.json");
 
 module.exports = new CommandInterface({
+  
+  category: "User",
+
   execute: async function(p){
     if(p.args[1]=="add"){
       ItemUtil.addItem(p, p.args[2]);

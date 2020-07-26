@@ -23,7 +23,8 @@ module.exports = class CommandHandler{
 			"main":msg.main,
 			"bot":msg.main.bot,
 			"prefix":msg.main.prefix,
-			"user":msg.author
+			"user":msg.author,
+			"commands":commands
 		}
 
 		param.send = function(message){

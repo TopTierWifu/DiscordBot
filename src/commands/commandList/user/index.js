@@ -4,7 +4,10 @@ const Items = require("../../../data/items.json");
 const itemTypes = ["helmet"];
 
 module.exports = new CommandInterface({
-    execute: async function(p){
+
+  category: "User",
+
+  execute: async function(p){
       openIndex(p);
     }
   });

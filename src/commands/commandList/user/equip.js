@@ -5,7 +5,10 @@ const Items = require("../../../data/items.json");
 const ItemUtil = require("../util/itemUtil");
 
 module.exports = new CommandInterface({
-  execute: async function(p){
+
+    category: "User",
+
+    execute: async function(p){
     if(p.args[1] && ItemUtil.isItem(p.args[1])){
         equipItem(p, ItemUtil.isItem(p.args[1]));
     } else if(p.args[1]) {

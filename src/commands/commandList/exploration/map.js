@@ -3,6 +3,10 @@ const Profile = require("../../../models/user/profile");
 const MapData = require("../../../data/map.json");
 
 module.exports = new CommandInterface({
+
+    category: "Exploration",
+
+
     execute: async function(p){
       openMap(p);
     }
