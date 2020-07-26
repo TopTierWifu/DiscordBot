@@ -5,6 +5,8 @@ const Items = require("../../../data/items.json");
 
 module.exports = new CommandInterface({
 
+  aliases: ["inv"],
+
   arguments:"{add} {item}",
   
   description: "Displays your inventory",

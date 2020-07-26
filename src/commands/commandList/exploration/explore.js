@@ -3,6 +3,8 @@ const ExploreUtil = require("../util/exploreUtil");
 
 module.exports = new CommandInterface({
 
+  aliases: ["e"],
+
   arguments:"",
 
   description: "Explore the world to find gold and loot",

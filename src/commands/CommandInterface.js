@@ -1,6 +1,7 @@
 module.exports = class CommandInterface{
 
 	constructor(args){
+    this.aliases = args.aliases;
     this.arguments = args.arguments;
     this.description = args.description;
     this.examples = args.examples;

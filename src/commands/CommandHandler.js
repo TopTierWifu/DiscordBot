@@ -14,7 +14,9 @@ module.exports = class CommandHandler{
 	execute(command, msg){
         if(commands[command]){
 			commands[command].execute(this.getParams(msg));
-		}	
+		} else if(this.isAlias(command)){
+			commands[this.isAlias(command)].execute(this.getParams(msg));
+		}
 	}
 
 	getParams(msg){
@@ -57,6 +59,16 @@ module.exports = class CommandHandler{
 		for(let command in commands){
 			if(!categories[commands[command].category]){categories[commands[command].category] = [];}
 			categories[commands[command].category].push(command);
+		}
+	}
+
+	isAlias(message){
+		for(let command in commands){
+			if(commands[command] && commands[command].aliases){
+				if(commands[command].aliases.includes(message)){
+					return command;
+				}
+			}
 		}
 	}
 
