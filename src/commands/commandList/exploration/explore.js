@@ -83,8 +83,11 @@ async function completeEncounter(s){
         return;
     }
 
-    s.e.pl.health -= en.strength - pl.defence;
-    s.e.en.health -= pl.strength - en.defence;
+    let plTrueDamage = pl.strength - en.defence < 0 ? 0 : pl.strength - en.defence;
+    let enTrueDamage = en.strength - pl.defence < 0 ? 0 : en.strength - pl.defence;
+
+    s.e.pl.health -= enTrueDamage;
+    s.e.en.health -= plTrueDamage;
 
     s.e.pl.health = s.e.pl.health < 1 ? 0 : s.e.pl.health;    
     s.e.en.health = s.e.en.health < 1 ? 0 : s.e.en.health;
@@ -93,7 +96,7 @@ async function completeEncounter(s){
     s.embed.fields[2].value = ":heart: `" + s.e.en.health + "`"
 
     s.embed.footer = {
-        "text": "You attack " + en.name + " for ❤️" + (pl.strength - en.defence) + ", and " + en.name + " hits you for ❤️" + (en.strength - pl.defence) + "!"
+        "text": "You attack " + en.name + " for ❤️" + (plTrueDamage) + ", and " + en.name + " hits you for ❤️" + (enTrueDamage) + "!"
     }
 
     let embed = s.embed;
