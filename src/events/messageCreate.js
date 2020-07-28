@@ -1,28 +1,8 @@
-const CommandHander = require("../commands/CommandHandler")
+exports.handle = function(msg){
 
-module.exports = class MessageCreate{
-    constructor(main){
-        this.main = main;
-        this.prefix = main.prefix;
-        this.command = new CommandHander(main);
-    }
+    //Ignore if the sender is a bot
+    if(msg.author.bot) {return;}
 
-    handle(msg){
-        if(msg.author.bot) {return;}
-        msg.args = this.getArgs(msg.content);
-        msg.main = this.main;
-        if(msg.args){
-            this.command.execute(msg.args[0].toLowerCase(),msg);
-        }
-    }
-
-    getArgs(msg){
-        if(this.isCommand(msg)){
-            return msg.trim().slice(this.prefix.length).split(/ +/g);
-        }
-    }
-    
-    isCommand(msg){
-        return msg.toLowerCase().trim().startsWith(this.prefix);
-    }
+    //Pass it on to the command handler to do command checks
+    else this.commandHandler.execute(msg);
 }

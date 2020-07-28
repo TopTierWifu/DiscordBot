@@ -1,5 +1,4 @@
 const Items = require("../../../data/items.json");
-const Map = require("../../../data/map.json");
 
 exports.getBonusStats = function(profile, stat){
   let bonus = 0;
@@ -12,25 +11,4 @@ exports.getBonusStats = function(profile, stat){
   if(Items[profile.accessory[1]] && Items[profile.accessory[1]].stats[stat]){bonus += Items[profile.accessory[1]].stats[stat];}
   if(Items[profile.accessory[2]] && Items[profile.accessory[2]].stats[stat]){bonus += Items[profile.accessory[2]].stats[stat];}
   return bonus;
-}
-
-exports.getAdventureTitle = function(profile){
-  let tile = Map.map[profile.tile];
-  switch(tile){
-    case "🌳":
-      return "Adventure in the Forest";
-    break;
-    case "🌱":
-      return "Exploring the Plains";
-    break;
-    case "🌊":
-      return "Swimming in the Pond";
-    break;
-    case "⛰️":
-      return "Climbing mountains";
-    break;
-    case "🏔️":
-      return "Playing in the snow";
-    break;
-  }
 }

@@ -1,23 +1,23 @@
-const Inventory = require("../../../models/user/inventory");
 const Items = require("../../../data/items.json");
 
 exports.addItem = async function(p, itemName){
-  if(!exports.isItem(itemName)){
-    if(itemName != undefined){p.send("That is not a real item!");}
-    return;
+  if(!exports.isItem(itemName)){ //If it is a not real item
+    if(itemName != undefined){p.warn("That is not a real item!");}  //Ignore for unequip
+    return false; //Boolean return for equip
   }
-  itemName = exports.isItem(itemName);
-  let fullInv = await Inventory.get(p.user.id);
-  let invPart = await fullInv.get("items");
-  if(invPart.length < 30){
-    invPart.push(itemName);
-  } else{
-    p.send("Your inventory is full!");
-    return;
+  itemName = exports.isItem(itemName);  //Get name from possible alias
+  let user = await p.db.User.findById(p.sender.id, "items");   //Get items section
+  if(!user || user.items.length < 30){  //If the inventory is empty or has less than 30 items
+    await p.db.User.updateOne(
+        {_id: p.sender.id},
+        { $push: { items: itemName}},
+        { upsert: true }
+    );  //Push the item to the items array
+    p.send("Added " + Items[itemName].icon + " to your inventory!");    //Confirmation
+    return true;    //Boolean return for equip
   }
-  fullInv.save();
-  p.send("Added " + Items[itemName].icon + " to your inventory!");
-  return true;
+  p.warn("Your inventory is full!");    //Error message
+  return false; //Boolean return for equip
 }
 
 exports.isItem = function(name){

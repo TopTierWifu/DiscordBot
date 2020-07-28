@@ -1,54 +1,54 @@
-const CommandInterface = require("../../CommandInterface");
-const Profile = require("../../../models/user/profile");
-const Items = require("../../../data/items.json");
+const CommandInterface = require("../../commandInterface");
 const ItemUtil = require("../util/itemUtil");
+const Items = require("../../../data/items.json");
 
 module.exports = new CommandInterface({
 
-    arguments:"{item}",
+    alias:["unequip"],
 
-    description: "Allows you to unequip the gear you are wearing",
+    usage: "{item}",
 
-    examples: ["unequip smiley", "unequip grinning"],
+    desc: "Unequips items and puts them in your inventory",
+
+    examples: ["unequip knife", "unequip ring"],
 
     category: "User",
-
+    
     execute: async function(p){
-        if(p.args[1] && ItemUtil.isItem(p.args[1])){
-            unequipItem(p, ItemUtil.isItem(p.args[1]));
-        } else if(p.args[1]) {
-            p.send("That is not an item!");
-        } else {
-            p.send("Please specify an item!")
-        }
+        if(p.args[0]) unequip(p, p.args[0].toLowerCase());
+        else p.warn("Please specify an item!");
     }
 });
 
-async function unequipItem(p, itemName){
-    let profile = await Profile.get(p.user.id);
-    let t = Items[itemName].type;
+async function unequip(p, itemName){
+    if(!ItemUtil.isItem(itemName)){p.warn("That is not a real item"); return;}
+    itemName = ItemUtil.isItem(itemName);
+    let type = Items[itemName].type;
+    let user = await p.db.User.findById(p.sender.id);
+    if(!user[type]) {p.warn("You can't wear that, silly"); return;}
 
-    if(t == "helmet" || t == "chestplate" || t == "pants" ){
-        if(profile[t] == itemName){
-            if(await ItemUtil.addItem(p, itemName)){
-                profile[t] = undefined;
-                profile.save();
-                p.send("Unequipped " + Items[itemName].icon);
-            } else {
-                p.send("There is no room in your inventory!");
-            }
-        }
-    } else if(t == "weapon" || t == "accessory") {
-        if(profile[t].includes(itemName)){
-            if(await ItemUtil.addItem(p, itemName)){
-                profile[t].splice(profile[t].indexOf(itemName), 1);
-                profile.save();
-                p.send("Unequipped " + Items[itemName].icon);
-            }
-        } else {
-            p.send("You are not using " + Items[itemName].icon);
-        }
+    if(user[type].includes(itemName)){
+        if(type == "helmet"||type == "chestplate"||type == "pants") unequipArmor(p, type, itemName);
+        else unequipItem(p, user, type, itemName)
     } else {
-        p.send("You can't wear that, silly");
+        p.warn("You are not using " + Items[itemName].icon);
+    }
+}
+
+async function unequipArmor(p, type, itemName){
+    if(await ItemUtil.addItem(p, itemName)){
+        let newSettings = {}
+        newSettings[type] = undefined;
+        await p.db.User.updateOne({ _id: p.sender.id}, {$set: newSettings});
+    }
+}
+
+async function unequipItem(p, user, type, itemName){
+    if(await ItemUtil.addItem(p, itemName)){
+        let items = user[type];
+        items.splice(items.indexOf(itemName), 1);
+        let newSettings = {}
+        newSettings[type] = items;
+        await p.db.User.updateOne({ _id: p.sender.id}, {$set: newSettings});
     }
 }

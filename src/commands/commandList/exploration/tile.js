@@ -1,36 +1,35 @@
-const CommandInterface = require("../../CommandInterface");
-const Profile = require("../../../models/user/profile");
-const { isNumber } = require("util");
+const CommandInterface = require("../../commandInterface");
 
 module.exports = new CommandInterface({
 
-    arguments:"{#}",
+    alias:["tile"],
 
-    description: "Allows you to move between tiles on the map",
+    usage: "{#}",
 
-    examples: ["tile 3"],
+    desc: "Change your location on the map for new adventures",
+
+    examples: ["tile 2", "tile 54"],
 
     category: "Exploration",
-
+    
     execute: async function(p){
-        if(parseInt(p.args[1])){
-            let tile = parseInt(p.args[1]);
-            let profile = await Profile.get(p.user.id);
-            if(tile > profile.bestTile){
-                p.send("You have not explored that tile yet!");
+        if(tile = parseInt(p.args[0])){
+            let pf = await p.db.User.findById(p.sender.id);
+            if(!pf)  pf = await p.db.User.create({_id: p.sender.id});
+            if(tile > pf.bestTile){
+                p.warn("You have not explored that tile yet!");
                 return;
             } else if(tile < 0){
-                p.send("You can't explore a negative tile silly.");
+                p.warn("You can't explore a negative tile, silly.");
                 return;
             }
-            profile.tile = tile;
-            profile.tileProgress = 0;
-            (await profile).save();
+            let newSettings = {tile: tile, tileProgress: 0};
+            await p.db.User.updateOne({ _id: p.sender.id}, {$set: newSettings});
             p.send("You are now in tile " + tile);
-        } else if(p.args[1]){
-            p.send("That is not a number!");
+        } else if(p.args[0]){
+            p.warn("That is not a number!");
         } else {
-            p.send("Please specify a tile number.");
+            p.warn("Please specify a tile number.");
         }
     }
 });

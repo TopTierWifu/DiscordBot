@@ -1,112 +1,95 @@
-const CommandInterface = require("../../CommandInterface");
+const CommandInterface = require("../../commandInterface");
 const ExploreUtil = require("../util/exploreUtil");
 
 module.exports = new CommandInterface({
 
-  aliases: ["e"],
+    alias:["explore", "e"],
 
-  arguments:"",
+    usage: "",
 
-  description: "Explore the world to find gold and loot",
+    desc: "Explore the map to fight monsters, find loot, and level up",
 
-  examples: ["explore"],
+    examples: ["explore"],
 
-  category: "Exploration",
+    category: "Exploration",
 
-  execute: async function(p){
-    let startingState = await startEncounter(p);
-    if(!startingState){return;}
-    setTimeout(async function(){
-        try{await completeEncounter(startingState);}
-        catch(err){console.error(err);}
-    },3000);
-  }
+    execute: async function(p){
+        let encounter = await ExploreUtil.getEncounter(p);
+        if(!encounter) return;
+        switch(encounter.type){
+            case "battle":
+                await completeBattle(await initBattle(p, encounter));
+            break;
+            default:
+                p.send("I should never send this, oop (explore.js)");
+        }
+    }
 });
 
-async function startEncounter(p){
-    let e = await ExploreUtil.getEncounter(p);
-    if(!e){return;}
+async function initBattle(p, e){
+    let embed = p.embed(e.title, p.sender.avatarURL);
+    embed.thumbnail.url = e.en.url;
+    embed.fields[0] = {
+        "name": e.pl.name,
+        "value": p.config.stats.health + " `" + e.pl.health + "`",
+        "inline": true
+    };
+    embed.fields[1] = {
+        "name": p.config.emoji.blank,
+        "value": p.config.emoji.battle,
+        "inline": true
+    };
+    embed.fields[2] = {
+        "name": e.en.name.replace(/^./, e.en.name[0].toUpperCase()),
+        "value": p.config.stats.health + " `" + e.en.health + "`",
+        "inline": true
+    };
 
-    let embed = {
-        "color": 13679088,
-        "author": {
-          "name": e.adventureTitle,
-          "icon_url": p.user.avatarURL
-        },
-        "thumbnail": {
-          "url": e.en.url
-        },
-        "fields": [
-          {
-            "name": e.pl.name,
-            "value":":heart: `" + e.pl.health + "`",
-            "inline": true
-          },
-          {
-            "name": "<:_:732401376910377100>",
-            "value":":crossed_swords:",
-            "inline": true
-          },
-          {
-            "name": e.en.name.replace(/^./, e.en.name[0].toUpperCase()),
-            "value":":heart: `" + e.en.health + "`",
-            "inline": true
-          }
-        ]
-        };
-    
     let msg = await p.send({embed});
-    return({e,p,msg,embed});
+    return({e,p,msg,embed})
 }
 
-async function completeEncounter(s){
-    let pl = s.e.pl;
-    let en = s.e.en;
-
-    if(pl.health < 1){
-        s.embed.footer = {
-            "text": "You died!"
-        }
-        let embed = s.embed;
-        await s.msg.edit({embed});
-        return;
+async function completeBattle(s){
+   let pl = s.e.pl;
+   let en = s.e.en;
+   let embed = s.embed;
+   let heart = s.p.config.stats.health;
+   
+   if(pl.health < 1){
+       embed.footer = {text: "You died!"}
+       await s.msg.edit({embed});
+       return;
     } else if(en.health < 1) {
-        s.embed.footer = {
-            "text": "You defeated " + en.name + " and got " + en.gold + " gold & " + en.xp + " experience"
-        }
-        //s.embed.thumbnail.url = "https://cdn.discordapp.com/attachments/732695357602922596/736627781722701834/upscaledGrave.png";
-        let embed = s.embed;
-        await s.msg.edit({embed});
-        let profile = ExploreUtil.giveDrops(s.e.profile, en.gold, en.xp);
-        profile = ExploreUtil.addTileProgress(profile);
-        await profile.save();
-        return;
+       embed.footer = {text: "You defeated " + en.name + " and got " + en.gold + " gold & " + en.xp + " experience!"}
+       await s.msg.edit({embed});
+       await s.p.db.User.updateOne(
+           { _id: s.p.sender.id}, 
+           {$inc: {
+                gold: en.gold,
+                xp: en.xp,
+                tileProgress: pl.tileInc
+            }}
+        );
+       return;
     }
 
-    let plTrueDamage = pl.strength - en.defence < 0 ? 0 : pl.strength - en.defence;
-    let enTrueDamage = en.strength - pl.defence < 0 ? 0 : en.strength - pl.defence;
+    let plDmgOutput = pl.strength - en.defence < 0 ? 0 : pl.strength - en.defence;
+    let enDmgOutput = en.strength - pl.defence < 0 ? 0 : en.strength - pl.defence;
 
-    s.e.pl.health -= enTrueDamage;
-    s.e.en.health -= plTrueDamage;
+    pl.health = pl.health - enDmgOutput < 1 ? 0 : pl.health - enDmgOutput;
+    en.health = en.health - plDmgOutput < 1 ? 0 : en.health - plDmgOutput;
+    
+    s.embed.fields[0].value = heart + " `" + pl.health + "`";
+    s.embed.fields[2].value = heart + " `" + en.health + "`";
 
-    s.e.pl.health = s.e.pl.health < 1 ? 0 : s.e.pl.health;    
-    s.e.en.health = s.e.en.health < 1 ? 0 : s.e.en.health;
+    s.embed.footer = {text: "You attack " + en.name + " for ❤️" + plDmgOutput + ", and " + en.name + " hits you for ❤️" + enDmgOutput + "!"};
 
-    s.embed.fields[0].value = ":heart: `" + s.e.pl.health + "`"
-    s.embed.fields[2].value = ":heart: `" + s.e.en.health + "`"
-
-    s.embed.footer = {
-        "text": "You attack " + en.name + " for ❤️" + (plTrueDamage) + ", and " + en.name + " hits you for ❤️" + (enTrueDamage) + "!"
-    }
-
-    let embed = s.embed;
-    let msg = await s.msg.edit({embed});
-    let e = s.e;
-    let p = s.p
+    s.e.pl = pl;
+    s.e.en = en;
+    s.msg = await s.msg.edit({embed});
 
     setTimeout(async function(){
-        try{await completeEncounter({e, p, msg, embed});}
+        try{await completeBattle(s);}
         catch(err){console.error(err);}
     },3000);
 }
-

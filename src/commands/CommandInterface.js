@@ -1,15 +1,16 @@
 module.exports = class CommandInterface{
 
 	constructor(args){
-    this.aliases = args.aliases;
-    this.arguments = args.arguments;
-    this.description = args.description;
+    this.alias = args.alias;
+    this.usage = args.usage;
+    this.desc = args.desc;
     this.examples = args.examples;
     this.category = args.category;
-		this.executeCommand = args.execute;
+	this.executeCommand = args.execute;
     }
 
-    async execute(args){
-        await this.executeCommand(args);
+    async execute(param){
+        //This is where perm/nfsw checks go
+        await this.executeCommand(param);
 	}
 }

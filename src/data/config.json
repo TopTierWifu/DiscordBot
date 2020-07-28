@@ -1,0 +1,40 @@
+{
+    "prefix": "w!",
+
+    "stats": {
+        "health" : ":heart:",
+        "defence" : ":shield:",
+        "strength" : ":crossed_swords:",
+        "crit_chance" : ":dagger:",
+        "crit_damage": ":boom:",
+        "gold_find" : ":moneybag:",
+        "speed" : ":dash:",
+        "luck": ":four_leaf_clover:",
+        "xp_gain": ":star2:"
+    },
+
+    "emoji": {
+        "blank": "<:_:732401376910377100>",
+        "battle": ":crossed_swords:"
+    },
+    
+    "clientOptions": {
+        "autoreconnect":true,
+        "compress":false,
+        "disableEvents":{
+            "TYPEING_START":true,
+            "VOICE_SERVER_UPDATE":true,
+            "VOICE_STATE_UPDATE":true,
+            "USER_NOTE_UPDATE":true,
+            "CHANNEL_PINS_UPDATE":true,
+            "MESSAGE_UPDATE":true,
+            "RELATIONSHIP_ADD":true,
+            "RELATIONSHIP_REMOVE":true
+        },
+        "disableEveryone":true,
+        "messageLimit":10,
+        "defaultImageFormat":"png",
+        "defaultImageSize":128,
+        "restMode":true
+    }
+}

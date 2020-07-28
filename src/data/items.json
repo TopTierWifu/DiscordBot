@@ -1,7 +1,7 @@
 {
     "grinning": {
         "icon": "😀",
-        "aliases": [":grinning:"],
+        "aliases": [],
         "type": "helmet",
         "rarity": "common",
         "value": 2,
@@ -11,7 +11,7 @@
     },
     "smiley": {
         "icon": "😃",
-        "aliases": [":smiley:"],
+        "aliases": [],
         "type": "helmet",
         "rarity": "common",
         "value": 2,
@@ -21,7 +21,7 @@
     },
     "shirt": {
         "icon": "👕",
-        "aliases": [":shirt:"],
+        "aliases": [],
         "type": "chestplate",
         "rarity": "common",
         "value": 10,
@@ -31,7 +31,7 @@
     },
     "shorts": {
         "icon": "🩳",
-        "aliases": [":shorts"],
+        "aliases": [],
         "type": "pants",
         "rarity": "common",
         "value": 2,
@@ -41,7 +41,7 @@
     },
     "bow": {
         "icon": "🏹",
-        "aliases": [":bow_and_arrow:"],
+        "aliases": [],
         "type": "weapon",
         "rarity": "common",
         "value": 2,
@@ -51,7 +51,7 @@
     },
     "knife": {
         "icon": "🔪",
-        "aliases": [":bow_and_arrow:"],
+        "aliases": [],
         "type": "weapon",
         "rarity": "common",
         "value": 2,
@@ -61,7 +61,7 @@
     },
     "ring": {
         "icon": "💍",
-        "aliases": [":ring:"],
+        "aliases": [],
         "type": "accessory",
         "rarity": "common",
         "value": 2,
@@ -71,7 +71,7 @@
     },
     "bag": {
         "icon": "👜",
-        "aliases": [":ring:"],
+        "aliases": [],
         "type": "accessory",
         "rarity": "common",
         "value": 2,
@@ -81,7 +81,7 @@
     },
     "gem": {
         "icon": "💎",
-        "aliases": [":ring:"],
+        "aliases": [],
         "type": "resource",
         "rarity": "common",
         "value": 2
