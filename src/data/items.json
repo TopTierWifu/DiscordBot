@@ -1,89 +1,12 @@
 {
-    "grinning": {
-        "icon": "😀",
-        "aliases": [],
-        "type": "helmet",
-        "rarity": "common",
-        "value": 2,
-        "stats": {
-            "health": 1
-        }
-    },
-    "smiley": {
-        "icon": "😃",
-        "aliases": [],
-        "type": "helmet",
-        "rarity": "common",
-        "value": 2,
-        "stats": {
-            "health": 50
-        }
-    },
-    "shirt": {
-        "icon": "👕",
-        "aliases": [],
-        "type": "chestplate",
-        "rarity": "common",
-        "value": 10,
-        "stats": {
-            "defence": 2
-        }
-    },
-    "shorts": {
-        "icon": "🩳",
-        "aliases": [],
-        "type": "pants",
-        "rarity": "common",
-        "value": 2,
-        "stats": {
-            "defence": 1
-        }
-    },
-    "bow": {
-        "icon": "🏹",
-        "aliases": [],
+    "wooden_sword": {
+        "icon": "<:wooden_sword:738130893797064806>",
+        "aliases": ["wood_sword"],
         "type": "weapon",
         "rarity": "common",
-        "value": 2,
+        "value": 1,
         "stats": {
-            "strength": 5
+            "strength": 1
         }
-    },
-    "knife": {
-        "icon": "🔪",
-        "aliases": [],
-        "type": "weapon",
-        "rarity": "common",
-        "value": 2,
-        "stats": {
-            "strength": 2
-        }
-    },
-    "ring": {
-        "icon": "💍",
-        "aliases": [],
-        "type": "accessory",
-        "rarity": "common",
-        "value": 2,
-        "stats": {
-            "speed": 3
-        }
-    },
-    "bag": {
-        "icon": "👜",
-        "aliases": [],
-        "type": "accessory",
-        "rarity": "common",
-        "value": 2,
-        "stats": {
-            "gold_find": 2
-        }
-    },
-    "gem": {
-        "icon": "💎",
-        "aliases": [],
-        "type": "resource",
-        "rarity": "common",
-        "value": 2
     }
 }

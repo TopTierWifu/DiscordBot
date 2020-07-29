@@ -27,18 +27,14 @@ async function openInv(p){
 
     let embed = p.embed(p.sender.username + "'s Inventory", p.sender.avatarURL);
 
-    embed.fields[0] = {
-        "name": "Inventory",
-        "value": ""
-    }
+    embed.fields[0] = {"name": "Inventory", "value": ""}
 
     embed.footer.text = items.length + "/30 Slots Used | Worth: " + getValue(items) + " Gold";
 
     for(i=1;i<=30;i++){
         if(items[i-1]) embed.fields[0].value += Items[items[i-1]].icon;
-        else embed.fields[0].value += ":white_small_square:";
+        else embed.fields[0].value += p.config.emoji.space;
         if(i%10==0) embed.fields[0].value += "\n";
-        else embed.fields[0].value += " ";
     }
 
     p.send({embed});

@@ -1,5 +1,6 @@
 const CommandInterface = require("../../commandInterface");
 const ExploreUtil = require("../util/exploreUtil");
+const TIMEOUT = 3000;
 
 module.exports = new CommandInterface({
 
@@ -18,7 +19,11 @@ module.exports = new CommandInterface({
         if(!encounter) return;
         switch(encounter.type){
             case "battle":
-                await completeBattle(await initBattle(p, encounter));
+                let battleState = await initBattle(p, encounter);
+                setTimeout(async function(){
+                    try{await completeBattle(battleState);}
+                    catch(err){console.error(err);}
+                },TIMEOUT);
             break;
             default:
                 p.send("I should never send this, oop (explore.js)");
@@ -35,7 +40,7 @@ async function initBattle(p, e){
         "inline": true
     };
     embed.fields[1] = {
-        "name": p.config.emoji.blank,
+        "name": p.config.emoji.space,
         "value": p.config.emoji.battle,
         "inline": true
     };
@@ -46,7 +51,7 @@ async function initBattle(p, e){
     };
 
     let msg = await p.send({embed});
-    return({e,p,msg,embed})
+    return({e,p,msg,embed});
 }
 
 async function completeBattle(s){
@@ -73,8 +78,8 @@ async function completeBattle(s){
        return;
     }
 
-    let plDmgOutput = pl.strength - en.defence < 0 ? 0 : pl.strength - en.defence;
-    let enDmgOutput = en.strength - pl.defence < 0 ? 0 : en.strength - pl.defence;
+    let plDmgOutput = pl.strength - en.defense < 0 ? 0 : pl.strength - en.defense;
+    let enDmgOutput = en.strength - pl.defense < 0 ? 0 : en.strength - pl.defense;
 
     pl.health = pl.health - enDmgOutput < 1 ? 0 : pl.health - enDmgOutput;
     en.health = en.health - plDmgOutput < 1 ? 0 : en.health - plDmgOutput;
@@ -91,5 +96,5 @@ async function completeBattle(s){
     setTimeout(async function(){
         try{await completeBattle(s);}
         catch(err){console.error(err);}
-    },3000);
+    },TIMEOUT);
 }

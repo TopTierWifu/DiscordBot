@@ -20,7 +20,8 @@ module.exports = new CommandInterface({
 });
 
 async function showProfile(p){
-    let b = p.config.emoji.blank;
+    let emoji = p.config.emoji;
+    let s = emoji.space;
     let nl = "\n";
 
     let pf = await p.db.User.findById(p.sender.id);
@@ -30,24 +31,24 @@ async function showProfile(p){
     embed.thumbnail.url = p.sender.avatarURL;
     embed.fields[0] = {
         "name": "Character",
-        "value":b + 
-                (Items[pf.helmet] ? Items[pf.helmet].icon : "<:hIcon:737328461445595148>") + 
-                b + 
-                (Items[pf.accessory[0]] ? Items[pf.accessory[0]].icon : "<:rIcon:732828071346044960>") + 
-                b + nl +
-                (Items[pf.weapon[0]] ? Items[pf.weapon[0]].icon : "<:wIcon:732825599319605259>") + 
-                (Items[pf.chestplate] ? Items[pf.chestplate].icon : "<:cIcon:737328461454245949>") + 
-                (Items[pf.weapon[1]] ? Items[pf.weapon[1]].icon : "<:wIcon:732825599319605259>") + 
-                (Items[pf.accessory[1]] ? Items[pf.accessory[1]].icon : "<:nIcon:732983438298316951>") + 
-                b + nl + b + 
-                (Items[pf.pants] ? Items[pf.pants].icon : "<:pIcon:737329081871368283>") + 
-                b + 
-                (Items[pf.accessory[2]] ? Items[pf.accessory[2]].icon : "<:aIcon:732981186712043600>") + 
-                b + nl,
+        "value":s + 
+                (Items[pf.helmet] ? Items[pf.helmet].icon : emoji.helmet) + 
+                s + 
+                (Items[pf.accessory[0]] ? Items[pf.accessory[0]].icon : emoji.ring) + 
+                s + nl +
+                (Items[pf.weapon[0]] ? Items[pf.weapon[0]].icon : emoji.weapon) + 
+                (Items[pf.chestplate] ? Items[pf.chestplate].icon : emoji.chestplate) + 
+                (Items[pf.weapon[1]] ? Items[pf.weapon[1]].icon : emoji.weapon) + 
+                (Items[pf.accessory[1]] ? Items[pf.accessory[1]].icon : emoji.necklace) + 
+                s + nl + s + 
+                (Items[pf.pants] ? Items[pf.pants].icon : emoji.pants) + 
+                s + 
+                (Items[pf.accessory[2]] ? Items[pf.accessory[2]].icon : emoji.accessory) + 
+                s + nl,
         "inline": true
     };
     embed.fields[1] = {
-        "name": b,
+        "name": s,
         "value":"Tile: " + pf.tile + " (" + pf.tileProgress +"%)" + nl +
                 "Gold: " + pf.gold + nl +
                 "Experience: " + pf.xp + nl,

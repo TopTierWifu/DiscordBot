@@ -1,21 +1,34 @@
 {
     "prefix": "w!",
 
+    "globalMultiplier" : {
+        "gold" : 1,
+        "speed": 1,
+        "xp_gain": 1
+    },
+
     "stats": {
-        "health" : ":heart:",
-        "defence" : ":shield:",
-        "strength" : ":crossed_swords:",
-        "crit_chance" : ":dagger:",
-        "crit_damage": ":boom:",
-        "gold_find" : ":moneybag:",
-        "speed" : ":dash:",
-        "luck": ":four_leaf_clover:",
-        "xp_gain": ":star2:"
+        "health" : "<:health:738130872359845898>",
+        "defense" : "<:defense:738130872188010518>",
+        "strength" : "<:strength:738130872506515616>",
+        "crit_chance" : "<:crit_chance:738130872305188984>",
+        "crit_damage": "<:crit_damage:738130872313839627>",
+        "gold_find" : "<:gold_find:738130872359714826>",
+        "speed" : "<:speed:738130872540069958>",
+        "luck": "<:luck:738130872179490928>",
+        "xp_gain": "<:xp_gain:738130872464703563>"
     },
 
     "emoji": {
-        "blank": "<:_:732401376910377100>",
-        "battle": ":crossed_swords:"
+        "space": "<:space:738131284680900699>",
+        "battle": ":crossed_swords:",
+        "helmet" : "<:hIcon:738130848779599963>",
+        "chestplate" : "<:cIcon:738130848917880963>",
+        "pants" : "<:pIcon:738130848980795485>",
+        "ring" : "<:rIcon:738130848745783377>",
+        "necklace" : "<:nIcon:738130849014218771>",
+        "accessory" : "<:aIcon:738130849001635910>",
+        "weapon" : "<:wIcon:738130848871874601>"
     },
     
     "clientOptions": {

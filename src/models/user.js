@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema({
     tileProgress: {type: Number, default: 0},
     bestTile: {type: Number, default: 1},
     health: {type: Number, default: 5},
-    defence: {type: Number, default: 0},
+    defense: {type: Number, default: 0},
     strength: {type: Number, default: 2},
     crit_chance: {type: Number, default: 1},
     crit_damage: {type: Number, default: 1},

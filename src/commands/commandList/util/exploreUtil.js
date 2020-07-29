@@ -19,14 +19,14 @@ function initBattleState(p, user){
         name: p.sender.username,
         health: user.health + ProfileUtil.getBonusStats(user, "health"),
         strength: user.strength + ProfileUtil.getBonusStats(user, "strength"),
-        defence: user.defence + ProfileUtil.getBonusStats(user, "defence"),
+        defense: user.defense + ProfileUtil.getBonusStats(user, "defense"),
         tileInc: 1 + ((user.speed + ProfileUtil.getBonusStats(user, "speed")) * 0.1)
     };
     e.en = {
         name: en,
         health: Enemies[en].stats.health,
         strength: Enemies[en].stats.strength,
-        defence: Enemies[en].stats.defence,
+        defense: Enemies[en].stats.defense,
         gold: Enemies[en].gold,
         xp: Enemies[en].xp,
         url: Enemies[en].url
