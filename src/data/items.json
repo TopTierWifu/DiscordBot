@@ -1,12 +1,72 @@
 {
-    "wooden_sword": {
+    "1": {
         "icon": "<:wooden_sword:738130893797064806>",
-        "aliases": ["wood_sword"],
+        "aliases": ["wooden_sword","wood_sword","ws"],
         "type": "weapon",
         "rarity": "common",
         "value": 1,
         "stats": {
             "strength": 1
+        }
+    },
+    "2": {
+        "icon": "<:wooden_sword2:738825368126881812>",
+        "aliases": ["wooden_sword2","wood_sword2","ws2"],
+        "type": "weapon",
+        "rarity": "common",
+        "value": 2,
+        "stats": {
+            "strength": 1
+        }
+    },
+    "3": {
+        "icon": "<:wooden_sword3:738825368433066104>",
+        "aliases": ["wooden_sword3","wood_sword3","ws3"],
+        "type": "weapon",
+        "rarity": "common",
+        "value": 3,
+        "stats": {
+            "strength": 2
+        }
+    },
+    "4": {
+        "icon": "<:wooden_sword4:738825367913234444>",
+        "aliases": ["wooden_sword4","wood_sword4","ws4"],
+        "type": "weapon",
+        "rarity": "common",
+        "value": 5,
+        "stats": {
+            "strength": 2
+        }
+    },
+    "5": {
+        "icon": "<:wooden_sword5:738825368093458452>",
+        "aliases": ["wooden_sword5","wood_sword5","ws5"],
+        "type": "weapon",
+        "rarity": "common",
+        "value": 8,
+        "stats": {
+            "strength": 3
+        }
+    },
+    "6": {
+        "icon": "<:leather_helmet:738166661793710222>",
+        "aliases": ["leather_helmet"],
+        "type": "helmet",
+        "rarity": "common",
+        "value": 3,
+        "stats": {
+            "defense": 1
+        }
+    },
+    "11": {
+        "icon": "<:leather_chestplate:738166638201012305>",
+        "aliases": ["leather_chestplate"],
+        "type": "chestplate",
+        "rarity": "common",
+        "value": 5,
+        "stats": {
+            "defense": 3
         }
     }
 }

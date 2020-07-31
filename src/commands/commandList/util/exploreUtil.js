@@ -20,6 +20,9 @@ function initBattleState(p, user){
         health: user.health + ProfileUtil.getBonusStats(user, "health"),
         strength: user.strength + ProfileUtil.getBonusStats(user, "strength"),
         defense: user.defense + ProfileUtil.getBonusStats(user, "defense"),
+        tile: user.tile,
+        bestTile: user.bestTile,
+        tileProgress: user.tileProgress,
         tileInc: 1 + ((user.speed + ProfileUtil.getBonusStats(user, "speed")) * 0.1)
     };
     e.en = {

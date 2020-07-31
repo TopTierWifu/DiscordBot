@@ -16,16 +16,16 @@ exports.addItem = async function(p, itemName){
     p.send("Added " + Items[itemName].icon + " to your inventory!");    //Confirmation
     return true;    //Boolean return for equip
   }
-  p.warn("Your inventory is full!");    //Error message
+  p.warn(p.sender.username + "'s inventory is full! Could not add " + Items[itemName].icon);    //Error message
   return false; //Boolean return for equip
 }
 
 exports.isItem = function(name){
   if(Items[name]){return name;}
-  for(item in Items){
-    for(alias in Items[item].aliases){
-      if(Items[item].aliases[alias] == name){
-        return item;
+  for(id in Items){
+    for(alias in Items[id].aliases){
+      if(Items[id].aliases[alias] == name){
+        return id;
       }
     }
   }

@@ -61,21 +61,23 @@ async function completeBattle(s){
    let heart = s.p.config.stats.health;
    
    if(pl.health < 1){
-       embed.footer = {text: "You died!"}
-       await s.msg.edit({embed});
-       return;
+        embed.footer = {text: "You died!"}
+        await s.msg.edit({embed});
+        return;
     } else if(en.health < 1) {
-       embed.footer = {text: "You defeated " + en.name + " and got " + en.gold + " gold & " + en.xp + " experience!"}
-       await s.msg.edit({embed});
-       await s.p.db.User.updateOne(
-           { _id: s.p.sender.id}, 
-           {$inc: {
-                gold: en.gold,
-                xp: en.xp,
-                tileProgress: pl.tileInc
-            }}
-        );
-       return;
+        embed.footer = {text: "You defeated " + en.name + " and got " + en.gold + " gold & " + en.xp + " experience!"}
+        await s.msg.edit({embed});
+
+        let newSettings = {gold: en.gold, xp: en.xp};
+        if(pl.tileProgress + pl.tileInc < 100) {
+            newSettings.tileProgress = pl.tileInc;
+        } else {
+            if(pl.tile == pl.bestTile) {newSettings.bestTile = 1;}
+            await s.p.db.User.updateOne({ _id: s.p.sender.id}, {$set: {tileProgress: 0}});
+        }
+        await s.p.db.User.updateOne({ _id: s.p.sender.id}, {$inc: newSettings});
+        s.p.send(":tada: **|** You completed tile " + pl.tile);
+        return;
     }
 
     let plDmgOutput = pl.strength - en.defense < 0 ? 0 : pl.strength - en.defense;
