@@ -8,27 +8,27 @@
     },
 
     "stats": {
-        "health" : "<:health:738130872359845898>",
-        "defense" : "<:defense:738130872188010518>",
-        "strength" : "<:strength:738130872506515616>",
-        "crit_chance" : "<:crit_chance:738130872305188984>",
-        "crit_damage": "<:crit_damage:738130872313839627>",
-        "gold_find" : "<:gold_find:738130872359714826>",
-        "speed" : "<:speed:738130872540069958>",
-        "luck": "<:luck:738130872179490928>",
-        "xp_gain": "<:xp_gain:738130872464703563>"
+        "health" : "<:health:738881486303789086>",
+        "defense" : "<:defense:738881486207582228>",
+        "strength" : "<:strength:738881486752579714>",
+        "crit_chance" : "<:crit_chance:738881485246955581>",
+        "crit_damage": "<:crit_damage:738881485771374774>",
+        "gold_find" : "<:gold_find:738881486316634133>",
+        "speed" : "<:speed:738881486253457409>",
+        "luck": "<:luck:738881486538670162>",
+        "xp_gain": "<:xp_gain:738881488602398800>"
     },
 
     "emoji": {
         "space": "<:space:738131284680900699>",
         "battle": ":crossed_swords:",
-        "helmet" : "<:hIcon:738130848779599963>",
-        "chestplate" : "<:cIcon:738130848917880963>",
-        "pants" : "<:pIcon:738130848980795485>",
-        "ring" : "<:rIcon:738130848745783377>",
-        "necklace" : "<:nIcon:738130849014218771>",
-        "accessory" : "<:aIcon:738130849001635910>",
-        "weapon" : "<:wIcon:738169382823395390>"
+        "helmet" : "<:hIcon:738875312062070794>",
+        "chestplate" : "<:cIcon:738875311940304987>",
+        "pants" : "<:pIcon:738875312166666322>",
+        "ring" : "<:rIcon:738875312246358047>",
+        "necklace" : "<:nIcon:738875311860482099>",
+        "accessory" : "<:aIcon:738875311852224532>",
+        "weapon" : "<:wIcon:738875311919333468>"
     },
     
     "clientOptions": {

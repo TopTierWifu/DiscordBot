@@ -26,7 +26,7 @@ function initBattleState(p, user){
         tileInc: 1 + ((user.speed + ProfileUtil.getBonusStats(user, "speed")) * 0.1)
     };
     e.en = {
-        name: en,
+        name: Enemies[en].name,
         health: Enemies[en].stats.health,
         strength: Enemies[en].stats.strength,
         defense: Enemies[en].stats.defense,
@@ -54,19 +54,19 @@ function getEnemy(tile){
 function getAdventureTitle(user){
     let tile = Map.map[user.tile];
     switch(tile){
-      case "🌳":
+      case "0":
         return "Adventure in the Forest";
       break;
-      case "🌱":
+      case "1":
         return "Exploring the Plains";
       break;
-      case "🌊":
+      case "2":
         return "Swimming in the Pond";
       break;
-      case "⛰️":
+      case "3":
         return "Climbing mountains";
       break;
-      case "🏔️":
+      case "4":
         return "Playing in the snow";
       break;
     }

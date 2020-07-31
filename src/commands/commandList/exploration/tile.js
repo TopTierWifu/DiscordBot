@@ -13,9 +13,9 @@ module.exports = new CommandInterface({
     category: "Exploration",
     
     execute: async function(p){
+        let pf = await p.db.User.findById(p.sender.id);
+        if(!pf)  pf = await p.db.User.create({_id: p.sender.id});
         if(tile = parseInt(p.args[0])){
-            let pf = await p.db.User.findById(p.sender.id);
-            if(!pf)  pf = await p.db.User.create({_id: p.sender.id});
             if(tile > pf.bestTile){
                 p.warn("You have not explored that tile yet!");
                 return;
@@ -29,7 +29,7 @@ module.exports = new CommandInterface({
         } else if(p.args[0]){
             p.warn("That is not a number!");
         } else {
-            p.warn("Please specify a tile number.");
+            p.send("You are on tile " + pf.tile);
         }
     }
 });

@@ -27,7 +27,7 @@ async function openMap(p){
         if(pf.tile == i){
             map += ":x:";
         } else if(pf.bestTile >= i){
-            map += MapData.map[i-1];
+            map += MapData.tileSet[MapData.map[i-1]].icon;
         } else {
             map += "▫️";
         }

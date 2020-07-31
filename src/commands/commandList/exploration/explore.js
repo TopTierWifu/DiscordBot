@@ -45,7 +45,7 @@ async function initBattle(p, e){
         "inline": true
     };
     embed.fields[2] = {
-        "name": e.en.name.replace(/^./, e.en.name[0].toUpperCase()),
+        "name": e.en.name,
         "value": p.config.stats.health + " `" + e.en.health + "`",
         "inline": true
     };
@@ -74,9 +74,9 @@ async function completeBattle(s){
         } else {
             if(pl.tile == pl.bestTile) {newSettings.bestTile = 1;}
             await s.p.db.User.updateOne({ _id: s.p.sender.id}, {$set: {tileProgress: 0}});
+            await s.p.send(":tada: **|** You completed tile " + pl.tile);
         }
         await s.p.db.User.updateOne({ _id: s.p.sender.id}, {$inc: newSettings});
-        s.p.send(":tada: **|** You completed tile " + pl.tile);
         return;
     }
 
