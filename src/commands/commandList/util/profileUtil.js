@@ -1,14 +1,14 @@
 const Items = require("../../../data/items.json");
 
-exports.getBonusStats = function(profile, stat){
+exports.getBonusStats = function(p, stat){
   let bonus = 0;
-  if(Items[profile.helmet] && Items[profile.helmet].stats[stat]){bonus += Items[profile.helmet].stats[stat];}
-  if(Items[profile.chestplate] && Items[profile.chestplate].stats[stat]){bonus += Items[profile.chestplate].stats[stat];}
-  if(Items[profile.pants] && Items[profile.pants].stats[stat]){bonus += Items[profile.pants].stats[stat];}
-  if(Items[profile.weapon[0]] && Items[profile.weapon[0]].stats[stat]){bonus += Items[profile.weapon[0]].stats[stat];}
-  if(Items[profile.weapon[1]] && Items[profile.weapon[1]].stats[stat]){bonus += Items[profile.weapon[1]].stats[stat];}
-  if(Items[profile.accessory[0]] && Items[profile.accessory[0]].stats[stat]){bonus += Items[profile.accessory[0]].stats[stat];}
-  if(Items[profile.accessory[1]] && Items[profile.accessory[1]].stats[stat]){bonus += Items[profile.accessory[1]].stats[stat];}
-  if(Items[profile.accessory[2]] && Items[profile.accessory[2]].stats[stat]){bonus += Items[profile.accessory[2]].stats[stat];}
+  if(Items[p.helmet]?.stats[stat]){bonus += Items[p.helmet].stats[stat];}
+  if(Items[p.chestplate]?.stats[stat]){bonus += Items[p.chestplate].stats[stat];}
+  if(Items[p.pants]?.stats[stat]){bonus += Items[p.pants].stats[stat];}
+  if(Items[p.weapon[0]]?.stats[stat]){bonus += Items[p.weapon[0]].stats[stat];}
+  if(Items[p.weapon[1]]?.stats[stat]){bonus += Items[p.weapon[1]].stats[stat];}
+  if(Items[p.accessory[0]]?.stats[stat]){bonus += Items[p.accessory[0]].stats[stat];}
+  if(Items[p.accessory[1]]?.stats[stat]){bonus += Items[p.accessory[1]].stats[stat];}
+  if(Items[p.accessory[2]]?.stats[stat]){bonus += Items[p.accessory[2]].stats[stat];}
   return bonus;
 }

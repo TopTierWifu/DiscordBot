@@ -15,15 +15,14 @@ module.exports = new CommandInterface({
     category: "User",
     
     execute: async function(p){
-        if(p.args[0] && p.args[0].toLowerCase()=="add") ItemUtil.addItem(p, p.args[1].toLowerCase());
+        if(p.args[0]?.toLowerCase()=="add") ItemUtil.addItem(p, p.args[1]?.toLowerCase());
         else openInv(p);
     }
 });
 
 async function openInv(p){
     let user = await p.db.User.findById(p.sender.id, "items");
-    if(!user) items = [];
-    else items = user.items;
+    let items = user.items ?? [];
 
     let embed = p.embed(p.sender.username + "'s Inventory", p.sender.avatarURL);
 

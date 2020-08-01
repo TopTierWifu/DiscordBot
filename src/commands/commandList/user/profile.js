@@ -24,26 +24,25 @@ async function showProfile(p){
     let s = emoji.space;
     let nl = "\n";
 
-    let pf = await p.db.User.findById(p.sender.id);
-    if(!pf)  pf = await p.db.User.create({_id: p.sender.id});
+    let pf = await p.db.User.findById(p.sender.id) ?? await p.db.User.create({_id: p.sender.id});
 
     let embed = p.embed(p.sender.username + "'s Profile", p.sender.avatarURL);
     embed.thumbnail.url = p.sender.avatarURL;
     embed.fields[0] = {
         "name": "Character",
         "value":s + 
-                (Items[pf.helmet] ? Items[pf.helmet].icon : emoji.helmet) + 
+                (Items[pf.helmet]?.icon ?? emoji.helmet) + 
                 s + 
-                (Items[pf.accessory[0]] ? Items[pf.accessory[0]].icon : emoji.ring) + 
+                (Items[pf.accessory[0]]?.icon ?? emoji.ring) + 
                 s + nl +
-                (Items[pf.weapon[0]] ? Items[pf.weapon[0]].icon : emoji.weapon) + 
-                (Items[pf.chestplate] ? Items[pf.chestplate].icon : emoji.chestplate) + 
-                (Items[pf.weapon[1]] ? Items[pf.weapon[1]].icon : emoji.weapon) + 
-                (Items[pf.accessory[1]] ? Items[pf.accessory[1]].icon : emoji.necklace) + 
+                (Items[pf.weapon[0]]?.icon ?? emoji.weapon) + 
+                (Items[pf.chestplate]?.icon ?? emoji.chestplate) + 
+                (Items[pf.weapon[1]]?.icon ?? emoji.weapon) + 
+                (Items[pf.accessory[1]]?.icon ?? emoji.necklace) + 
                 s + nl + s + 
-                (Items[pf.pants] ? Items[pf.pants].icon : emoji.pants) + 
+                (Items[pf.pants]?.icon ?? emoji.pants) + 
                 s + 
-                (Items[pf.accessory[2]] ? Items[pf.accessory[2]].icon : emoji.accessory) + 
+                (Items[pf.accessory[2]]?.icon ?? emoji.accessory) + 
                 s + nl,
         "inline": true
     };

@@ -3,8 +3,7 @@ const Enemies = require("../../../data/enemies.json");
 const Map = require("../../../data/map.json");
 
 exports.getEncounter = async function(p){
-    let user = await p.db.User.findById(p.sender.id);
-    if(!user)  user = await p.db.User.create({_id: p.sender.id});
+    let user = await p.db.User.findById(p.sender.id) ?? await p.db.User.create({_id: p.sender.id});
     //In case I want to add different types of encounters later
     //Add a type value to the "e" for new types
     return initBattleState(p, user);
