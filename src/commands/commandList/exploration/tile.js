@@ -22,8 +22,7 @@ module.exports = new CommandInterface({
                 p.warn("You can't explore a negative tile, silly.");
                 return;
             }
-            let newSettings = {tile: tile, tileProgress: 0};
-            await p.db.User.updateOne({ _id: p.sender.id}, {$set: newSettings});
+            await p.db.User.updateOne({ _id: p.sender.id}, {$set: {tile: tile, tileProgress: 0}});
             p.send("You are now in tile " + tile);
         } else if(p.args[0]){
             p.warn("That is not a number!");

@@ -1,6 +1,6 @@
 const CommandInterface = require("../../commandInterface");
 const ExploreUtil = require("../util/exploreUtil");
-const TIMEOUT = 3000;
+const TIMEOUT = 1000;
 
 module.exports = new CommandInterface({
 
@@ -37,18 +37,15 @@ async function initBattle(p, e){
     embed.fields[0] = {
         "name": e.pl.name,
         "value": p.config.stats.health + " `" + e.pl.health + "`",
-        "inline": true
-    };
+        "inline": true};
     embed.fields[1] = {
         "name": p.config.emoji.space,
         "value": p.config.emoji.battle,
-        "inline": true
-    };
+        "inline": true};
     embed.fields[2] = {
         "name": e.en.name,
         "value": p.config.stats.health + " `" + e.en.health + "`",
-        "inline": true
-    };
+        "inline": true};
 
     let msg = await p.send({embed});
     return({e,p,msg,embed});
@@ -60,7 +57,7 @@ async function completeBattle(s){
    let embed = s.embed;
    let heart = s.p.config.stats.health;
    
-   if(pl.health < 1){
+    if(pl.health < 1){
         embed.footer = {text: "You died!"}
         await s.msg.edit({embed});
         return;
@@ -68,19 +65,18 @@ async function completeBattle(s){
         embed.footer = {text: "You defeated " + en.name + " and got " + en.gold + " gold & " + en.xp + " experience!"}
         await s.msg.edit({embed});
 
-        let newSettings = {gold: en.gold, xp: en.xp};
-        if(pl.tileProgress + pl.tileInc < 100) {
-            newSettings.tileProgress = pl.tileInc;
-        } else {
-            if(pl.tile == pl.bestTile) {newSettings.bestTile = 1;}
-            await s.p.db.User.updateOne({ _id: s.p.sender.id}, {$set: {tileProgress: 0}});
-            await s.p.send(":tada: **|** You completed tile " + pl.tile);
+        e.update.$inc = {gold: en.gold, xp: en.xp};
+        if(pl.tileProgress + pl.tileInc < 100) {e.update.$inc.tileProgress = pl.tileInc;}
+        else {
+            if(pl.tile == pl.bestTile) {e.update.$inc.bestTile = 1;}
+            e.update.$set = {tileProgress: 0};
         }
-        await s.p.db.User.updateOne({ _id: s.p.sender.id}, {$inc: newSettings});
+        await s.p.db.User.updateOne({ _id: s.p.sender.id}, e.update);
+        if(e.update.$set){await s.p.send(":tada: **|** You completed tile " + pl.tile);}
         return;
     }
 
-    let plDmgOutput = pl.strength - en.defense < 0 ? 0 : pl.strength - en.defense;
+    let plDmgOutput = pl.strength - en.defense < 0 ? 0 : pl.strength - en.defense;  //Move to explore util?
     let enDmgOutput = en.strength - pl.defense < 0 ? 0 : en.strength - pl.defense;
 
     pl.health = pl.health - enDmgOutput < 1 ? 0 : pl.health - enDmgOutput;

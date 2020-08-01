@@ -22,7 +22,7 @@ module.exports = new CommandInterface({
 
 async function openInv(p){
     let user = await p.db.User.findById(p.sender.id, "items");
-    let items = user.items ?? [];
+    let items = user?.items ?? [];
 
     let embed = p.embed(p.sender.username + "'s Inventory", p.sender.avatarURL);
 

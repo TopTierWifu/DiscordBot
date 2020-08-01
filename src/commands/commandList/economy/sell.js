@@ -20,18 +20,17 @@ module.exports = new CommandInterface({
     }
 });
 
-async function sell(p, itemName){
-    if(!ItemUtil.isItem(itemName)){p.warn("That is not a real item"); return;}
-    itemName = ItemUtil.isItem(itemName);
+async function sell(p, item){
+    if(!ItemUtil.isItem(item)){p.warn("That is not a real item"); return;}
+    item = ItemUtil.isItem(item);
     let inv = (await p.db.User.findById(p.sender.id)).items;
     if(!inv.length) {p.warn("You do not have any items"); return;}
 
-    if(inv.includes(itemName)){
-        inv.splice(inv.indexOf(itemName), 1);
-        await p.db.User.updateOne({_id: p.sender.id}, {$inc: {gold: Items[itemName].value}});
-        await p.db.User.updateOne({_id: p.sender.id}, {$set: {items: inv}});
-        p.send("Sold " + Items[itemName].icon + " for " + Items[itemName].value + " gold")
+    if(inv.includes(item)){
+        inv.splice(inv.indexOf(item), 1);
+        await p.db.User.updateOne({_id: p.sender.id}, {$inc: {gold: Items[item].value}, $set: {items: inv}});
+        p.send("Sold " + Items[item].icon + " for " + Items[item].value + " gold")
     } else {
-        p.warn("You do not have " + Items[itemName].icon);
+        p.warn("You do not have " + Items[item].icon);
     }
 }

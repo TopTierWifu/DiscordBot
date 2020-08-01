@@ -24,7 +24,7 @@ async function equip(p, itemName){
     if(!ItemUtil.isItem(itemName)){p.warn("That is not a real item"); return;}
     itemName = ItemUtil.isItem(itemName);
     let user = await p.db.User.findById(p.sender.id);
-    if(!user || !user.items.length) {p.warn("You do not have any items"); return;}
+    if(!user?.items.length) {p.warn("You do not have any items"); return;}
 
     if(user.items.includes(itemName)){
         let type = Items[itemName].type;
@@ -47,7 +47,7 @@ async function equipArmor(p, user, type, itemName){
     let newSettings = { items : inv };
     newSettings[type] = itemName;
     await p.db.User.updateOne({ _id: p.sender.id}, {$set: newSettings});
-    await ItemUtil.addItem(p, user[type]);
+    await ItemUtil.addItem(p, user[type]);  //Look into splice 3nd arg of replace value to remove this line
     p.send("Equipped " + Items[itemName].icon);
 }
 

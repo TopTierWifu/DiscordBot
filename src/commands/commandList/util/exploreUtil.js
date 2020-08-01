@@ -36,6 +36,7 @@ function initBattleState(p, user){
     e.title = getAdventureTitle(user);
     e.profile = user;
     e.type = "battle";
+    e.update = {};
     
     return e;
 }
