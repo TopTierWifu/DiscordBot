@@ -65,14 +65,14 @@ async function completeBattle(s){
         embed.footer = {text: "You defeated " + en.name + " and got " + en.gold + " gold & " + en.xp + " experience!"}
         await s.msg.edit({embed});
 
-        e.update.$inc = {gold: en.gold, xp: en.xp};
-        if(pl.tileProgress + pl.tileInc < 100) {e.update.$inc.tileProgress = pl.tileInc;}
+        s.e.update.$inc = {gold: en.gold, xp: en.xp};
+        if(pl.tileProgress + pl.tileInc < 100) {s.e.update.$inc.tileProgress = pl.tileInc;}
         else {
-            if(pl.tile == pl.bestTile) {e.update.$inc.bestTile = 1;}
-            e.update.$set = {tileProgress: 0};
+            if(pl.tile == pl.bestTile) {s.e.update.$inc.bestTile = 1;}
+            s.e.update.$set = {tileProgress: 0};
         }
-        await s.p.db.User.updateOne({ _id: s.p.sender.id}, e.update);
-        if(e.update.$set){await s.p.send(":tada: **|** You completed tile " + pl.tile);}
+        await s.p.db.User.updateOne({ _id: s.p.sender.id}, s.e.update);
+        if(s.e.update.$set){await s.p.send(":tada: **|** You completed tile " + pl.tile);}
         return;
     }
 
