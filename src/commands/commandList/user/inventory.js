@@ -31,8 +31,7 @@ async function openInv(p){
     embed.footer.text = items.length + "/30 Slots Used | Worth: " + getValue(items) + " Gold";
 
     for(i=1;i<=30;i++){
-        if(items[i-1]) embed.fields[0].value += Items[items[i-1]].icon;
-        else embed.fields[0].value += p.config.emoji.space;
+        embed.fields[0].value += Items[items[i-1]]?.icon ?? p.config.emoji.space;
         if(i%10==0) embed.fields[0].value += "\n";
     }
 
@@ -41,8 +40,6 @@ async function openInv(p){
 
 function getValue(items){
     let value = 0;
-    for(item in items){
-      if(Items[items[item]].value){value += Items[items[item]].value;}
-    }
+    for(item in items){value += Items[items[item]].value ?? 0;}
     return value;
 }

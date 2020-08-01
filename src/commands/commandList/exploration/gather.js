@@ -13,8 +13,7 @@ module.exports = new CommandInterface({
     category: "Exploration",
 
     execute: async function(p){
-        let pf = await p.db.User.findById(p.sender.id);
-        if(!pf)  pf = await p.db.User.create({_id: p.sender.id});
-        p.send("I was too lazy to make this command rn, so you get this...");
+        let pf = await p.db.User.findById(p.sender.id) ?? await p.db.User.create({_id: p.sender.id});
+        p.send("This command is a WIP...");
     }
 });

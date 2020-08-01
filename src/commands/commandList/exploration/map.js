@@ -19,8 +19,7 @@ module.exports = new CommandInterface({
 });
 
 async function openMap(p){
-    let pf = await p.db.User.findById(p.sender.id);
-    if(!pf)  pf = await p.db.User.create({_id: p.sender.id});
+    let pf = await p.db.User.findById(p.sender.id) ?? await p.db.User.create({_id: p.sender.id});
     let map = "";
 
     for(i = 1; i<=100; i++){

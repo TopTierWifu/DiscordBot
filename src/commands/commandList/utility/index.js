@@ -13,6 +13,6 @@ module.exports = new CommandInterface({
     category: "Utility",
 
     execute: async function(p){
-        p.send("I was too lazy to make this command rn, so you get this...")
+        p.send("Command is a WIP...")
     }
 });

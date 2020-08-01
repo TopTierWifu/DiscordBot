@@ -61,9 +61,7 @@ async function showProfile(p){
     let i = 1;
     for(stat in p.config.stats){
         embed.fields[2].value += p.config.stats[stat] + " `" + pf[stat] + "(+" + ProfileUtil.getBonusStats(pf, stat) + ")` ";
-        if(i%3==0){
-          embed.fields[2].value += nl;
-        }
+        if(i%3==0){embed.fields[2].value += nl;}
         i++;
     }
 

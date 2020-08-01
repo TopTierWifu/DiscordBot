@@ -13,8 +13,7 @@ module.exports = new CommandInterface({
     category: "Exploration",
     
     execute: async function(p){
-        let pf = await p.db.User.findById(p.sender.id);
-        if(!pf)  pf = await p.db.User.create({_id: p.sender.id});
+        let pf = await p.db.User.findById(p.sender.id) ?? await p.db.User.create({_id: p.sender.id});
         if(tile = parseInt(p.args[0])){
             if(tile > pf.bestTile){
                 p.warn("You have not explored that tile yet!");
