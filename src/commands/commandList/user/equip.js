@@ -25,7 +25,7 @@ async function equip(p, itemName){
     itemName = ItemUtil.isItem(itemName);
     let user = await p.db.User.findById(p.sender.id);
     if(!user?.items.length) {p.warn("You do not have any items"); return;}
-
+    
     if(user.items.includes(itemName)){
         let type = Items[itemName].type;
         if(type == "helmet"||type == "chestplate"||type == "pants"){

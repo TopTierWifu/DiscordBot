@@ -21,7 +21,8 @@ const UserSchema = new mongoose.Schema({
     gold_find: {type: Number, default: 0},
     speed: {type: Number, default: 0},
     luck: {type: Number, default: 0},
-    xp_gain: {type: Number, default: 0}
+    xp_gain: {type: Number, default: 0},
+    index: [String]
 });
 
 module.exports = { name: 'User', schema: UserSchema };

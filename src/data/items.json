@@ -1,9 +1,10 @@
 {
     "1": {
         "icon": "<:wooden_sword:738889524637335654>",
+        "name": "Wooden Sword",
         "aliases": ["wooden_sword","wood_sword","ws"],
-        "type": "weapon",
-        "rarity": "common",
+        "type": "Weapon",
+        "rarity": "Common",
         "value": 1,
         "stats": {
             "strength": 1
@@ -11,9 +12,10 @@
     },
     "2": {
         "icon": "<:wooden_sword2:738889524981006457>",
+        "name": "Wooden Sword+",
         "aliases": ["wooden_sword2","wood_sword2","ws2"],
-        "type": "weapon",
-        "rarity": "common",
+        "type": "Weapon",
+        "rarity": "Common",
         "value": 2,
         "stats": {
             "strength": 1
@@ -21,9 +23,10 @@
     },
     "3": {
         "icon": "<:wooden_sword3:738889524993851404>",
+        "name": "Wooden Sword++",
         "aliases": ["wooden_sword3","wood_sword3","ws3"],
-        "type": "weapon",
-        "rarity": "common",
+        "type": "Weapon",
+        "rarity": "Common",
         "value": 3,
         "stats": {
             "strength": 2
@@ -31,9 +34,10 @@
     },
     "4": {
         "icon": "<:wooden_sword4:738889525576859828>",
+        "name": "Wooden Sword+++",
         "aliases": ["wooden_sword4","wood_sword4","ws4"],
-        "type": "weapon",
-        "rarity": "common",
+        "type": "Weapon",
+        "rarity": "Common",
         "value": 5,
         "stats": {
             "strength": 2
@@ -41,9 +45,10 @@
     },
     "5": {
         "icon": "<:wooden_sword5:738889525446705164>",
+        "name": "Wooden Sword++++",
         "aliases": ["wooden_sword5","wood_sword5","ws5"],
-        "type": "weapon",
-        "rarity": "common",
+        "type": "Weapon",
+        "rarity": "Common",
         "value": 8,
         "stats": {
             "strength": 3
@@ -51,9 +56,10 @@
     },
     "6": {
         "icon": "<:leather_helmet:738891658413735996>",
+        "name": "Leather Helmet",
         "aliases": ["leather_helmet", "lh"],
-        "type": "helmet",
-        "rarity": "common",
+        "type": "Helmet",
+        "rarity": "Common",
         "value": 3,
         "stats": {
             "defense": 1
@@ -61,9 +67,10 @@
     },
     "7": {
         "icon": "<:leather_helmet2:738891658523050065>",
+        "name": "Leather Helmet+",
         "aliases": ["leather_helmet2", "lh2"],
-        "type": "helmet",
-        "rarity": "common",
+        "type": "Helmet",
+        "rarity": "Common",
         "value": 5,
         "stats": {
             "defense": 1
@@ -71,9 +78,10 @@
     },
     "8": {
         "icon": "<:leather_helmet3:738891658627907604>",
+        "name": "Leather Helmet++",
         "aliases": ["leather_helmet3", "lh3"],
-        "type": "helmet",
-        "rarity": "common",
+        "type": "Helmet",
+        "rarity": "Common",
         "value": 8,
         "stats": {
             "defense": 2
@@ -81,9 +89,10 @@
     },
     "9": {
         "icon": "<:leather_helmet4:738891658724376689>",
+        "name": "Leather Helmet+++",
         "aliases": ["leather_helmet4", "lh4"],
-        "type": "helmet",
-        "rarity": "common",
+        "type": "Helmet",
+        "rarity": "Common",
         "value": 12,
         "stats": {
             "defense": 2
@@ -91,9 +100,10 @@
     },
     "10": {
         "icon": "<:leather_helmet5:738891658883498084>",
+        "name": "Leather Helmet++++",
         "aliases": ["leather_helmet5", "lh5"],
-        "type": "helmet",
-        "rarity": "common",
+        "type": "Helmet",
+        "rarity": "Common",
         "value": 18,
         "stats": {
             "defense": 3
@@ -101,9 +111,10 @@
     },
     "11": {
         "icon": "<:leather_chestplate:738891684213162065>",
+        "name": "Leather Chestplate",
         "aliases": ["leather_chestplate", "lc"],
-        "type": "chestplate",
-        "rarity": "common",
+        "type": "Chestplate",
+        "rarity": "Common",
         "value": 5,
         "stats": {
             "defense": 3
@@ -111,42 +122,46 @@
     },
     "12": {
         "icon": "<:leather_chestplate2:738891684435329034>",
+        "name": "Leather Chestplate+",
         "aliases": ["leather_chestplate2", "lc2"],
-        "type": "chestplate",
-        "rarity": "common",
+        "type": "Chestplate",
+        "rarity": "Common",
         "value": 5,
         "stats": {
-            "defense": 3
+            "defense": 4
         }
     },
     "13": {
         "icon": "<:leather_chestplate3:738891684498112553>",
+        "name": "Leather Chestplate++",
         "aliases": ["leather_chestplate3", "lc3"],
-        "type": "chestplate",
-        "rarity": "common",
+        "type": "Chestplate",
+        "rarity": "Common",
         "value": 5,
         "stats": {
-            "defense": 3
+            "defense": 6
         }
     },
     "14": {
         "icon": "<:leather_chestplate4:738891684611489832>",
+        "name": "Leather Chestplate+++",
         "aliases": ["leather_chestplate4", "lc4"],
-        "type": "chestplate",
-        "rarity": "common",
+        "type": "Chestplate",
+        "rarity": "Common",
         "value": 5,
         "stats": {
-            "defense": 3
+            "defense": 10
         }
     },
     "15": {
         "icon": "<:leather_chestplate5:738891687463485452>",
+        "name": "Leather Chestplate++++",
         "aliases": ["leather_chestplate5", "lc5"],
-        "type": "chestplate",
-        "rarity": "common",
+        "type": "Chestplate",
+        "rarity": "Common",
         "value": 5,
         "stats": {
-            "defense": 3
+            "defense": 15
         }
     }
 }

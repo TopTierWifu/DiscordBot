@@ -15,8 +15,7 @@ module.exports = new CommandInterface({
     category: "Exploration",
 
     execute: async function(p){
-        let encounter = await ExploreUtil.getEncounter(p);
-        if(!encounter) return;
+        if(!(encounter = await ExploreUtil.getEncounter(p))) return;
         switch(encounter.type){
             case "battle":
                 let battleState = await initBattle(p, encounter);
