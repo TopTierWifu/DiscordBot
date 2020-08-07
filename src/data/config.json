@@ -7,18 +7,6 @@
         "xp_gain": 1
     },
 
-    "stats": {
-        "health" : "<:health:738881486303789086>",
-        "defense" : "<:defense:738881486207582228>",
-        "strength" : "<:strength:738881486752579714>",
-        "crit_chance" : "<:crit_chance:738881485246955581>",
-        "crit_damage": "<:crit_damage:738881485771374774>",
-        "gold_find" : "<:gold_find:738881486316634133>",
-        "speed" : "<:speed:738881486253457409>",
-        "luck": "<:luck:738881486538670162>",
-        "xp_gain": "<:xp_gain:738881488602398800>"
-    },
-
     "emoji": {
         "space": "<:space:738131284680900699>",
         "battle": ":crossed_swords:",
@@ -28,7 +16,18 @@
         "ring" : "<:rIcon:738875312246358047>",
         "necklace" : "<:nIcon:738875311860482099>",
         "accessory" : "<:aIcon:738875311852224532>",
-        "weapon" : "<:wIcon:738875311919333468>"
+        "weapon" : "<:wIcon:738875311919333468>",
+        "stats": {
+            "health" : "<:health:738881486303789086>",
+            "defense" : "<:defense:738881486207582228>",
+            "strength" : "<:strength:738881486752579714>",
+            "crit_chance" : "<:crit_chance:738881485246955581>",
+            "crit_damage": "<:crit_damage:738881485771374774>",
+            "gold_find" : "<:gold_find:738881486316634133>",
+            "speed" : "<:speed:738881486253457409>",
+            "luck": "<:luck:738881486538670162>",
+            "xp_gain": "<:xp_gain:738881488602398800>"
+        }
     },
     
     "clientOptions": {

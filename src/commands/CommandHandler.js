@@ -51,7 +51,10 @@ function getParams(msg, command, args, main){
     }
 
     param.warn = function(message){
-        return param.client.createMessage(param.msg.channel.id, ":warning: **|** " + message);
+        return param.client.createMessage(param.msg.channel.id, ":warning: **|** " + message)
+        .then(msg => setTimeout(function(){
+            try{msg.delete();}catch(e){}
+        }, 5000));
     }
 
     param.embed = function(name, iconURL){

@@ -1,32 +1,69 @@
 const Items = require("../../../data/items.json");
+let highestIndex;
 
-exports.addItem = async function(p, itemName){
-  itemID = exports.isItem(itemName);  //Get id from possible alias
-  if(!itemID){ //If it is a not real item
-    if(itemID != undefined){p.warn("That is not a real item!");}  //Ignore for unequip
-    return false; //Boolean return for equip
-  }
-  let user = await p.db.User.findById(p.sender.id, "items");   //Get items section
-  if(!user || user.items.length < 30){  //If the inventory is empty or has less than 30 items
+exports.addItem = async function(p, itemID, quality){
+    if(!highestIndex) {await initHighestIndex(p);}
+    if(!Items.items[itemID]) {p.warn("There is no item with the id `" + itemID + "`"); return;}
+    if(!Items.quality[quality]) {p.warn("`" + quality + "` is not a real weapon quality"); return;}
+
+    let index = highestIndex++;
+
+    await p.db.Item.create({
+        _id: index.toString(36),
+        index: index,
+        itemID: itemID,
+        quality: quality ?? 0
+    });
+
     await p.db.User.updateOne(
         {_id: p.sender.id},
-        { $push: {items: itemID}, $addToSet: {index: itemID}},
-        { upsert: true }
-    );  //Push the item to the items array
-    p.send("Added " + Items[itemID].icon + " to your inventory!");    //Confirmation
-    return true;    //Boolean return for equip
-  }
-  p.warn(p.sender.username + "'s inventory is full! Could not add " + Items[itemID].icon);    //Error message
-  return false; //Boolean return for equip
+        {$push: {items: index.toString(36)}, $addToSet: {index: itemID}},
+        {upsert: true}
+    );
+
+    p.send("Added `" + index.toString(36) + "` " + Items.items[itemID].icons[quality] + " to " + p.sender.mention + "'s inventory");
 }
 
-exports.isItem = function(name){
-  if(Items[name]){return name;}
-  for(id in Items){
-    for(alias in Items[id].aliases){
-      if(Items[id].aliases[alias] == name){
-        return id;
-      }
+exports.getItem = async function(p, dbID){
+    let q = await p.db.Item.findById(dbID);
+    if(q) return {data: q, base: Items.items[q.itemID]};
+    else return;
+}
+
+exports.getItems = async function(p, pf){
+    return items = {
+        "h": await exports.getItem(p, pf.Helmet),
+        "c": await exports.getItem(p, pf.Chestplate),
+        "p": await exports.getItem(p, pf.Pants),
+        "w0": await exports.getItem(p, (pf.Weapon) ? pf.Weapon[0] : undefined),
+        "w1": await exports.getItem(p, (pf.Weapon) ? pf.Weapon[1] : undefined),
+        "a0": await exports.getItem(p, (pf.Accessory) ? pf.Accessory[0] : undefined),
+        "a1": await exports.getItem(p, (pf.Accessory) ? pf.Accessory[1] : undefined),
+        "a2": await exports.getItem(p, (pf.Accessory) ? pf.Accessory[2] : undefined)
+    };
+}
+
+exports.getIcon = function(item){
+    return item?.base.icons[item.data.quality];
+}
+
+exports.getBonusStats = function(items, stat){
+    let bonus = 0;
+    for(item in items){
+        bonus += items[item]?.base.stats[stat] ?? 0; //Change this to do math with item.data.quality for higher tier items to have more stats
     }
-  }
+    return bonus;
+}
+
+exports.getItemPreview = function(item){
+    let s = "\n`" + item.data._id + "` ";
+    s += exports.getIcon(item) + " ";
+    s += item.base.name;
+    //Add more stat data later
+    return s;
+}
+
+async function initHighestIndex(p){
+    highestIndex = (await p.db.Item.find({}).sort({index: "-1"}).limit(1))[0]?.index ?? 0;
+    if(highestIndex != 0) highestIndex++;
 }

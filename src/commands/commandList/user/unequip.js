@@ -1,6 +1,5 @@
 const CommandInterface = require("../../commandInterface");
 const ItemUtil = require("../util/itemUtil");
-const Items = require("../../../data/items.json");
 
 module.exports = new CommandInterface({
 
@@ -8,9 +7,9 @@ module.exports = new CommandInterface({
 
     usage: "{item}",
 
-    desc: "Unequips items and puts them in your inventory",
+    desc: "Unequip items to put better ones on",
 
-    examples: ["unequip knife", "unequip ring"],
+    examples: ["unequip 4fzl", "unequip h8xc"],
 
     category: "User",
     
@@ -20,35 +19,28 @@ module.exports = new CommandInterface({
     }
 });
 
-async function unequip(p, itemName){
-    if(!ItemUtil.isItem(itemName)){p.warn("That is not a real item"); return;}
-    itemName = ItemUtil.isItem(itemName);
-    let type = Items[itemName].type;
+async function unequip(p, dbID){
     let user = await p.db.User.findById(p.sender.id);
-    if(!user[type]) {p.warn("You can't wear that, silly"); return;}
+    let items = await ItemUtil.getItems(p, user);
 
-    if(user[type].includes(itemName)){
-        if(type == "helmet"||type == "chestplate"||type == "pants") unequipArmor(p, type, itemName);
-        else unequipItem(p, user, type, itemName)
-    } else {
-        p.warn("You are not using " + Items[itemName].icon);
+    let equipment;
+
+    for(item in items){
+        if(items[item] && items[item].data._id == dbID) {equipment = items[item]};
     }
-}
 
-async function unequipArmor(p, type, itemName){
-    if(await ItemUtil.addItem(p, itemName)){
-        let newSettings = {}
+    if(!equipment) {p.warn("You are not using `" + dbID + "`"); return;}
+
+    let type = equipment.base.type;
+    let newSettings = {};
+    if(type == "Helmet"||type == "Chestplate"||type == "Pants"){
         newSettings[type] = undefined;
         await p.db.User.updateOne({ _id: p.sender.id}, {$set: newSettings});
-    }
-}
-
-async function unequipItem(p, user, type, itemName){
-    if(await ItemUtil.addItem(p, itemName)){
-        let items = user[type];
-        items.splice(items.indexOf(itemName), 1);
-        let newSettings = {}
-        newSettings[type] = items;
+        p.send("Unequipped " + ItemUtil.getIcon(equipment));
+    } else if(type == "Accessory" || type == "Weapon"){
+        newSettings[type] = user[type];
+        newSettings[type].splice(newSettings[type].indexOf(dbID), 1);
         await p.db.User.updateOne({ _id: p.sender.id}, {$set: newSettings});
+        p.send("Unequipped " + ItemUtil.getIcon(equipment));
     }
 }

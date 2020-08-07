@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
     _id: String,
-    helmet: String,
-    chestplate: String,
-    pants: String,
-    weapon: [String],
-    accessory: [String],
+    Helmet: String,
+    Chestplate: String,
+    Pants: String,
+    Weapon: [String],
+    Accessory: [String],
     items: [String],
     xp: {type: Number, default: 0},
     gold: {type: Number, default: 0},

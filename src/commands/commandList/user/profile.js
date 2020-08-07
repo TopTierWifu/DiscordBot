@@ -1,69 +1,73 @@
 const CommandInterface = require("../../commandInterface");
-const ProfileUtil = require("../util/profileUtil");
-const Items = require("../../../data/items.json");
+const ItemUtil = require("../util/itemUtil");
+const EMOJI = require("../../../data/config.json").emoji;
+const S = EMOJI.space;
+const N = "\n";
 
 module.exports = new CommandInterface({
 
     alias:["profile", "p"],
 
-    usage: "",
-
-    desc: "View your equipment, gold, stats and more",
-
-    examples: ["profile"],
+    desc: "View your equiped items, gold, and experience",
 
     category: "User",
     
     execute: async function(p){
-        showProfile(p);
+        let pf = await p.db.User.findById(p.sender.id) ?? await p.db.User.create({_id: p.sender.id});
+
+        let items = await ItemUtil.getItems(p, pf);
+        
+        let embed = p.embed(p.sender.username + "'s Profile", p.sender.avatarURL);
+        embed.thumbnail.url = p.sender.avatarURL;
+        embed.fields[0] = {
+            "name": "Character",
+            "value":S + 
+                    (ItemUtil.getIcon(items.h) ?? EMOJI.helmet) + 
+                    S + 
+                    (ItemUtil.getIcon(items.a0) ?? EMOJI.ring) + 
+                    S + N +
+                    (ItemUtil.getIcon(items.w0) ?? EMOJI.weapon) + 
+                    (ItemUtil.getIcon(items.c) ?? EMOJI.chestplate) + 
+                    (ItemUtil.getIcon(items.w1) ?? EMOJI.weapon) + 
+                    (ItemUtil.getIcon(items.a1) ?? EMOJI.necklace) + 
+                    S + N + S + 
+                    (ItemUtil.getIcon(items.p) ?? EMOJI.pants) + 
+                    S + 
+                    (ItemUtil.getIcon(items.a2) ?? EMOJI.accessory) + 
+                    S + N,
+            "inline": true
+        };
+        embed.fields[1] = {
+            "name": S,
+            "value":"Tile: " + pf.tile + " (" + pf.tileProgress +"%)" + N +
+                    "Gold: " + pf.gold + N +
+                    "Experience: " + pf.xp + N,
+            "inline": true
+        };
+        embed.fields[2] = {
+            "name": "Equipment",
+            "value": ""
+        };
+        embed.fields[3] = {
+            "name": "Stats",
+            "value":""
+        };
+
+        let i = 1;
+        for(stat in EMOJI.stats){
+            embed.fields[3].value += EMOJI.stats[stat] + " `" + pf[stat] + "(+" + ItemUtil.getBonusStats(items, stat) + ")` ";
+            if(i%3==0){embed.fields[3].value += N;}
+            i++;
+        }
+
+        for(item in items){
+            if(items[item]){
+                embed.fields[2].value += ItemUtil.getItemPreview(items[item]);
+            }
+        }
+
+        if(!embed.fields[2].value) embed.fields[2].value = S;
+
+        p.send({embed});
     }
 });
-
-async function showProfile(p){
-    let emoji = p.config.emoji;
-    let s = emoji.space;
-    let nl = "\n";
-
-    let pf = await p.db.User.findById(p.sender.id) ?? await p.db.User.create({_id: p.sender.id});
-
-    let embed = p.embed(p.sender.username + "'s Profile", p.sender.avatarURL);
-    embed.thumbnail.url = p.sender.avatarURL;
-    embed.fields[0] = {
-        "name": "Character",
-        "value":s + 
-                (Items[pf.helmet]?.icon ?? emoji.helmet) + 
-                s + 
-                (Items[pf.accessory[0]]?.icon ?? emoji.ring) + 
-                s + nl +
-                (Items[pf.weapon[0]]?.icon ?? emoji.weapon) + 
-                (Items[pf.chestplate]?.icon ?? emoji.chestplate) + 
-                (Items[pf.weapon[1]]?.icon ?? emoji.weapon) + 
-                (Items[pf.accessory[1]]?.icon ?? emoji.necklace) + 
-                s + nl + s + 
-                (Items[pf.pants]?.icon ?? emoji.pants) + 
-                s + 
-                (Items[pf.accessory[2]]?.icon ?? emoji.accessory) + 
-                s + nl,
-        "inline": true
-    };
-    embed.fields[1] = {
-        "name": s,
-        "value":"Tile: " + pf.tile + " (" + pf.tileProgress +"%)" + nl +
-                "Gold: " + pf.gold + nl +
-                "Experience: " + pf.xp + nl,
-        "inline": true
-    };
-    embed.fields[2] = {
-        "name": "Stats",
-        "value":""
-    };
-
-    let i = 1;
-    for(stat in p.config.stats){
-        embed.fields[2].value += p.config.stats[stat] + " `" + pf[stat] + "(+" + ProfileUtil.getBonusStats(pf, stat) + ")` ";
-        if(i%3==0){embed.fields[2].value += nl;}
-        i++;
-    }
-
-    p.send({embed});
-}
