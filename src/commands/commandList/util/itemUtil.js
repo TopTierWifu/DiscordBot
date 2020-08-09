@@ -47,6 +47,10 @@ exports.getIcon = function(item){
     return item?.base.icons[item.data.quality];
 }
 
+exports.getRarity = function(item){
+    return Items.quality[item?.data.quality]?.name;
+}
+
 exports.getBonusStats = function(items, stat){
     let bonus = 0;
     for(item in items){
