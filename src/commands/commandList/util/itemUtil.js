@@ -67,6 +67,12 @@ exports.getItemPreview = function(item){
     return s;
 }
 
+exports.isUsing = function(items, dbID){
+    for(item in items){
+        if(items[item]?.data._id == dbID) {return true;}
+    }
+}
+
 async function initHighestIndex(p){
     highestIndex = (await p.db.Item.find({}).sort({index: "-1"}).limit(1))[0]?.index ?? 0;
     if(highestIndex != 0) highestIndex++;
