@@ -10,7 +10,7 @@ exports.getEncounter = async function(p){
 }
 
 async function initBattleState(p, user){
-    let en = getEnemy(user.tile);
+    let en = getEnemy(Map.map[user.tile]);
     if(!en){p.send("Could not find any monsters for tile " + user.tile); return;}
     let items = await ItemUtil.getItems(p, user);
 
@@ -42,10 +42,10 @@ async function initBattleState(p, user){
     return e;
 }
 
-function getEnemy(tile){
+function getEnemy(tileSetID){
     let possible = []
     for(enemy in Enemies){
-        if(Enemies[enemy].tiles.includes(tile)){
+        if(Enemies[enemy].tiles.includes(tileSetID)){
             possible.push(enemy);
         }
     }

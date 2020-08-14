@@ -57,18 +57,18 @@ function getParams(msg, command, args, main){
         }, 5000));
     }
 
-    param.embed = function(name, iconURL){
-        let embed = {
+    param.embed = function(){
+        return {
             "color": 13679088,
-            "author": {
-                "name": name,
-                "icon_url": iconURL
-            },
+            "author": {},
             "thumbnail": {},
             "fields": [],
             "footer": {}
         }
-        return embed;
+    }
+
+    param.getDoc = async function(model){
+        return await param.db[model].findById(p.sender.id) ?? await param.db[model].create({_id: p.sender.id});
     }
 
     return param;

@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "eris": "^0.13.3",
     "dotenv": "^8.2.0",
+    "eris": "^0.13.3",
+    "eris-collector": "^1.0.1",
     "eris-sharder": "^1.10.0",
     "mongoose": "^5.9.22",
     "require-dir": "^1.2.0"
