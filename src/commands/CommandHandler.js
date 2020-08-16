@@ -43,7 +43,15 @@ function getParams(msg, command, args, main){
         "db": main.db,
         "config": main.config,
         "commands": commands,
-        "categories": categories
+        "categories": categories,
+        "embed": {
+            "color": 13679088,
+            "author": {},
+            "thumbnail": {},
+            "fields": [],
+            "footer": {},
+            "description": ""
+        }
     }
 
     param.send = function(message){
@@ -57,18 +65,8 @@ function getParams(msg, command, args, main){
         }, 5000));
     }
 
-    param.embed = function(){
-        return {
-            "color": 13679088,
-            "author": {},
-            "thumbnail": {},
-            "fields": [],
-            "footer": {}
-        }
-    }
-
     param.getDoc = async function(model){
-        return await param.db[model].findById(p.sender.id) ?? await param.db[model].create({_id: p.sender.id});
+        return await param.db[model].findById(param.sender.id) ?? await param.db[model].create({_id: param.sender.id});
     }
 
     return param;

@@ -17,7 +17,7 @@ exports.addItem = async function(p, itemID, quality){
 
     await p.db.User.updateOne(
         {_id: p.sender.id},
-        {$push: {items: index.toString(36)}, $addToSet: {index: itemID}},
+        {$push: {items: index.toString(36)}, $addToSet: {index: {items: itemID}}},
         {upsert: true}
     );
 

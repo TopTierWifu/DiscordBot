@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+const ResourceSchema = new mongoose.Schema();
+
+
 const UserSchema = new mongoose.Schema({
     _id: String,
     Helmet: String,
@@ -8,6 +11,7 @@ const UserSchema = new mongoose.Schema({
     Weapon: [String],
     Accessory: [String],
     items: [String],
+    inventory: [Number],
     xp: {type: Number, default: 0},
     gold: {type: Number, default: 0},
     tile: {type: Number, default: 1},
@@ -22,7 +26,10 @@ const UserSchema = new mongoose.Schema({
     speed: {type: Number, default: 0},
     luck: {type: Number, default: 0},
     xp_gain: {type: Number, default: 0},
-    index: [String]
+    index: {
+        items: [String],
+        resources: [String],
+    }
 });
 
 module.exports = { name: 'User', schema: UserSchema };

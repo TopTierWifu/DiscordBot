@@ -5,7 +5,7 @@ module.exports = new CommandInterface({
 
     alias:["items"],
 
-    desc: "View the items in your inventory",
+    desc: "View your equipable items",
 
     category: "User",
     
@@ -15,14 +15,15 @@ module.exports = new CommandInterface({
 });
 
 async function listItems(p){
-    let items = (await p.db.User.findById(p.sender.id, "items"))?.items ?? [];
+    let items = (await p.getDoc("User")).items;
     
-    let embed = p.embed(p.sender.username + "'s Inventory", p.sender.avatarURL);
-    embed.description = "";
+    p.embed.author.name = p.sender.username + "'s Items";
+    p.embed.author.icon_url = p.sender.avatarURL; 
 
     for(dbID in items){
-        embed.description += ItemUtil.getItemPreview(await ItemUtil.getItem(p, items[dbID]));
+        p.embed.description += ItemUtil.getItemPreview(await ItemUtil.getItem(p, items[dbID]));
     }
 
+    let embed = p.embed;
     p.send({embed});
 }

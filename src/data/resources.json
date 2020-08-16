@@ -1,7 +1,12 @@
 {
     "0": {
-        "icon": "s",
-        "name": "Pink Slime",
+        "icon": "<:pinkSlimeBall:743949889435861011>",
+        "name": "Pink Slime Ball",
+        "value": 1
+    },
+    "1": {
+        "icon": ":game_die:",
+        "name": "Die",
         "value": 1
     }
 }

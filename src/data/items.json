@@ -1,25 +1,10 @@
 {
     "quality": {
-        "0": {
-            "rate": 0.889,
-            "name": "Basic"
-        },
-        "1": {
-            "rate": 0.1,
-            "name": "Bronze"
-        },
-        "2": {
-            "rate": 0.01,
-            "name": "Silver"
-        },
-        "3": {
-            "rate": 0.001,
-            "name": "Gold"
-        },
-        "4": {
-            "rate": 0,
-            "name": "Platinum"
-        }
+        "0": {"rate": 0.889, "name": "Basic"},
+        "1": {"rate": 0.1, "name": "Bronze"},
+        "2": {"rate": 0.01, "name": "Silver"},
+        "3": {"rate": 0.001, "name": "Gold"},
+        "4": {"rate": 0, "name": "Platinum"}
     },
 
     "items": {
