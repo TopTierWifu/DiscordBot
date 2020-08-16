@@ -20,40 +20,45 @@ module.exports = new CommandInterface({
 });
 
 function sendHelpMessage(p){
-    let embed = p.embed("Commands", p.sender.avatarURL);
+    p.embed.author.name = "Commands";
+    p.embed.author.icon_url = p.sender.avatarURL;
     let i = 0;
     for(category in p.categories){
-        embed.fields[i] = {name: category, value: ""};
+        p.embed.fields[i] = {name: category, value: ""};
         for(command in p.categories[category]){
-            embed.fields[i].value += "`" + p.categories[category][command] + "` ";
+            p.embed.fields[i].value += "`" + p.categories[category][command] + "` ";
         }
         i++
     }
+
+    let embed = p.embed;
     p.send({embed});
 }
 
 function sendCommandDescription(p, command){
     let N = "\n";
 
-    let embed = p.embed(command.alias[0].replace(/^./, command.alias[0][0].toUpperCase()), p.sender.avatarURL);
-    embed.description = "";
+    p.embed.author.name = command.alias[0].replace(/^./, command.alias[0][0].toUpperCase());
+    p.embed.author.icon_url = p.sender.avatarURL;
+    p.embed.description = "";
     
-    embed.description += "**Usage:** `" + p.config.prefix + command.alias[0];
-    if(command.usage) {embed.description += " " + command.usage;}
-    embed.description += "`";
-    embed.description += N + command.desc + N
+    p.embed.description += "**Usage:** `" + p.config.prefix + command.alias[0];
+    if(command.usage) {p.embed.description += " " + command.usage;}
+    p.embed.description += "`";
+    p.embed.description += N + command.desc + N
 
     if(command.alias.length > 1){
-        embed.description += "**Aliases:**" + N;
-        for(alias in command.alias) {embed.description += "`" + command.alias[alias] + "` ";}
-        embed.description += N;
+        p.embed.description += "**Aliases:**" + N;
+        for(alias in command.alias) {p.embed.description += "`" + command.alias[alias] + "` ";}
+        p.embed.description += N;
     }
 
     if(command.examples){
-        embed.description += "**Examples:**" + N;
-        for(example in command.examples) {embed.description += "`" + p.config.prefix + command.examples[example] + "` ";}
-        embed.description += N;
+        p.embed.description += "**Examples:**" + N;
+        for(example in command.examples) {p.embed.description += "`" + p.config.prefix + command.examples[example] + "` ";}
+        p.embed.description += N;
     }
 
+    let embed = p.embed;
     p.send({embed});
 }

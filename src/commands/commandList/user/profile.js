@@ -17,9 +17,10 @@ module.exports = new CommandInterface({
 
         let items = await ItemUtil.getItems(p, pf);
         
-        let embed = p.embed(p.sender.username + "'s Profile", p.sender.avatarURL);
-        embed.thumbnail.url = p.sender.avatarURL;
-        embed.fields[0] = {
+        p.embed.author.name = p.sender.username + "'s Profile";
+        p.embed.author.icon_url = p.sender.avatarURL;
+        p.embed.thumbnail.url = p.sender.avatarURL;
+        p.embed.fields[0] = {
             "name": "Character",
             "value":S + 
                     (ItemUtil.getIcon(items.h) ?? EMOJI.helmet) + 
@@ -37,37 +38,38 @@ module.exports = new CommandInterface({
                     S + N,
             "inline": true
         };
-        embed.fields[1] = {
+        p.embed.fields[1] = {
             "name": S,
             "value":"Tile: " + pf.tile + " (" + pf.tileProgress +"%)" + N +
                     "Gold: " + pf.gold + N +
                     "Experience: " + pf.xp + N,
             "inline": true
         };
-        embed.fields[2] = {
+        p.embed.fields[2] = {
             "name": "Equipment",
             "value": ""
         };
-        embed.fields[3] = {
+        p.embed.fields[3] = {
             "name": "Stats",
             "value":""
         };
 
         let i = 1;
         for(stat in EMOJI.stats){
-            embed.fields[3].value += EMOJI.stats[stat] + " `" + pf[stat] + "(+" + ItemUtil.getBonusStats(items, stat) + ")` ";
-            if(i%3==0){embed.fields[3].value += N;}
+            p.embed.fields[3].value += EMOJI.stats[stat] + " `" + pf[stat] + "(+" + ItemUtil.getBonusStats(items, stat) + ")` ";
+            if(i%3==0){p.embed.fields[3].value += N;}
             i++;
         }
 
         for(item in items){
             if(items[item]){
-                embed.fields[2].value += ItemUtil.getItemPreview(items[item]);
+                p.embed.fields[2].value += ItemUtil.getItemPreview(items[item]);
             }
         }
 
-        if(!embed.fields[2].value) embed.fields[2].value = S;
+        if(!p.embed.fields[2].value) p.embed.fields[2].value = S;
 
+        let embed = p.embed;
         p.send({embed});
     }
 });

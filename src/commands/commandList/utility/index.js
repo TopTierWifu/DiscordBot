@@ -25,17 +25,17 @@ async function oneItem(p, dbID){
 
     let N = "\n";
 
-    let embed = p.embed(item.base.name);
-    embed.thumbnail.url = `https://cdn.discordapp.com/emojis/${ItemUtil.getIcon(item).slice(-19,-1)}.png`;
-    embed.description = "**Type:** " + item.base.type + N;
-    embed.description += "**Rarity:** " + ItemUtil.getRarity(item) + N;
-    embed.description += "**Value:** " + item.base.value + N;
-    embed.description += "**Stats:**" + N;
+    p.embed.author.name = item.base.name;
+    p.embed.thumbnail.url = `https://cdn.discordapp.com/emojis/${ItemUtil.getIcon(item).slice(-19,-1)}.png`;
+    p.embed.description = "**Type:** " + item.base.type + N;
+    p.embed.description += "**Rarity:** " + ItemUtil.getRarity(item) + N;
+    p.embed.description += "**Value:** " + item.base.value + N;
+    p.embed.description += "**Stats:**" + N;
 
     let i = 1;
     for(stat in item.base.stats){
-        embed.description += p.config.emoji.stats[stat] + " `" + item.base.stats[stat] + "`";
-        if(i%3==0){embed.description += N;}
+        p.embed.description += p.config.emoji.stats[stat] + " `" + item.base.stats[stat] + "`";
+        if(i%3==0){p.embed.description += N;}
         i++;
     }
     
