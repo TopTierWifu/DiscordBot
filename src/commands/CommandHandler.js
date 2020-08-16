@@ -1,5 +1,5 @@
 const requireDir = require('require-dir');
-const dir = requireDir('./commandList', { recurse: true });
+const dir = requireDir('./commandList', {recurse: true});
 const CommandInterface = require("./commandInterface");
 
 const commands = {};
@@ -58,15 +58,24 @@ function getParams(msg, command, args, main){
         return param.client.createMessage(param.msg.channel.id, message);
     }
 
+    param.sendEmbed = function(){
+        let embed = param.embed;
+        return param.client.createMessage(param.msg.channel.id, {embed});
+    }
+
     param.warn = function(message){
         return param.client.createMessage(param.msg.channel.id, ":warning: **|** " + message)
         .then(msg => setTimeout(function(){
-            try{msg.delete();}catch(e){}
+            try{
+                msg.delete();
+            } catch(e){
+                console.error(e);
+            }
         }, 5000));
     }
 
-    param.getDoc = async function(model){
-        return await param.db[model].findById(param.sender.id) ?? await param.db[model].create({_id: param.sender.id});
+    param.getDoc = async function(model, selection){
+        return await param.db[model].findById(param.sender.id, selection) ?? await param.db[model].create({_id: param.sender.id});
     }
 
     return param;
