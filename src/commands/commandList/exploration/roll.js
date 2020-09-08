@@ -10,8 +10,12 @@ module.exports = new CommandInterface({
     category: "Exploration",
 
     execute: async function(p){
-        //let pf = await p.getDoc("Profile");
-
-        msg = p.send(":game_die:");
+        let pf = await p.getDoc("Profile");
+        if(p.args[0] && pf.items.includes(p.args[0])){
+            let result = await DIE.roll(await p.db.Item.findById(p.args[0]));
+            p.send("You rolled a " + result);
+            return;
+        }
+        p.warn("Please choose a die you own to roll");
     }
 });
