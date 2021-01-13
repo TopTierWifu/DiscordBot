@@ -1,0 +1,2 @@
+# WifuBot
+A Discord bot
