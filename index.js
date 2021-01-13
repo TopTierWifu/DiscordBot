@@ -1,11 +1,16 @@
-require('dotenv').config();
+const Client = require("./lib/client");
+const TOKEN = require("./secret.json").TOKEN;
 
-const testing = true;
+const BOT = new Client(TOKEN);
+BOT.login();
 
-const config = require("./src/data/config.json");
+// async function test(){
+//     let test = await BOT.rest.getUser("210177401064390658");
+//     console.log(test);
+// }
 
-const Sharder = require('eris-sharder').Master;
-const sharder = new Sharder((testing) ? process.env.TEST_BOT_TOKEN : process.env.BOT_TOKEN, process.env.SHARDER_PATH, {
-    name: (testing) ? process.env.TEST_NAME : process.env.NAME,
-    clientOptions: config.clientOptions
-}); //This starts the bot
+// test();
+
+// BOT.on("ready", () => {
+//     console.log("Bot has logged in");
+// });

@@ -1,21 +1,19 @@
 {
-  "name": "Wifu",
-  "version": "1.0.0",
-  "description": "",
+  "name": "wifubot",
+  "version": "0.0.1",
+  "description": "A discord bot",
   "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
   "dependencies": {
-    "dotenv": "^8.2.0",
-    "eris": "^0.13.3",
-    "eris-collector": "^1.0.1",
-    "eris-sharder": "^1.10.0",
-    "mongoose": "^5.9.22",
-    "require-dir": "^1.2.0"
+    "node-fetch": "^2.6.1",
+    "ws": "^7.4.1"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "Joshua Castaneda",
   "license": "ISC"
 }
