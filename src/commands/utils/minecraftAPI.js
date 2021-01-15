@@ -10,22 +10,38 @@ async function GET(url){
     return await (await fetch(url)).json();
 }
 
-exports.getPlayerData = async function(username_uuid){
-    let uuid = username_uuid;
-    if(username_uuid.length < 3) {
-        return {error: "Username too short!"}
-    } else if(username_uuid.length <= 16){
-        uuid = addHyphens((await GET(URLS.UsernameToUuid(username_uuid))).id);
+exports.getPlayerData = async function(data){
+    const playerData = {
+        "name": null,
+        "names": null,
+        "uuid": null,
     }
 
-    return await GET(URLS.UuidToNames(uuid));
+    if(data.name == "username"){
+        const result = await TRY(GET(URLS.UsernameToUuid(data.value)), "Invalid username");
+        if(result.error) return result.error;
+        playerData.uuid = exports.addHyphens(result.id);
+    } else {
+        playerData.uuid = data.value;
+    }
+
+    const result = await TRY(GET(URLS.UuidToNames(playerData.uuid), "Invalid UUID"));
+    if(result.error) return result.error;
+    playerData.names = result;
+    playerData.name = result[result.length - 1].name;
+    
+    return playerData;
 }
 
-function addHyphens(uuid){
-    let one = uuid.substr(0, 8);
-    let two = uuid.substr(8, 4);
-    let three = uuid.substr(12, 4);
-    let four = uuid.substr(16, 4);
-    let five = uuid.substr(20);
-    return `${one}-${two}-${three}-${four}-${five}`;
+exports.addHyphens = function(uuid){
+    let s = uuid.match(/.{1,4}/g);
+    return `${s[0]}${s[1]}-${s.slice(2, 5).join("-")}-${s.slice(5).join("")}`
+}
+
+async function TRY(callback, errorMsg){
+    try {
+        return await callback;
+    } catch {
+        return {error: errorMsg};
+    }
 }
