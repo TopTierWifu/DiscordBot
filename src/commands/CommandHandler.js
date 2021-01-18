@@ -24,9 +24,10 @@ module.exports = class CommandHandler{
 }
 
 function getParams(client, interaction){
-	const param = {
+	return {
 		client: client,
 		interaction: interaction,
+		user: new client.User(interaction.member.user),
 		reply: async (reply) => {
 			return await client.rest.createInteractionResponse(interaction, reply);
 		},
@@ -34,8 +35,6 @@ function getParams(client, interaction){
 			return await client.rest.createMessage(interaction.channel_id, message).then((msg) => new client.Message(msg, client));
 		}
 	}
-
-	return param;
 }
 
 async function registerCommands(){
