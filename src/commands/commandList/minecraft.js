@@ -39,25 +39,38 @@ module.exports = new CommandInterface({
 	},
 	
 	execute: async function(p){
-		const data = p.options[0].options[0];
+		const {interaction, send, user} = p;
+		const data = interaction.data.options[0].options[0];
 		
 		if(data.name == "username"){
 			if(data.value.match(/[a-zA-Z0-9_]{3,16}/g) != data.value){
-				/* Send Error Message*/
-				console.log("Invalid username");
+				send({"content": "Invalid username"});
 				return;
 			}
 		} else {
 			if(data.value.length == 32) {data.value = API.addHyphens(data.value);}
 			if(data.value.length != 36){
-				/* Send Error Message*/
-				console.log("Invalid UUID");
+				send({"content": "Invalid UUID"});
 				return;
 			}
 		}
 
 		let playerData = await API.getPlayerData(data);
-		console.log(playerData);
+		
+		let embed = {
+			"embed": {
+				"title": playerData.name,
+				"description": `\`\`\`properties\nUUID ${playerData.uuid}\`\`\``,
+				"color": 13679088,
+				"timestamp": new Date(),
+				"author": {
+					"name": `${user.username}`,
+					"icon_url": `${user.avatarURL()}`
+				}
+			}
+		}
+
+		send(embed);
 	}
 });
 

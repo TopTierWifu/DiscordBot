@@ -1,4 +1,4 @@
-const fs = require('fs');
+const {readdirSync} = require('fs');
 const CommandInterface = require("./commandInterface");
 
 const commands = {};
@@ -38,7 +38,7 @@ function getParams(client, interaction){
 }
 
 async function registerCommands(){
-	fs.readdirSync("./src/commands/commandList/").forEach(file => {
+	readdirSync("./src/commands/commandList/").forEach(file => {
 		const command = require(`./commandList/${file}`);
 		if(command instanceof CommandInterface) {commands[command.id] = command;}
 	});
