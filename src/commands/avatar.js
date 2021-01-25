@@ -1,8 +1,10 @@
 const Command = require("../../lib/structures/Command");
+const N = "\n"
+const B = "\`\`\`"
 
 module.exports = new Command({
 
-	id: "800972577203552277",
+	id: "802997298673877043",
 
 	cooldown: 30000,
 
@@ -38,9 +40,41 @@ module.exports = new Command({
 	},
 	
 	execute: async function(p){
-		// const {interaction: {data : {options : [{options: [{value: id}]}]}}} = p;
-		// console.log(id);
-		console.log(p.client.users);
+		const {member, presence, send, interaction: {data : {options : [{options: [{value: id}]}]}}} = p;
+		const {user, joinedAtFullTimeStamp, roles, nick} = member;
+		const {username, discriminator, createdAtFullTimeStamp} = user;
+		const {status} = presence;
+
+		let color = 0;
+		let text = `__**Roles**__ **[${roles.size}]**${N}`;
+
+		roles.forEach((value) => {
+			text += value;
+			const roleColor = value.color;
+			if(!color && roleColor) color = roleColor;
+		})
+		
+		let embed = {
+			author: {
+				name: `${username}#${discriminator}`,
+				icon_url: user.avatarURL(1024)
+			},
+			description: `${text}${N}` +
+				`${B}properties${N}` +
+				`Registered ${createdAtFullTimeStamp}${N}` +
+				`Joined ${joinedAtFullTimeStamp}${N}` +
+				`ID ${id}${N}` +
+				`Nickname ${nick ? nick : username}${N}` +
+				`Status ${status}${N}` +
+				`${B}`,
+			image: {
+				url: user.avatarURL(1024)
+			},
+			timestamp: new Date(),
+			color: color
+		}
+
+		send({embed});
 	}
 });
 
