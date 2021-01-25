@@ -45,14 +45,22 @@ module.exports = new Command({
 		const {username, discriminator, createdAtFullTimeStamp} = user;
 		const {status} = presence;
 
-		let color = 0;
+		let color = 0, position = 0, orderedRoles = [];
 		let text = `__**Roles**__ **[${roles.size}]**${N}`;
 
-		roles.forEach((value) => {
-			text += value;
-			const roleColor = value.color;
-			if(!color && roleColor) color = roleColor;
-		})
+		roles.forEach((role) => {
+			orderedRoles[role.position] = role;
+			if((role.position > position) && role.color) {
+				color = role.color;
+				position = role.position;
+			}
+		});
+
+		orderedRoles.reverse().forEach((value) => {
+			if(value){
+				text += value;
+			}
+		});
 		
 		let embed = {
 			author: {
