@@ -39,7 +39,7 @@ module.exports = new Command({
 	},
 	
 	execute: async function(p){
-		const {interaction, send, user} = p;
+		const {interaction, send, member: {user}} = p;
 		const data = interaction.data.options[0].options[0];
 		
 		if(data.name == "username"){
