@@ -41,27 +41,16 @@ module.exports = new Command({
 	
 	execute: async function(p){
 		const {member, presence, send, interaction: {data : {options : [{options: [{value: id}]}]}}} = p;
-		const {user, joinedAtFullTimeStamp, roles, nick} = member;
+		const {user, joinedAtFullTimeStamp, roles, nick, color, orderedRoles} = member;
 		const {username, discriminator, createdAtFullTimeStamp} = user;
 		const {status} = presence;
 
-		let color = 0, position = 0, orderedRoles = [];
 		let text = `__**Roles**__ **[${roles.size}]**${N}`;
 
-		roles.forEach((role) => {
-			orderedRoles[role.position] = role;
-			if((role.position > position) && role.color) {
-				color = role.color;
-				position = role.position;
-			}
-		});
+		for(role of orderedRoles){
+			text += role;
+		}
 
-		orderedRoles.reverse().forEach((value) => {
-			if(value){
-				text += value;
-			}
-		});
-		
 		let embed = {
 			author: {
 				name: `${username}#${discriminator}`,
@@ -72,8 +61,8 @@ module.exports = new Command({
 				`Registered ${createdAtFullTimeStamp}${N}` +
 				`Joined ${joinedAtFullTimeStamp}${N}` +
 				`ID ${id}${N}` +
-				`Nickname ${nick ? nick : username}${N}` +
-				`Status ${status}${N}` +
+				`${nick ? `Nickname ${nick}${N}` : ""}` +
+				`${status ? `Status ${status}${N}` : ""}` +
 				`${B}`,
 			image: {
 				url: user.avatarURL(1024)
