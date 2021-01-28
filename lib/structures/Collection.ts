@@ -1,11 +1,13 @@
 export class Collection extends Map{
 
+    baseClass: any;
+
     constructor(baseClass){
         super();
         this.baseClass = baseClass;
     }
 
-    add(object, extra){
+    add(object, extra = undefined){
         if(!(object instanceof this.baseClass || object.constructor.name === this.baseClass.name)){
             object = new this.baseClass(object, extra);
         }
@@ -15,7 +17,7 @@ export class Collection extends Map{
         return object;
     }
 
-    update(object, extra){
+    update(object, extra = undefined){
         const value = this.get(object.id);
         if(!value){
             return this.add(object, extra);

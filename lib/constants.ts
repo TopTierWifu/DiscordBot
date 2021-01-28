@@ -1,30 +1,30 @@
 const OPCODES = {
-    "DISPATCH": 0,                  //Receive
-    "HEARTBEAT": 1,                 //Send & Receive
-    "IDENTIFY": 2,                  //Send
-    "PRESENCE_UPDATE": 3,           //Send
-    "VOICE_STATE_UPDATE": 4,        //Send
-    "RESUME": 6,                    //Send
-    "RECONNECT": 7,                 //Receive
-    "REQUEST_GUILD_MEMBERS": 8,     //Send
-    "INVALID_SESSION": 9,           //Receive
-    "HELLO": 10,                    //Receive
-    "HEARTBEAT_ACKNOWLEDGEMENT": 11 //Receive
+    DISPATCH: 0,                  //Receive
+    HEARTBEAT: 1,                 //Send & Receive
+    IDENTIFY: 2,                  //Send
+    PRESENCE_UPDATE: 3,           //Send
+    VOICE_STATE_UPDATE: 4,        //Send
+    RESUME: 6,                    //Send
+    RECONNECT: 7,                 //Receive
+    REQUEST_GUILD_MEMBERS: 8,     //Send
+    INVALID_SESSION: 9,           //Receive
+    HELLO: 10,                    //Receive
+    HEARTBEAT_ACKNOWLEDGEMENT: 11 //Receive
 }
 
 const PAYLOADS = {
-    "HEARTBEAT": (sequence_number) => {
+    HEARTBEAT: (sequence_number: number) => {
         return JSON.stringify({
-            "op": OPCODES.HEARTBEAT, 
-            "d": sequence_number
+            op: OPCODES.HEARTBEAT, 
+            d: sequence_number
         })
     },
-    "IDENTIFY": (token) => {
+    IDENTIFY: (token: string) => {
         return JSON.stringify({
-            "op": OPCODES.IDENTIFY, 
-            "d": {
-                "token": token,
-                "intents": 
+            op: OPCODES.IDENTIFY, 
+            d: {
+                token: token,
+                intents: 
                 (1 << 0) +  //GUILDS
                 (1 << 1) +  //GUILD_MEMBERS
                 // (1 << 2) +  //GUILD_BANS
@@ -41,21 +41,21 @@ const PAYLOADS = {
                 // (1 << 13) + //DIRECT_MESSAGE_REACTIONS
                 // (1 << 14) + //DIRECT_MESSAGE_TYPING
                 0,
-                "properties": {
-                    "$os": process.platform,
-                    "$browser": "wifu_library",
-                    "$device": "wifu_library"
+                properties: {
+                    $os: process.platform,
+                    $browser: "wifu_library",
+                    $device: "wifu_library"
                 }
             }
         })
     },
-    "RESUME": (token, session_id, sequence_number) => {
+    RESUME: (token: string, session_id: string, sequence_number: number) => {
         return JSON.stringify({
-            "op": OPCODES.RESUME,
-            "d": {
-                "token": token,
-                "session_id": session_id,
-                "seq": sequence_number
+            op: OPCODES.RESUME,
+            d: {
+                token: token,
+                session_id: session_id,
+                seq: sequence_number
             }
         })
     }
@@ -66,35 +66,35 @@ const GATEWAY = "wss://gateway.discord.gg/?v=8&encoding=json"
 const REST_API = "https://discord.com/api/v8";
 
 const ENDPOINTS = {
-    "GET_USER": (id) => {
+    GET_USER: (id: string) => {
         return {
             url: `${REST_API}/users/${id}`,
         }
     },
-    "GET_GUILD_MEMBER": (guild_id, id) => {
+    GET_GUILD_MEMBER: (guild_id: string, id: string) => {
         return {
             url: `${REST_API}/guilds/${guild_id}/members/${id}`
         }
     },
-    "CREATE_INTERACTION_RESPONSE": (interaction_id, interaction_token) => {
+    CREATE_INTERACTION_RESPONSE: (interaction_id: string, interaction_token: string) => {
         return {
             url: `${REST_API}/interactions/${interaction_id}/${interaction_token}/callback`,
             method: `POST`
         }
     },
-    "CREATE_MESSAGE": (channel_id) => {
+    CREATE_MESSAGE: (channel_id: string) => {
         return {
             url: `${REST_API}/channels/${channel_id}/messages`,
             method: `POST`
         }
     },
-    "DELETE_MESSAGE": (channel_id, message_id) => {
+    DELETE_MESSAGE: (channel_id: string, message_id: string) => {
         return {
             url: `${REST_API}/channels/${channel_id}/messages/${message_id}`,
             method: `DELETE`
         }
     },
-    "EDIT_MESSAGE": (channel_id, message_id) => {
+    EDIT_MESSAGE: (channel_id: string, message_id: string) => {
         return {
             url: `${REST_API}/channels/${channel_id}/messages/${message_id}`,
             method: `PATCH`

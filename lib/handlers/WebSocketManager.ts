@@ -1,7 +1,17 @@
 import WebSocket from "ws";
 import { OPCODES, PAYLOADS, GATEWAY } from "../constants";
+import { Client } from "../client";
 
 export class WebSocketManager{
+
+    client: Client;
+    token: string;
+    gateway: WebSocket;
+    sequence_number: number;
+    session_id: string;
+    lastHeartbeatSent: number;
+    lastHeartbeatACK: boolean;
+    pulse: any;
         
     constructor(client){
         this.client = client;
@@ -73,7 +83,7 @@ export class WebSocketManager{
         }
     }
 
-    heartbeat(pulse){
+    heartbeat(pulse = false){
         if(pulse) {
             if(!this.lastHeartbeatACK){
                 this.disconect(true);

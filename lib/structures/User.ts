@@ -2,6 +2,12 @@ import { Base } from "./Base";
 
 export class User extends Base{
 
+    username: string;
+    discriminator: string;
+    avatar: string;
+    bot: boolean;
+    mention: string;
+
     constructor(data){
         super(data.id);
         this.username = data.username;
@@ -18,7 +24,7 @@ export class User extends Base{
 
     update(data){
         const properties = `username discriminator avatar`;
-        for(property of properties.split(" ")){
+        for(const property of properties.split(" ")){
             if(data[property] !== undefined) {
                 this[property] = data[property];
             }

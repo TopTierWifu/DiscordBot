@@ -2,6 +2,13 @@ import { Base } from "./Base";
 
 export class Role extends Base{
 
+    name: string;
+    color: number;
+    hoist: boolean;
+    position: number;
+    permissions: string;
+    mentionable: boolean;
+
     constructor(data){
         super(data.id);
         this.name = data.name;

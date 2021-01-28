@@ -1,5 +1,9 @@
+import { Client } from "../client";
+
 export class EventHandler{
     
+    client: Client;
+
     constructor(client) {
         this.client = client;
     }

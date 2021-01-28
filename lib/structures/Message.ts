@@ -1,7 +1,12 @@
 import { Base } from "./Base";
 import { User } from "./User";
+import { Client } from "../client";
 
 export class Message extends Base{
+
+    channel_id: string;
+    author: User;
+    client: Client;
 
     constructor(data, client){
         super(data.id);

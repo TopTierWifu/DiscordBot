@@ -6,6 +6,15 @@ import { Presence } from "./Presence";
 
 export class Guild extends Base{
 
+    name: string;
+    icon: string;
+    roles: Collection;
+    joinedAt: Date;
+    unavailable: boolean;
+    member_count: number;
+    members: Collection;
+    presences: Collection;
+
     constructor(data){
         super(data.id);
         this.name = data.name;
@@ -35,7 +44,7 @@ export class Guild extends Base{
 
     update(data){
         const properties = `name icon ununavailable member_count`;
-        for(property of properties.split(" ")){
+        for(const property of properties.split(" ")){
             if(data[property] !== undefined){
                 this[property] = data[property];
             }

@@ -3,12 +3,15 @@ import { ENDPOINTS } from "../constants";
 
 export class RestAPIManager{
 
+    token: string;
+    headers: any;
+
     constructor(client) {
         this.token = client.token;
         this.headers = {"Content-Type": 'application/json', "Authorization": `Bot ${this.token}`};
     }
 
-    async fetch(endpoint, body){
+    async fetch(endpoint, body = null){
 
         let options = {
             method: endpoint.method ? endpoint.method : `GET`,

@@ -5,13 +5,22 @@ import { Role } from "./Role";
 
 export class Member extends Base{
 
+    user: User;
+    nick: string;
+    roles: Collection;
+    joinedAt: Date;
+    joinedAtFormatted: string;
+    guildRoles: any;
+    color: number;
+    orderedRoles: Role[];
+
     constructor(data, guildRoles){
         super(data.user.id);
         this.user = new User(data.user);
         this.nick = data.nick;
         this.roles = new Collection(Role);
         this.joinedAt = new Date(data.joined_at);
-        this.joinedAtFullTimeStamp = `${this.joinedAt.toDateString()} ${this.joinedAt.toLocaleString("en-US", {timeStyle: "short"})}`;
+        this.joinedAtFormatted = `${this.joinedAt.toDateString()} ${this.joinedAt.toLocaleString("en-US", {timeStyle: "short"})}`;
         this.guildRoles = guildRoles;
         this.color = 0;
         this.orderedRoles = [];
@@ -21,7 +30,7 @@ export class Member extends Base{
 
     update(data, guildRoles){
         const properties = `nick`;
-        for(property of properties.split(" ")){
+        for(const property of properties.split(" ")){
             if(data[property] !== undefined){
                 this[property] = data[property];
             }

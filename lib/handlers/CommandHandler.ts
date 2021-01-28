@@ -1,12 +1,15 @@
 import { readdirSync } from "fs";
 import { CommandInterface as Command } from "../structures/Command";
 
+import { Client } from "../client";
 import { Message } from "../structures/Message";
 import { Member } from "../structures/Member";
 
 const commands = {};
 
 export class CommandHandler{
+
+	client: Client;
 
 	constructor(client){
 		this.client = client;

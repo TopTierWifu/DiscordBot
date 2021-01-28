@@ -25,7 +25,7 @@ export async function getPlayerData(data){
         playerData.uuid = data.value;
     }
 
-    const result = await TRY(GET(URLS.UuidToNames(playerData.uuid), "Invalid UUID"));
+    const result = await TRY(GET(URLS.UuidToNames(playerData.uuid)), "Invalid UUID");
     if(result.error) return result.error;
     playerData.names = result;
     playerData.name = result[result.length - 1].name;

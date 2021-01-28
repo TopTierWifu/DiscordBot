@@ -3,6 +3,9 @@ import { User } from "./User";
 
 export class Presence extends Base{
 
+    user: User;
+    status: string;
+
     constructor(data){
         super(data.user.id);
         this.user = new User(data.user);
@@ -11,7 +14,7 @@ export class Presence extends Base{
 
     update(data){
         const properties = `status`;
-        for(property of properties.split(" ")){
+        for(const property of properties.split(" ")){
             if(data[property] !== undefined){
                 this[property] = data[property];
             }
