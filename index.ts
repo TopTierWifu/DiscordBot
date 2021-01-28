@@ -1,5 +1,5 @@
-const Client = require("./lib/client");
-const TOKEN = require("./secret.json").TOKEN;
+import { Client } from "./lib/client";
+import { TOKEN } from "./secret.json";
 
 const BOT = new Client(TOKEN);
 BOT.login();

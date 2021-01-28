@@ -1,7 +1,7 @@
-const WebSocket = require('ws');
-const {OPCODES, PAYLOADS, GATEWAY} = require("../constants");
+import WebSocket from "ws";
+import { OPCODES, PAYLOADS, GATEWAY } from "../constants";
 
-module.exports = class WebSocketManager{
+export class WebSocketManager{
         
     constructor(client){
         this.client = client;

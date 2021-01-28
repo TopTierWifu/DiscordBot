@@ -1,7 +1,7 @@
-const nodeFetch = require("node-fetch");
-const {ENDPOINTS} = require("../constants");
+import nodeFetch from "node-fetch";
+import { ENDPOINTS } from "../constants";
 
-module.exports = class RestAPIManager{
+export class RestAPIManager{
 
     constructor(client) {
         this.token = client.token;

@@ -1,9 +1,9 @@
-const Base = require("./Base");
-const User = require("./User");
-const Collection = require("./Collection");
-const Role = require("./Role");
+import { Base } from "./Base";
+import { User } from "./User";
+import { Collection } from "./Collection";
+import { Role } from "./Role";
 
-module.exports = class Member extends Base{
+export class Member extends Base{
 
     constructor(data, guildRoles){
         super(data.user.id);

@@ -1,4 +1,4 @@
-const fetch = require("node-fetch")
+import fetch from "node-fetch";
 
 const URLS = {
     UsernameToUuid: (username) => `https://api.mojang.com/users/profiles/minecraft/${username}`,
@@ -10,7 +10,7 @@ async function GET(url){
     return await (await fetch(url)).json();
 }
 
-exports.getPlayerData = async function(data){
+export async function getPlayerData(data){
     const playerData = {
         "name": null,
         "names": null,
@@ -33,7 +33,7 @@ exports.getPlayerData = async function(data){
     return playerData;
 }
 
-exports.addHyphens = function(uuid){
+export function addHyphens(uuid){
     let s = uuid.match(/.{1,4}/g);
     return `${s[0]}${s[1]}-${s.slice(2, 5).join("-")}-${s.slice(5).join("")}`
 }

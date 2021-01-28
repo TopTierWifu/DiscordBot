@@ -1,6 +1,6 @@
-const Base = require("./Base");
+import { Base } from "./Base";
 
-module.exports = class Role extends Base{
+export class Role extends Base{
 
     constructor(data){
         super(data.id);

@@ -1,4 +1,4 @@
-module.exports = class Collection extends Map{
+export class Collection extends Map{
 
     constructor(baseClass){
         super();

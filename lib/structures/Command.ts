@@ -1,6 +1,6 @@
-const Base = require("./Base");
+import { Base } from "./Base";
 
-module.exports = class CommandInterface extends Base{
+export class CommandInterface extends Base{
 
 	constructor(args){
         super(args.id);

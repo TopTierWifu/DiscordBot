@@ -1,7 +1,7 @@
-const Base = require("./Base")
-const User = require("./User");
+import { Base } from "./Base";
+import { User } from "./User";
 
-module.exports = class Message extends Base{
+export class Message extends Base{
 
     constructor(data, client){
         super(data.id);

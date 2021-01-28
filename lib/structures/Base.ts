@@ -1,4 +1,4 @@
-module.exports = class Base {
+export class Base {
 
     constructor(id){
         this.id = id;

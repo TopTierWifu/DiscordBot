@@ -102,7 +102,7 @@ const ENDPOINTS = {
     }
 }
 
-module.exports = {
+export {
     OPCODES,
     PAYLOADS,
     GATEWAY,

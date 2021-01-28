@@ -1,12 +1,12 @@
-const {readdirSync} = require('fs');
-const Command = require("../structures/Command");
+import { readdirSync } from "fs";
+import { CommandInterface as Command } from "../structures/Command";
 
-const Message = require("../structures/Message");
-const Member = require("../structures/User");
+import { Message } from "../structures/Message";
+import { Member } from "../structures/Member";
 
 const commands = {};
 
-module.exports = class CommandHandler{
+export class CommandHandler{
 
 	constructor(client){
 		this.client = client;

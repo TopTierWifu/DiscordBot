@@ -1,14 +1,14 @@
-const WebSocketManager = require("./handlers/WebSocketManager");
-const RestAPIManager = require ("./handlers/RestAPIManager");
-const EventHandler = require("./handlers/EventHandler");
-const CommandHandler = require("./handlers/CommandHandler");
+import { WebSocketManager } from "./handlers/WebSocketManager";
+import { RestAPIManager } from "./handlers/RestAPIManager";
+import { EventHandler } from "./handlers/EventHandler";
+import { CommandHandler } from "./handlers/CommandHandler";
 
-const Collection = require("./structures/Collection");
-const User = require("./structures/User");
-const Presence = require("./structures/Presence");
-const Guild = require("./structures/Guild");
+import { Collection } from "./structures/Collection";
+import { User } from "./structures/User";
+import { Presence } from "./structures/Presence";
+import { Guild } from "./structures/Guild";
 
-module.exports = class Client{
+export class Client{
         
     constructor(token) {
         this.token = token;

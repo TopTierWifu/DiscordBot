@@ -1,4 +1,4 @@
-const Command = require("../../lib/structures/Command");
+import { CommandInterface as Command } from "../../lib/structures/Command";
 const N = "\n"
 const B = "\`\`\`"
 

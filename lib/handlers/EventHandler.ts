@@ -1,4 +1,4 @@
-module.exports = class EventHandler{
+export class EventHandler{
     
     constructor(client) {
         this.client = client;
