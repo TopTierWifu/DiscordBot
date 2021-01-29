@@ -43,11 +43,17 @@ export class Guild extends Base{
     }
 
     update(data: any){
-        const properties = `name icon ununavailable member_count`;
-        for(const property of properties.split(" ")){
-            if(data[property] !== undefined){
-                this[property] = data[property];
-            }
+        if(data.name !== undefined){
+            this.name = data.name;
+        }
+        if(data.icon !== undefined){
+            this.icon = data.icon;
+        }
+        if(data.unavailable !== undefined){
+            this.unavailable = data.unavailable;
+        }
+        if(data.member_count !== undefined){
+            this.member_count = data.member_count;
         }
         return this;
     }
