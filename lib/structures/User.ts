@@ -8,7 +8,7 @@ export class User extends Base{
     bot: boolean;
     mention: string;
 
-    constructor(data){
+    constructor(data: any){
         super(data.id);
         this.username = data.username;
         this.discriminator = data.discriminator;
@@ -17,21 +17,24 @@ export class User extends Base{
         this.mention = `<@${this.id}>`;
     }
 
-    avatarURL(size){
+    avatarURL(size: number){
         size = size ? size : 1024;
         return `https://cdn.discordapp.com/avatars/${this.id}/${this.avatar}?size=${size}`
     }
 
-    update(data){
-        const properties = `username discriminator avatar`;
-        for(const property of properties.split(" ")){
-            if(data[property] !== undefined) {
-                this[property] = data[property];
-            }
+    update(data: any){
+        if(data.username !== undefined) {
+            this.username = data.username;
+        }
+        if(data.discriminator !== undefined) {
+            this.discriminator = data.discriminator;
+        }
+        if(data.avatar !== undefined) {
+            this.avatar = data.avatar;
         }
     }
 
-    toString(){
+    toString(): string{
         return this.mention;
     }
 

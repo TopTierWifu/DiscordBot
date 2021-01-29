@@ -26,11 +26,11 @@ export class Client{
         this.guilds = new Collection(Guild);
     }
 
-    login() {
+    login(): void{
         this.gateway.connect();
     }
 
-    debugLog(event, outgoing = false){
+    debugLog(event: any, outgoing = false): void{
         const now = new Date().toLocaleTimeString("it-IT");
         console.log(`[${now}] ${this.gateway.sequence_number}${outgoing?">":"<"} ${event}`);
     }

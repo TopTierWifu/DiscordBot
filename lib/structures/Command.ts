@@ -6,7 +6,7 @@ export class CommandInterface extends Base{
     syntax: any;
     execute: any;
 
-	constructor(args){
+	constructor(args: any){
         super(args.id);
         this.cooldown = args.cooldown;
         this.syntax = args.syntax

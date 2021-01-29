@@ -2,12 +2,12 @@ export class Collection extends Map{
 
     baseClass: any;
 
-    constructor(baseClass){
+    constructor(baseClass: any){
         super();
         this.baseClass = baseClass;
     }
 
-    add(object, extra = undefined){
+    add(object: any, extra: any = undefined){
         if(!(object instanceof this.baseClass || object.constructor.name === this.baseClass.name)){
             object = new this.baseClass(object, extra);
         }
@@ -17,7 +17,7 @@ export class Collection extends Map{
         return object;
     }
 
-    update(object, extra = undefined){
+    update(object: any, extra: any = undefined){
         const value = this.get(object.id);
         if(!value){
             return this.add(object, extra);
@@ -26,7 +26,7 @@ export class Collection extends Map{
         return value;
     }
 
-    remove(object){
+    remove(object: any){
         const value = this.get(object.id);
         if(!value){
             return null;
@@ -35,7 +35,7 @@ export class Collection extends Map{
         return value;
     }
 
-    toString(){
+    toString(): string{
         return `[Collection<${this.baseClass.name}>]`;
     }
 

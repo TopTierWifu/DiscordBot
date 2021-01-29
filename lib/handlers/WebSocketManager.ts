@@ -7,13 +7,13 @@ export class WebSocketManager{
     client: Client;
     token: string;
     gateway: WebSocket;
-    sequence_number: number;
-    session_id: string;
-    lastHeartbeatSent: number;
+    sequence_number: number | null;
+    session_id: string | null;
+    lastHeartbeatSent: number | null;
     lastHeartbeatACK: boolean;
     pulse: any;
         
-    constructor(client){
+    constructor(client: Client){
         this.client = client;
         this.token = client.token;
         this.gateway = null;
@@ -27,11 +27,11 @@ export class WebSocketManager{
     connect(){
         this.gateway = new WebSocket(GATEWAY);
         this.lastHeartbeatACK = true;
-        this.gateway.on("message", payload => this.recieve(JSON.parse(payload)));
+        this.gateway.on("message", (payload: any) => this.recieve(JSON.parse(payload)));
         this.client.debugLog(`Connected`);
     }
 
-    disconect(reconnect){
+    disconect(reconnect: boolean){
         if(!this.gateway){return;}
 
         this.gateway.close();
@@ -45,7 +45,7 @@ export class WebSocketManager{
         }
     }
 
-    recieve(payload){
+    recieve(payload: any){
         const {op, d, s} = payload;
         this.sequence_number = s ?? this.sequence_number;
 

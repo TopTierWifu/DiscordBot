@@ -4,11 +4,11 @@ export class EventHandler{
     
     client: Client;
 
-    constructor(client) {
+    constructor(client: Client) {
         this.client = client;
     }
 
-    async handleDispatch(payload){
+    async handleDispatch(payload: any){
         const {t, d} = payload;
     
         switch(t){

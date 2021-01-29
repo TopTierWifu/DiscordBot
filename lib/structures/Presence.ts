@@ -6,18 +6,15 @@ export class Presence extends Base{
     user: User;
     status: string;
 
-    constructor(data){
+    constructor(data: any){
         super(data.user.id);
         this.user = new User(data.user);
         this.status = data.status;
     }
 
-    update(data){
-        const properties = `status`;
-        for(const property of properties.split(" ")){
-            if(data[property] !== undefined){
-                this[property] = data[property];
-            }
+    update(data: any){
+        if(data.status !== undefined){
+            this.status = data.status;
         }
         this.user.update(data.user);
     }

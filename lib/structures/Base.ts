@@ -7,7 +7,11 @@ export abstract class Base{
     constructor(id: any){
         this.id = id;
         this.createdAt = new Date(Math.floor(this.id/4194304) + 1420070400000);
-        this.createdAtFormatted = `${this.createdAt.toDateString()} ${this.createdAt.toLocaleString("en-US", {timeStyle: "short"})}`;
+        this.createdAtFormatted = this.formatDate(this.createdAt);
+    }
+
+    formatDate(date: Date): string{
+        return `${date.toDateString()} ${date.toLocaleString("en-US", {hour: "numeric", minute: "2-digit"})}`;
     }
 
 }

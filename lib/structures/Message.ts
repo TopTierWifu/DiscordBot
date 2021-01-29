@@ -8,7 +8,7 @@ export class Message extends Base{
     author: User;
     client: Client;
 
-    constructor(data, client){
+    constructor(data: any, client: Client){
         super(data.id);
         this.channel_id = data.channel_id;
         this.author = new User(data.author);
@@ -19,8 +19,9 @@ export class Message extends Base{
         return await this.client.rest.deleteMessage(this.channel_id, this.id);
     }
 
-    async edit(message){
-        return await this.client.rest.editMessage(this.channel_id, this.id, message);
+    async edit(message: any): Promise<Message>{
+        await this.client.rest.editMessage(this.channel_id, this.id, message)
+        return this;
     }
 
 }

@@ -15,7 +15,7 @@ export class Guild extends Base{
     members: Collection;
     presences: Collection;
 
-    constructor(data){
+    constructor(data: any){
         super(data.id);
         this.name = data.name;
         this.icon = data.icon;
@@ -37,12 +37,12 @@ export class Guild extends Base{
         }
     }
 
-    iconURL(size){
+    iconURL(size: number){
         size = size ? size : 1024;
         return `https://cdn.discordapp.com/icons/${this.id}/${this.icon}?size=${size}`
     }
 
-    update(data){
+    update(data: any){
         const properties = `name icon ununavailable member_count`;
         for(const property of properties.split(" ")){
             if(data[property] !== undefined){
@@ -52,31 +52,31 @@ export class Guild extends Base{
         return this;
     }
 
-    createRole(role){
+    createRole(role: any){
         return this.roles.add(role);
     }
 
-    updateRole(role){
+    updateRole(role: any){
         return this.roles.update(role);
     }
 
-    deleteRole(role){
+    deleteRole(role: any){
         return this.roles.remove(role);
     }
 
-    addMember(member){
+    addMember(member: any){
         return this.members.add(member, this.roles);
     }
 
-    updateMember(member){
+    updateMember(member: any){
         return this.members.update(member, this.roles);
     }
 
-    deleteMember(member){
+    deleteMember(member: any){
         return this.members.remove(member);
     }
 
-    updatePresence(presence){
+    updatePresence(presence: any){
         return this.presences.update(presence);
     }
 

@@ -1,20 +1,20 @@
 import fetch from "node-fetch";
 
 const URLS = {
-    UsernameToUuid: (username) => `https://api.mojang.com/users/profiles/minecraft/${username}`,
-    UuidToProfile: (uuid) => `https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`,
-    UuidToNames: (uuid) => `https://api.mojang.com/user/profiles/${uuid}/names`
+    UsernameToUuid: (username: string) => `https://api.mojang.com/users/profiles/minecraft/${username}`,
+    UuidToProfile: (uuid: string) => `https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`,
+    UuidToNames: (uuid: string) => `https://api.mojang.com/user/profiles/${uuid}/names`
 };
 
-async function GET(url){
+async function GET(url: string){
     return await (await fetch(url)).json();
 }
 
-export async function getPlayerData(data){
+export async function getPlayerData(data: any){
     const playerData = {
-        "name": null,
-        "names": null,
-        "uuid": null,
+        name: "",
+        names: "",
+        uuid: "",
     }
 
     if(data.name == "username"){
@@ -33,12 +33,12 @@ export async function getPlayerData(data){
     return playerData;
 }
 
-export function addHyphens(uuid){
-    let s = uuid.match(/.{1,4}/g);
+export function addHyphens(uuid: string){
+    const s: any = uuid.match(/.{1,4}/g);
     return `${s[0]}${s[1]}-${s.slice(2, 5).join("-")}-${s.slice(5).join("")}`
 }
 
-async function TRY(callback, errorMsg){
+async function TRY(callback: any, errorMsg: any){
     try {
         return await callback;
     } catch {

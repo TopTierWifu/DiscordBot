@@ -39,7 +39,7 @@ module.exports = new Command({
 		]
 	},
 	
-	execute: async function(p){
+	execute: async function(p: any){
 		const {member, presence, send, interaction: {data : {options : [{options: [{value: id}]}]}}} = p;
 		const {user, joinedAtFullTimeStamp, roles, nick, color, orderedRoles} = member;
 		const {username, discriminator, createdAtFullTimeStamp} = user;

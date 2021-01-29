@@ -9,7 +9,7 @@ export class Role extends Base{
     permissions: string;
     mentionable: boolean;
 
-    constructor(data){
+    constructor(data: any){
         super(data.id);
         this.name = data.name;
         this.color = data.color;
@@ -19,12 +19,24 @@ export class Role extends Base{
         this.mentionable = data.mentionable;
     }
 
-    update(data){
-        const properties = `name color hoist position permissions mentionable`;
-        for(const property of properties.split(" ")){
-            if(data[property] !== undefined){
-                this[property] = data[property];
-            }
+    update(data: any){
+        if(data.name !== undefined){
+            this.name = data.name;
+        }
+        if(data.color !== undefined){
+            this.color = data.color;
+        }
+        if(data.hoist !== undefined){
+            this.hoist = data.hoist;
+        }
+        if(data.position !== undefined){
+            this.position = data.position;
+        }
+        if(data.permissions !== undefined){
+            this.permissions = data.permissions;
+        }
+        if(data.mentionable !== undefined){
+            this.mentionable = data.mentionable;
         }
     }
 

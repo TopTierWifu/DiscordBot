@@ -38,7 +38,7 @@ module.exports = new Command({
 		]
 	},
 	
-	execute: async function(p){
+	execute: async function(p: any){
 		const {interaction, send, member: {user}} = p;
 		const data = interaction.data.options[0].options[0];
 		
