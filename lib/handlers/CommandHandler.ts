@@ -1,8 +1,8 @@
 import { readdirSync } from "fs";
-import { CommandInterface as Command } from "../structures/Command";
+import { CommandInterface as Command } from "@structures/Command";
 
 import { Client } from "../client";
-import { Message } from "../structures/Message";
+import { Message } from "@structures/Message";
 
 const commands: any = {};
 

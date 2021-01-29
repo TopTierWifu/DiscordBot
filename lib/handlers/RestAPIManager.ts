@@ -1,5 +1,5 @@
 import nodeFetch from "node-fetch";
-import { ENDPOINTS } from "../constants";
+import { ENDPOINTS } from "@constants";
 import { Client } from "../client";
 
 export class RestAPIManager{

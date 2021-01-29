@@ -1,12 +1,12 @@
-import WebSocket from "ws";
-import { OPCODES, PAYLOADS, GATEWAY } from "../constants";
+import * as WebSocket from "ws";
+import { OPCODES, PAYLOADS, GATEWAY } from "@constants";
 import { Client } from "../client";
 
 export class WebSocketManager{
 
     client: Client;
     token: string;
-    gateway: WebSocket;
+    gateway: WebSocket | null;
     sequence_number: number | null;
     session_id: string | null;
     lastHeartbeatSent: number | null;
@@ -74,7 +74,7 @@ export class WebSocketManager{
                 break;
             case OPCODES.HEARTBEAT_ACKNOWLEDGEMENT:
                 this.lastHeartbeatACK = true;
-                this.client.debugLog(`Heartbeat acknowledged in ${Date.now() - this.lastHeartbeatSent} ms`);
+                this.client.debugLog(`Heartbeat acknowledged in ${Date.now() - (this.lastHeartbeatSent ?? Date.now())} ms`);
                 break;
             default:
                 this.client.debugLog(`UNKNOWN OPCODE: ${op}`);
@@ -91,15 +91,15 @@ export class WebSocketManager{
             this.lastHeartbeatACK = false;
         }
         this.lastHeartbeatSent = Date.now();
-        this.gateway.send(PAYLOADS.HEARTBEAT(this.sequence_number));
+        this.gateway?.send(PAYLOADS.HEARTBEAT(this.sequence_number??0));
     }
 
     identify(){
-        this.gateway.send(PAYLOADS.IDENTIFY(this.token));
+        this.gateway?.send(PAYLOADS.IDENTIFY(this.token));
     }
 
     resume(){
-        this.gateway.send(PAYLOADS.RESUME(this.token, this.session_id, this.sequence_number));
+        this.gateway?.send(PAYLOADS.RESUME(this.token, this.session_id??"", this.sequence_number??0));
     }
 
     reset(){
