@@ -1,5 +1,5 @@
 const Command = require("../../lib/structures/Command");
-const API = require("../utils/minecraftAPI");
+const {getPlayerData, addHyphens} = require("../utils/minecraftAPI");
 
 module.exports = new Command({
 
@@ -48,14 +48,14 @@ module.exports = new Command({
 				return;
 			}
 		} else {
-			if(data.value.length == 32) {data.value = API.addHyphens(data.value);}
+			if(data.value.length == 32) {data.value = addHyphens(data.value);}
 			if(data.value.length != 36){
 				send({"content": "Invalid UUID"});
 				return;
 			}
 		}
 
-		let playerData = await API.getPlayerData(data);
+		let playerData = await getPlayerData(data);
 		
 		let embed = {
 			"embed": {

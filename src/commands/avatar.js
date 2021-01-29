@@ -47,7 +47,7 @@ module.exports = new Command({
 
 		let text = `__**Roles**__ **[${roles.size}]**${N}`;
 
-		for(role of orderedRoles){
+		for(const role of orderedRoles){
 			text += role;
 		}
 
