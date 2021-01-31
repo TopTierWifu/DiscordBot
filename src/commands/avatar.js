@@ -40,15 +40,25 @@ module.exports = new Command({
 	},
 	
 	execute: async function(p){
-		const {member, presence, send, interaction: {data : {options : [{options: [{value: id}]}]}}} = p;
-		const {user, joinedAtFullTimeStamp, roles, nick, color, orderedRoles} = member;
-		const {username, discriminator, createdAtFullTimeStamp} = user;
-		const {status} = presence;
+		const {guild, send, interaction: {data : {options : [{options: [{value: id}]}]}}} = p;
+		const member = guild.members.get(id);
+		const {joinedAtFormatted, roles, nick, color, orderedRoles} = member ?? {};
+		const user = p.client.users.get(id) ?? p.client.users.add(await p.client.getUser(id));
+		const {username, discriminator, createdAtFormatted} = user;
 
-		let text = `__**Roles**__ **[${roles.size}]**${N}`;
+		if(!username){
+			send({"content": "A user with that ID does not exist!"});
+			return;
+		}
 
-		for(const role of orderedRoles){
-			text += role;
+		const {status} = p.client.presences.get(id) ?? {};
+
+		let text = roles ? `__**Roles**__ **[${roles.size}]**${N}` : "";
+
+		if(member){
+			for(const role of orderedRoles){
+				text += role;
+			}
 		}
 
 		let embed = {
@@ -58,8 +68,8 @@ module.exports = new Command({
 			},
 			description: `${text}${N}` +
 				`${B}properties${N}` +
-				`Registered ${createdAtFullTimeStamp}${N}` +
-				`Joined ${joinedAtFullTimeStamp}${N}` +
+				`Registered ${createdAtFormatted}${N}` +
+				`${joinedAtFormatted ? `Joined ${joinedAtFormatted}${N}` : ""}` +
 				`ID ${id}${N}` +
 				`${nick ? `Nickname ${nick}${N}` : ""}` +
 				`${status ? `Status ${status}${N}` : ""}` +
@@ -68,7 +78,7 @@ module.exports = new Command({
 				url: user.avatarURL(1024)
 			},
 			timestamp: new Date(),
-			color: color
+			color: color ?? 0
 		}
 
 		send({embed});
