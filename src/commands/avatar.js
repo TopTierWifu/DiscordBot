@@ -42,7 +42,7 @@ module.exports = new Command({
 	execute: async function(p){
 		const {guild, send, interaction: {data : {options : [{options: [{value: id}]}]}}} = p;
 		const member = guild.members.get(id);
-		const {joinedAtFormatted, roles, nick, color, orderedRoles} = member ?? {};
+		const {joinedAtFormatted, roles, nick, hexColor, color, orderedRoles} = member ?? {};
 		const user = p.client.users.get(id) ?? p.client.users.add(await p.client.getUser(id));
 		const {username, discriminator, createdAtFormatted} = user;
 
@@ -71,6 +71,7 @@ module.exports = new Command({
 				`Registered ${createdAtFormatted}${N}` +
 				`${joinedAtFormatted ? `Joined ${joinedAtFormatted}${N}` : ""}` +
 				`ID ${id}${N}` +
+				`${hexColor ? `Role Color ${hexColor}${N}` : ""}`
 				`${nick ? `Nickname ${nick}${N}` : ""}` +
 				`${status ? `Status ${status}${N}` : ""}` +
 				`${B}`,
