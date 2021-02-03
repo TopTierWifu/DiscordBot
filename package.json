@@ -7,10 +7,13 @@
     "lib": "lib"
   },
   "dependencies": {
+    "mysql2": "^2.2.5",
     "node-fetch": "^2.6.1",
     "ws": "^7.4.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "ssh2": "^0.8.9"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
