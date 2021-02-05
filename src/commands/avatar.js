@@ -6,7 +6,7 @@ module.exports = new Command({
 
 	id: "802997298673877043",
 
-	cooldown: 30000,
+	cooldown: 1000,
 
 	syntax: {"name": "avatar", "description": "Displays a Discord user's information",
 		"options": [
@@ -71,7 +71,7 @@ module.exports = new Command({
 				`Registered ${createdAtFormatted}${N}` +
 				`${joinedAtFormatted ? `Joined ${joinedAtFormatted}${N}` : ""}` +
 				`ID ${id}${N}` +
-				`${hexColor ? `Role Color ${hexColor}${N}` : ""}`
+				`${hexColor ? `Color #${hexColor}${N}` : ""}` +
 				`${nick ? `Nickname ${nick}${N}` : ""}` +
 				`${status ? `Status ${status}${N}` : ""}` +
 				`${B}`,
