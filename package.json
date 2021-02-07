@@ -11,9 +11,7 @@
     "node-fetch": "^2.6.1",
     "ws": "^7.4.1"
   },
-  "devDependencies": {
-    "ssh2": "^0.8.9"
-  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
