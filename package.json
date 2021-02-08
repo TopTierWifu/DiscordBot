@@ -3,13 +3,8 @@
   "version": "0.0.1",
   "description": "A discord bot",
   "main": "index.js",
-  "directories": {
-    "lib": "lib"
-  },
   "dependencies": {
-    "mysql2": "^2.2.5",
-    "node-fetch": "^2.6.1",
-    "ws": "^7.4.1"
+    "wifu": "0.0.10"
   },
   "devDependencies": {},
   "scripts": {

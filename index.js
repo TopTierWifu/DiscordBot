@@ -1,4 +1,11 @@
-const Client = require("./lib/client");
-const {TOKEN} = require("./secret");
+const {readdirSync} = require("fs");
 
-const BOT = new Client(TOKEN);
+const Wifu = require("wifu");
+const {TOKEN, OPTIONS} = require("./secret");
+
+const BOT = new Wifu(TOKEN, OPTIONS);
+
+readdirSync("./src/commands").forEach(file => {
+    const command = require(`./src/commands/${file}`);
+    BOT.addCommand(command);
+});

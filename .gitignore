@@ -1,3 +1,4 @@
 node_modules
 secret.js
 src/commands/test.js
+package-lock.json

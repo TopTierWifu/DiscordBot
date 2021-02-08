@@ -1,4 +1,4 @@
-const Command = require("../../lib/structures/Command");
+const {Command} = require("wifu");
 const N = "\n"
 const B = "\`\`\`"
 

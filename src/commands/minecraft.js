@@ -1,4 +1,4 @@
-const Command = require("../../lib/structures/Command");
+const {Command} = require("wifu");
 const {getPlayerData, addHyphens} = require("../utils/minecraftAPI");
 
 module.exports = new Command({
