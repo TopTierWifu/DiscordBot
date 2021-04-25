@@ -10,5 +10,6 @@ const sharder = new Master(token, "/src/bot.js", {
     defaultImageFormat: "png",
     intents: 771,
     messageLimit: 1,
-    stats: true
+    stats: true,
+    name: "Bot"
 });
