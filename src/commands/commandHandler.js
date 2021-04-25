@@ -2,6 +2,7 @@
  * @typedef ctx
  * @prop {object} guild
  * @prop {object} member
+ * @prop {()=>Promise<void>} send
  */
 
 const Command = require("../commands/command");
@@ -45,12 +46,30 @@ module.exports = class CommandHandler {
  * @returns {ctx}
  */
 function getContext(base, interaction) {
-    const { guild_id, channel_id, member: { user: { id } } } = interaction;
+    const { guild_id, channel_id, member: { user: { id } }, token } = interaction;
     const guild = base.bot.guilds.get(guild_id);
     const member = guild.members.get(id);
 
     return {
         guild,
-        member
+        member,
+        send: async () => {
+            const application_id = base.bot.user.id;
+            base.requestREST("POST", `/interactions/${interaction.id}/${interaction.token}/callback`, {
+                type: 4, 
+                data: {
+                    content: "Interaction Response"
+                }
+            }).then(async () => {
+                await base.bot.executeWebhook(application_id, token, {
+                    content: "Execute Webhook/Followup Message",
+                    embeds: [{
+                        title: "Title",
+                        description: "Description"
+                    }],
+                    wait: true,
+                });
+            });
+        }
     }
 }

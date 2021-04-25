@@ -38,6 +38,6 @@ module.exports = new Command({
     },
 
     execute: async (ctx) => {
-        console.log(ctx.member);
+        await ctx.send();
     }
 });

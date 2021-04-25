@@ -12,6 +12,16 @@ module.exports = class Bot extends Base {
         /**@type Map<`${bigint}`, import("./commands/command")> */
         this.commands = new Map();
         this.commandHandler = new (require("./commands/commandHandler"))(this);
+
+        /**
+         * Typed rest request function (mainly for interaction responses)
+         * @param {"GET" | "POST" | "PUT" | "DELETE" | "PATCH"} method 
+         * @param {string} route 
+         * @param {*} body 
+         */
+         this.requestREST = async (method, route, body) => {
+            await this.bot.requestHandler.request(method, route, true, body);
+        }
     }
 
     launch(){
