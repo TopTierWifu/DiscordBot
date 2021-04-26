@@ -1,8 +1,15 @@
 const Base = require("eris-sharder").Base;
 
 module.exports = class Bot extends Base {
+    /**
+     * 
+     * @param {import("eris").Client} bot 
+     */
     constructor(bot){
         super(bot);
+
+        /**@type {import("eris").Client} */
+        this.bot;
 
         //To remove the Interaction Response warning messages with an unknown type (20) 
         this.bot.removeAllListeners("warn");
@@ -19,7 +26,8 @@ module.exports = class Bot extends Base {
          * @param {string} route 
          * @param {*} body 
          */
-         this.requestREST = async (method, route, body) => {
+        this.requestREST = async (method, route, body) => {
+            // @ts-ignore
             await this.bot.requestHandler.request(method, route, true, body);
         }
     }

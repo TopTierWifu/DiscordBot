@@ -1,7 +1,7 @@
 /**
  * @typedef ctx
- * @prop {object} guild
- * @prop {object} member
+ * @prop {import("eris").Guild} guild
+ * @prop {import("eris").Member} member
  * @prop {()=>Promise<void>} send
  */
 
