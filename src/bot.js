@@ -28,7 +28,7 @@ module.exports = class Bot extends Base {
          */
         this.requestREST = async (method, route, body) => {
             // @ts-ignore
-            await this.bot.requestHandler.request(method, route, true, body);
+            return await this.bot.requestHandler.request(method, route, true, body);
         }
     }
 
