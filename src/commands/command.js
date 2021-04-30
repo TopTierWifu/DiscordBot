@@ -28,13 +28,12 @@ module.exports = class Command {
     /**
      * Command constructor
      * @arg {object} args
-     * @arg {import("../events/interactionCreate").snowflake} args.id
-     * @arg {Omit<ApplicationCommand, "id" | "application_id">} args.syntax
+     * @arg {Omit<ApplicationCommand, "application_id">} args.syntax
      * @arg {number} args.cooldown
      * @arg {(ctx: import("./commandHandler").ctx) => Promise<void>} args.execute
      */
     constructor(args){
-        this.id = args.id;
+        this.id = args.syntax.id;
         this.name = args.syntax.name;
         this.cooldown = args.cooldown;
         this.execute = args.execute;
