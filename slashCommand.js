@@ -30,33 +30,38 @@ const json = {
  * @param {*} [body] 
  */
 function request(route, method = "GET", body) {
-    fetch(`${discordURL}${route}`, { method, body, headers: { 'Content-Type': 'application/json', Authorization: `Bot ${token}` } })
-    .then(res => res.json())
-    .then(json => console.log(json));
+    return fetch(`${discordURL}${route}`, { method, body, headers: { 'Content-Type': 'application/json', Authorization: `Bot ${token}` } })
+    .then(res => res.json());
 }
 
 /**
  * @param {*} body 
  */
-function createGuildCommand(body) {
-    request(`/applications//${botID}/guilds/${testGuildID}/commands`, "POST", JSON.stringify(body));
+async function createGuildCommand(body) {
+    return await request(`/applications//${botID}/guilds/${testGuildID}/commands`, "POST", JSON.stringify(body));
 }
 
 /**
  * @param {string} commandId 
  * @param {*} body
  */
-function editGuildCommand(commandId, body) {
-    request(`/applications/${botID}/guilds/${testGuildID}/commands/${commandId}`, "PATCH", JSON.stringify(body));
+async function editGuildCommand(commandId, body) {
+    return await request(`/applications/${botID}/guilds/${testGuildID}/commands/${commandId}`, "PATCH", JSON.stringify(body));
 }
 
 /**
  * @param {string} commandId 
  */
-function deleteGuildCommand(commandId) {
-    request(`/applications/${botID}/guilds/${testGuildID}/commands/${commandId}`, "DELETE");
+async function deleteGuildCommand(commandId) {
+    return await request(`/applications/${botID}/guilds/${testGuildID}/commands/${commandId}`, "DELETE");
 }
 
-function getGuildCommands() {
-    request(`/applications/${botID}/guilds/${testGuildID}/commands`)
+async function getGuildCommands() {
+    return await request(`/applications/${botID}/guilds/${testGuildID}/commands`)
 }
+
+async function getGlobalCommands() {
+    return await request(`/applications/${botID}/commands`);
+}
+
+getGlobalCommands().then(res => console.log(res));
