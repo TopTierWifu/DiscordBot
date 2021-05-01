@@ -9,6 +9,7 @@ const sharder = new Master(token, "/src/bot.js", {
         defaultImageSize: 1024,
         intents: 771,
         messageLimit: 0,
+        restMode: true,
         allowedMentions: {
             everyone: false,
             roles: false,

@@ -1,113 +1,68 @@
 const Command = require("../command");
 
 module.exports = new Command({
-    
-    id: "802997298673877043",
 
     cooldown: 1000,
 
-    syntax: {"name": "avatar", "description": "Displays a Discord user's information",
-        "options": [
+    syntax: {
+        id: "838125469387194438",
+        name: "avatar",
+        description: "Displays a Discord user's information",
+        options: [
             {
-                "name": "user",
-                "description": "Displays a Discord user's information from a user mention",
-                "type": 1,
-                "options": [
-                    {
-                        "name": "user",
-                        "description": "The mention of the user",
-                        "type": 6,
-                        "required": true
-                    }
-                ]
-            },
-            {
-                "name": "id",
-                "description": "Displays a Discord user's information from an ID",
-                "type": 1,
-                "options": [
-                    {
-                        "name": "id",
-                        "description": "The ID of the user",
-                        "type": 3,
-                        "required": true
-                    }
-                ]
+                name: "user",
+                description: "The user, can be an ID",
+                type: 6,
+                required: false
             }
         ]
     },
 
     execute: async (ctx) => {
-        //Normal Message
-        const res = await ctx.send("Normal Message");
+        const { guild, interaction: { data: { options: [{ options: [{ value: id }] }] } } } = ctx;
 
-        const interval = 1000;
+        const member = guild.members.get(id);
+        const user = member?.user ?? await ctx.get.user(id);
 
-        //Message with Embed
-        setTimeout(async () => {
-            await res.edit({
-                content: "Message with embed",
-                embeds: [{
-                    title: "Embed",
-                    description: "Message with embed"
-                }]
-            });
-        }, 1 * interval);
+        if (!user) { ctx.reply(`I can't find that user...`); return; }
 
-        //Only Embed
-        setTimeout(async () => {
-            await res.edit({
-                content: "",
-                embeds: [{
-                    title: "Embed",
-                    description: "Only embed"
-                }]
-            });
-        }, 2 * interval);
+        const createdAt = ctx.format.fullDatetime(user.createdAt);
+        let color, joinedAt, text;
 
-        //Normal Message
-        setTimeout(async () => {
-            await res.edit({
-                content: "Normal Message",
-                embeds: []
-            });
-        }, 3 * interval);
+        if (member) {
+            text = member.roles.length ? `__**Roles**__ **[${member.roles.length}]**\n` : "";
 
-        //Normal Message
-        setTimeout(async () => {
-            await res.edit({
-                content: "Allowed Mentions Test <@210177401064390658> <= Should be nullified",
-                allowedMentions: {
-                    users: false
+            for (const role of member.roles) {
+                text += guild.roles.get(role).mention + " ";
+            }
+
+            color = ctx.get.memberColor(member);
+            joinedAt = ctx.format.fullDatetime(member.joinedAt);
+        }
+
+        ctx.reply({
+            embeds: [
+                {
+                    author: {
+                        name: `${user.username}#${user.discriminator}`,
+                        icon_url: user.avatarURL
+                    },
+                    description: `${text ? `${text}\n` : ""}` +
+                        `\`\`\`properties\n` +
+                        `Registered ${createdAt}\n` +
+                        `${joinedAt ? `Joined ${joinedAt}\n` : ""}` +
+                        `ID ${id}$\n` +
+                        `${color ? `Color #${color.toString(16)}\n` : ""}` +
+                        `${member?.nick ? `Nickname ${member.nick}\n` : ""}` +
+                        `${member?.status ? `Status ${member.status}\n` : ""}` +
+                        `\`\`\``,
+                    image: {
+                        url: user.avatarURL
+                    },
+                    timestamp: new Date(),
+                    color
                 }
-            });
-        }, 4 * interval);
-
-        //Normal Message
-        setTimeout(async () => {
-            await res.edit({
-                content: "Allowed Mentions Test <@210177401064390658> <= Should be a normal mention"
-            });
-        }, 5 * interval);
-
-        //Normal Message
-        setTimeout(async () => {
-            await res.edit({
-                content: "Allowed Mentions Test @everyone <= Should be nullified"
-            });
-        }, 6 * interval);
-
-        //Followup
-        setTimeout(async () => {
-            const followup = await ctx.followup({
-                content: "Followup"
-            });
-            //Followup Edited
-            setTimeout(async () => {
-                await followup.edit({
-                    content: "Followup Edited"
-                });
-            }, interval);
-        }, 7 * interval);
+            ]
+        });
     }
 });

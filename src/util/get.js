@@ -5,6 +5,7 @@ module.exports = class Get {
      * @param {import("../bot")} base 
      */
     constructor(base){
+        /**@private */
         this.bot = base.bot;
     }
 
@@ -28,7 +29,16 @@ module.exports = class Get {
      * Get a user by id, if they don't exist, then we will try a rest fetch and cache
      * @param {string} id 
      */
-    user(id) {
-
+    async user(id) {
+        let user = this.bot.users.get(id);
+        if(!user) {
+            try {
+                user = await this.bot.getRESTUser(id);
+                this.bot.users.add(user, this.bot, false);
+            } catch (error) {
+                return;
+            }
+        }
+        return user;
     }
 }

@@ -7,7 +7,7 @@
  * @prop {snowflake} interaction.data.id The ID of the invoked command
  * @prop {string} interaction.data.name The name of the invoked command
  * @prop {ApplicationCommandInteractionDataResolved} interaction.data.resolved Converted users + roles + channels
- * @prop {ApplicationCommandInteractionDataOption} interaction.data.options The params + values from the user
+ * @prop {ApplicationCommandInteractionDataOption[]} interaction.data.options The params + values from the user
  */
 
 /**
@@ -22,7 +22,7 @@
  * @typedef ApplicationCommandInteractionDataOption
  * @prop {string} name The name of the parameter
  * @prop {ApplicationCommandOptionType} type Value of ApplicationCommandOptionType
- * @prop {unknown} [value] The value of the pair (name, type)
+ * @prop {*} [value] The value of the pair (name, type)
  * @prop {ApplicationCommandInteractionDataOption[]} [options] Present if this option is a group or subcommand
  */
 
@@ -37,6 +37,7 @@
  * @prop {boolean} mute Whether the user is muted in voice channels
  * @prop {boolean} [pending] Whether the user has not yet passed the guild's Membership Screening requirements
  * @prop {string} [permissions] Total permissions of the member in the channel, including overrides, returned when in the interaction object
+ * @deprecated @prop {boolean} [is_pending] DEPRECATED: Replaced by "pending" property
  */
 
 /**
@@ -46,6 +47,7 @@
  * @prop {string} discriminator The user's 4-digit discord-tag
  * @prop {string} [avatar] The user's avatar hash
  * @prop {boolean} [bot] Whether the user belongs to an OAuth2 application
+ * @prop {number} [public_flags] The public flags on a user's account
  */
 
 /**
