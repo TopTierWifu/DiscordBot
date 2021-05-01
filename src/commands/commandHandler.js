@@ -54,7 +54,11 @@ module.exports = class CommandHandler {
 
         const context = getContext(this.base, interaction);
 
-        await command.execute(context);
+        try {
+            await command.execute(context);
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 
@@ -64,7 +68,7 @@ module.exports = class CommandHandler {
  * @returns {ctx}
  */
 function getContext(base, interaction) {
-    const { guild_id, channel_id, member: { user: { id } }, token } = interaction;
+    const { guild_id, member: { user: { id } }, token } = interaction;
     const application_id = base.bot.user.id;
     const guild = base.bot.guilds.get(guild_id);
     const member = guild.members.get(id);
