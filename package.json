@@ -18,5 +18,8 @@
   "homepage": "https://github.com/Wifus/Bot#readme",
   "dependencies": {
     "eris-sharder": "^1.10.0"
+  },
+  "devDependencies": {
+    "node-fetch": "^2.6.1"
   }
 }
