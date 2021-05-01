@@ -3,6 +3,8 @@ const Command = require("../commands/command");
 const dir = require("fs").readdirSync("./src/commands/commandList").map(filename => filename.slice(0, -3));
 
 /**
+ * @typedef {import("../bot")} Base
+ * @typedef {import("../events/interactionCreate").Interaction} Interaction
  * @typedef {Eris.Guild} Guild
  * @typedef {Eris.Member} Member
  * @typedef {Eris.WebhookPayload} WebhookPayload
@@ -11,10 +13,14 @@ const dir = require("fs").readdirSync("./src/commands/commandList").map(filename
 
 /**
  * @typedef ctx
+ * @prop {Eris.Client} bot
+ * @prop {Interaction} interaction
  * @prop {Guild} guild
  * @prop {Member} member
- * @prop {(response: InteractionResponse | string)=>Promise<Response>} send
+ * @prop {(response: InteractionResponse | string)=>Promise<Response>} reply
  * @prop {(message: WebhookPayload)=>Promise<Eris.Message<Eris.TextableChannel>>} followup
+ * @prop {import("../util/get")} get
+ * @prop {import("../util/format")} format
  */
 
 /**
@@ -22,7 +28,7 @@ const dir = require("fs").readdirSync("./src/commands/commandList").map(filename
  */
 module.exports = class CommandHandler {
     /**
-     * @arg {import("../bot")} base 
+     * @arg {Base} base 
      */
     constructor(base) {
         this.base = base;
@@ -37,7 +43,7 @@ module.exports = class CommandHandler {
     }
 
     /**
-     * @arg {import("../events/interactionCreate").Interaction} interaction 
+     * @arg {Interaction} interaction 
      */
     async executeCommand(interaction) {
         const { data: { id } } = interaction;
@@ -53,8 +59,8 @@ module.exports = class CommandHandler {
 }
 
 /**
- * @arg {import("../bot")} base 
- * @arg {import("../events/interactionCreate").Interaction} interaction 
+ * @arg {Base} base 
+ * @arg {Interaction} interaction 
  * @returns {ctx}
  */
 function getContext(base, interaction) {
@@ -64,13 +70,15 @@ function getContext(base, interaction) {
     const member = guild.members.get(id);
 
     return {
+        bot: base.bot,
+        interaction,
         guild,
         member,
         /**
          * Can only use this once per command
          * @arg {InteractionResponse | string} response 
          */
-        send: async (response) => {
+        reply: async (response) => {
             if (typeof response !== "object") {
                 response = {
                     defer: false,
@@ -96,7 +104,9 @@ function getContext(base, interaction) {
                 ...message,
                 wait: true
             });
-        }
+        },
+        get: base.get,
+        format: base.format
     }
 }
 
@@ -115,7 +125,7 @@ function getContext(base, interaction) {
  */
 class Response {
     /**
-     * @arg {import("../bot")} base 
+     * @arg {Base} base 
      * @arg {string} interaction_token 
      */
     constructor(base, interaction_token) {
