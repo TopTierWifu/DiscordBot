@@ -19,21 +19,20 @@ module.exports = new Command({
     },
 
     execute: async (ctx) => {
-        const { guild, interaction: { data: { options: [{ options: [{ value: id }] }] } } } = ctx;
-
-        const member = guild.members.get(id);
+        const id = ctx.interaction.data?.options?.[0]?.value;
+        const member = id ? ctx.guild.members.get(id) : ctx.member;
         const user = member?.user ?? await ctx.get.user(id);
 
         if (!user) { ctx.reply(`I can't find that user...`); return; }
 
         const createdAt = ctx.format.fullDatetime(user.createdAt);
-        let color, joinedAt, text;
+        let color, joinedAt, roles;
 
         if (member) {
-            text = member.roles.length ? `__**Roles**__ **[${member.roles.length}]**\n` : "";
+            roles = `__**Roles**__ **[${member.roles.length}]**\n`;
 
             for (const role of member.roles) {
-                text += guild.roles.get(role).mention + " ";
+                roles += ctx.guild.roles.get(role).mention + " ";
             }
 
             color = ctx.get.memberColor(member);
@@ -47,15 +46,16 @@ module.exports = new Command({
                         name: `${user.username}#${user.discriminator}`,
                         icon_url: user.avatarURL
                     },
-                    description: `${text ? `${text}\n` : ""}` +
+                    description: `${member?.roles?.length ? `${roles}\n` : ""}` +
                         `\`\`\`properties\n` +
                         `Registered ${createdAt}\n` +
                         `${joinedAt ? `Joined ${joinedAt}\n` : ""}` +
-                        `ID ${id}$\n` +
+                        `ID ${user.id}\n` +
                         `${color ? `Color #${color.toString(16)}\n` : ""}` +
                         `${member?.nick ? `Nickname ${member.nick}\n` : ""}` +
                         `${member?.status ? `Status ${member.status}\n` : ""}` +
-                        `\`\`\``,
+                        `\`\`\`` +
+                        `\n${user.mention}`,
                     image: {
                         url: user.avatarURL
                     },
