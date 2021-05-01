@@ -11,7 +11,7 @@ module.exports = class Bot extends Base {
         /**@type {import("eris").Client} */
         this.bot;
 
-        //To remove the Interaction Response warning messages with an unknown type (20) 
+        //To remove the warning for messages with an unknown type (20) resulting from Interaction Responses 
         this.bot.removeAllListeners("warn");
 
         this.eventHandler = new (require("./events/eventHandler"))(this);
@@ -30,6 +30,10 @@ module.exports = class Bot extends Base {
             // @ts-ignore
             return await this.bot.requestHandler.request(method, route, true, body);
         }
+
+        //Util classes
+        this.get = new (require("./util/get"))(this);
+        this.format = new (require("./util/format"));
     }
 
     launch(){
