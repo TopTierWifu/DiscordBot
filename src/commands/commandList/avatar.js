@@ -5,7 +5,7 @@ module.exports = new Command({
     cooldown: 1000,
 
     syntax: {
-        id: "838125469387194438",
+        id: "838249101669564437",
         name: "avatar",
         description: "Displays a Discord user's information",
         options: [
