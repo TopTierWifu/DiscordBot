@@ -1,4 +1,4 @@
-const debug = true;
+const debug = require("../tokens/bot-auth.json").debug;
 
 /**
  * @typedef {Omit<import("./src/commands/command").ApplicationCommand, "application_id" | "id">} Command
@@ -15,15 +15,22 @@ const discordURL = "https://discord.com/api/v8";
 
 /**@type {Command} */
 const json = {
-    name: "avatar",
-    description: "Displays a Discord user's information",
+    name: "test",
+    description: "This is a test",
     options: [
+        { 
+            type: 3, 
+            name: 'messageID', 
+            description: 'The message ID of the first zoo message',
+            required: true
+        },
         {
-            name: "user",
-            description: "The user, can be an ID",
-            type: 6,
-            required: false
+            type: 4,
+            name: 'zooLength',
+            description: "The number of messages long the zoo is",
+            required: true
         }
+
     ]
 }
 
@@ -93,6 +100,13 @@ async function createGlobalCommand(body) {
     return await request(`/applications/${botID}/commands`, "POST", JSON.stringify(body));
 }
 
+/**
+ * @param {string} commandId 
+ */
+async function deleteGlobalCommand(commandId){
+    request(`/applications/${botID}/commands/${commandId}`, "DELETE")
+}
+
 async function getGlobalCommands() {
     return await request(`/applications/${botID}/commands`);
 }
@@ -106,4 +120,4 @@ async function editTestCommand(body) {
     editGuildCommand(testCommandID, testGuildID, body);
 }
 
-// deleteGuildCommand("838125469387194438", testGuildID).then(res => console.log(res));
+getGuildCommands(testGuildID).then(res => console.log(res));

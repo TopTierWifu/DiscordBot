@@ -1,5 +1,7 @@
+const debug = require("../tokens/bot-auth.json").debug;
+
+const token = debug ? require("../tokens/bot-auth.json").testToken : require("../tokens/bot-auth.json").token;
 const Master = require("eris-sharder").Master;
-const { token } = require("../tokens/bot-auth.json");
 
 const sharder = new Master(token, "/src/bot.js", {
     stats: true,
