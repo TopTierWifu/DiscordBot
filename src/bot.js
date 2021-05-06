@@ -34,6 +34,7 @@ module.exports = class Bot extends Base {
         //Util classes
         this.get = new (require("./util/get"))(this);
         this.format = new (require("./util/format"));
+        this.send = new (require("./util/send").Send)(this);
     }
 
     launch(){
