@@ -23,7 +23,7 @@ module.exports = new Command({
         const member = id ? ctx.guild.members.get(id) : ctx.member;
         const user = member?.user ?? await ctx.get.user(id);
 
-        if (!user) { ctx.reply(`I can't find that user...`); return; }
+        if (!user) { ctx.respond(`I can't find that user...`); return; }
 
         const createdAt = ctx.format.fullDatetime(user.createdAt);
         let color, joinedAt, roles;
@@ -39,7 +39,7 @@ module.exports = new Command({
             joinedAt = ctx.format.fullDatetime(member.joinedAt);
         }
 
-        ctx.reply({
+        ctx.respond({
             embeds: [
                 {
                     author: {
