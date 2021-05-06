@@ -81,7 +81,7 @@ function getContext(base, interaction) {
          * Can only use this once per command
          * @arg {InteractionResponseData | string} response 
          */
-        respond: async(response) => base.send.respond(interaction, response),
+        respond: async (response) => base.send.respond(interaction, response),
         /**@arg {WebhookPayload} message */
         followup: async (message) => base.send.followup(interaction, message),
         get: base.get,

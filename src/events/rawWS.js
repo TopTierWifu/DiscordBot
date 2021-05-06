@@ -8,7 +8,7 @@ const interactionHandler = require("./interactionCreate");
  * @param {number} id 
  * @this {import("../bot")}
  */
-exports.handle = function(packet, id) {
+exports.handle = function (packet, id) {
     if (packet.t != "INTERACTION_CREATE") { return; }
 
     interactionHandler.handle(this, packet.d);

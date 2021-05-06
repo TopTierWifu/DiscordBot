@@ -4,7 +4,7 @@ module.exports = class Get {
     /**
      * @param {import("../bot")} base 
      */
-    constructor(base){
+    constructor(base) {
         /**@private */
         this.bot = base.bot;
     }
@@ -17,7 +17,7 @@ module.exports = class Get {
         let color, pos = -1;
         member?.roles.forEach((id) => {
             const role = member.guild.roles.get(id);
-            if(role?.position > pos && role.color) {
+            if (role?.position > pos && role.color) {
                 color = role.color;
                 pos = role.position;
             }
@@ -31,7 +31,7 @@ module.exports = class Get {
      */
     async user(id) {
         let user = this.bot.users.get(id);
-        if(!user) {
+        if (!user) {
             try {
                 user = await this.bot.getRESTUser(id);
                 this.bot.users.add(user, this.bot, false);

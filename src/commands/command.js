@@ -32,7 +32,7 @@ module.exports = class Command {
      * @arg {number} args.cooldown
      * @arg {(ctx: import("./commandHandler").ctx) => Promise<void>} args.execute
      */
-    constructor(args){
+    constructor(args) {
         this.id = args.syntax.id;
         this.name = args.syntax.name;
         this.cooldown = args.cooldown;

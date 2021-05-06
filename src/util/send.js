@@ -19,7 +19,7 @@ class Send {
     /**
      * @param {import("../bot")} base 
      */
-     constructor(base){
+    constructor(base) {
         /**@private */
         this.base = base;
     }
@@ -98,7 +98,7 @@ class InteractionResponse {
         await this.base.requestREST("PATCH", `/webhooks/${this.bot_id}/${this.interaction_token}/messages/@original`, {
             ...data,
             // @ts-ignore
-            ...{allowed_mentions: data.allowedMentions ? this.base.bot._formatAllowedMentions(data.allowedMentions) : this.base.bot.options.allowedMentions}
+            ...{ allowed_mentions: data.allowedMentions ? this.base.bot._formatAllowedMentions(data.allowedMentions) : this.base.bot.options.allowedMentions }
         });
         return this;
     }
@@ -108,7 +108,6 @@ class InteractionResponse {
     }
 
 }
-
 
 module.exports = {
     Send,

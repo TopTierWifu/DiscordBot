@@ -119,8 +119,8 @@ const InteractionType = {
  * @arg {import("../bot")} base
  * @arg {Interaction} interaction
  */
-exports.handle = async function(base, interaction) {
-    if(interaction.member.user.bot) return;
+exports.handle = async function (base, interaction) {
+    if (interaction.member.user.bot) return;
 
     else await base.commandHandler.executeCommand(interaction);
 }

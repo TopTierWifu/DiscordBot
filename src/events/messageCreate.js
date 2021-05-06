@@ -1,1 +1,1 @@
-exports.handle = () => {/*console.log("Message!");*/}
+exports.handle = () => {/*console.log("Message!");*/ }

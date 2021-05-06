@@ -5,7 +5,7 @@ module.exports = class Bot extends Base {
      * 
      * @param {import("eris").Client} bot 
      */
-    constructor(bot){
+    constructor(bot) {
         super(bot);
 
         /**@type {import("eris").Client} */
@@ -37,7 +37,7 @@ module.exports = class Bot extends Base {
         this.send = new (require("./util/send").Send)(this);
     }
 
-    launch(){
+    launch() {
 
     }
 }

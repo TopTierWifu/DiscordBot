@@ -9,9 +9,9 @@ module.exports = new Command({
         name: "test",
         description: "Find the sell/sacrifice value of your zoo. Note that all referenced messages must be successive.",
         options: [
-            { 
-                type: 3, 
-                name: 'messageID', 
+            {
+                type: 3,
+                name: 'messageID',
                 description: 'The message ID of the owo zoo command',
                 required: true
             },
