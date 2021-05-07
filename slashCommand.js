@@ -4,34 +4,17 @@ const debug = require("../tokens/bot-auth.json").debug;
  * @typedef {Omit<import("./src/commands/command").ApplicationCommand, "application_id" | "id">} Command
  */
 const fetch = require("node-fetch").default;
-const token = debug ? require("../tokens/bot-auth.json").testToken : require("../tokens/bot-auth.json").token;
-const botID = debug ? "741854059748786176" : "539465213246963724";
+const auth = require("../tokens/bot-auth.json");
+const botAuth = debug ? auth.testBotAuth : auth.botAuth;
 
 const testGuildID = "604719438805205004";
-const testCommandID = "798081847266770945";
-const wifuID = "210177401064390658";
-
-const discordURL = "https://discord.com/api/v8";
+const testCommandID = "838261981815373865";
 
 /**@type {Command} */
 const json = {
-    name: "test",
-    description: "This is a test",
-    options: [
-        { 
-            type: 3, 
-            name: 'messageID', 
-            description: 'The message ID of the first zoo message',
-            required: true
-        },
-        {
-            type: 4,
-            name: 'zooLength',
-            description: "The number of messages long the zoo is",
-            required: true
-        }
-
-    ]
+    name: "about",
+    description: "Info about the bot",
+    options: []
 }
 
 /**
@@ -41,7 +24,7 @@ const json = {
  * @param {*} [body] 
  */
 async function request(route, method = "GET", body) {
-    return fetch(`${discordURL}${route}`, { method, body, headers: { 'Content-Type': 'application/json', Authorization: `Bot ${token}` } })
+    return fetch(`https://discord.com/api/v8${route}`, { method, body, headers: { 'Content-Type': 'application/json', Authorization: `Bot ${botAuth.token}` } })
     .then(async res => {
         try {
             return await res.json();
@@ -60,7 +43,7 @@ async function request(route, method = "GET", body) {
  * @param {*} body 
  */
 async function createGuildCommand(guildId, body) {
-    return await request(`/applications//${botID}/guilds/${guildId}/commands`, "POST", JSON.stringify(body));
+    return await request(`/applications//${botAuth.id}/guilds/${guildId}/commands`, "POST", JSON.stringify(body));
 }
 
 /**
@@ -69,7 +52,7 @@ async function createGuildCommand(guildId, body) {
  * @param {*} body
  */
 async function editGuildCommand(commandId, guildId, body) {
-    return await request(`/applications/${botID}/guilds/${guildId}/commands/${commandId}`, "PATCH", JSON.stringify(body));
+    return await request(`/applications/${botAuth.id}/guilds/${guildId}/commands/${commandId}`, "PATCH", JSON.stringify(body));
 }
 
 /**
@@ -77,14 +60,14 @@ async function editGuildCommand(commandId, guildId, body) {
  * @param {string} guildId
  */
 async function deleteGuildCommand(commandId, guildId) {
-    return await request(`/applications/${botID}/guilds/${guildId}/commands/${commandId}`, "DELETE");
+    return await request(`/applications/${botAuth.id}/guilds/${guildId}/commands/${commandId}`, "DELETE");
 }
 
 /**
  * @param {string} guildId 
  */
 async function getGuildCommands(guildId) {
-    return await request(`/applications/${botID}/guilds/${guildId}/commands`)
+    return await request(`/applications/${botAuth.id}/guilds/${guildId}/commands`)
 }
 
 
@@ -97,18 +80,18 @@ async function getGuildCommands(guildId) {
  * @param {*} body 
  */
 async function createGlobalCommand(body) {
-    return await request(`/applications/${botID}/commands`, "POST", JSON.stringify(body));
+    return await request(`/applications/${botAuth.id}/commands`, "POST", JSON.stringify(body));
 }
 
 /**
  * @param {string} commandId 
  */
 async function deleteGlobalCommand(commandId){
-    request(`/applications/${botID}/commands/${commandId}`, "DELETE")
+    request(`/applications/${botAuth.id}/commands/${commandId}`, "DELETE")
 }
 
 async function getGlobalCommands() {
-    return await request(`/applications/${botID}/commands`);
+    return await request(`/applications/${botAuth.id}/commands`);
 }
 
 
@@ -116,8 +99,11 @@ async function getGlobalCommands() {
  * TEST COMMAND
  */
 
+/**
+ * @param {*} body 
+ */
 async function editTestCommand(body) {
-    editGuildCommand(testCommandID, testGuildID, body);
+    return await editGuildCommand(testCommandID, testGuildID, body);
 }
 
-getGuildCommands(testGuildID).then(res => console.log(res));
+// deleteGlobalCommand("840077753155190795").then(res => console.log(res));
