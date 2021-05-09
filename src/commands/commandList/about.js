@@ -42,6 +42,7 @@ module.exports = new Command({
                             `\`\`\`properties\n` +
                             `Uptime ${ctx.format.fullDurationString(bot.uptime)}\n` +
                             `Ping ${guild.shard.latency}ms\n` +
+                            `RAM ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024 / 1024 * 100)/100}GB` +
                             `\`\`\``
                         }
                     ],
