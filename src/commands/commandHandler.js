@@ -54,8 +54,8 @@ module.exports = class CommandHandler {
         const context = getContext(this.base, interaction);
 
         try {
-            await command.execute(context);
             await this.base.send.thinking(interaction);
+            await command.execute(context);
         } catch (error) {
             console.error(error);
         }
