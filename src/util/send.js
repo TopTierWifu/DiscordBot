@@ -28,7 +28,7 @@ class Send {
      * @param {Interaction} interaction 
      */
     async thinking(interaction) {
-        await this.base.requestREST("POST", `/interactions/${interaction.id}/${interaction.token}/callback`, {
+        await this.base.requestREST(`/interactions/${interaction.id}/${interaction.token}/callback`, "POST", {
             type: 5
         });
     }
@@ -95,7 +95,7 @@ class InteractionResponse {
      * @param {EditWebhookOptions} data 
      */
     async edit(data) {
-        await this.base.requestREST("PATCH", `/webhooks/${this.bot_id}/${this.interaction_token}/messages/@original`, {
+        await this.base.requestREST(`/webhooks/${this.bot_id}/${this.interaction_token}/messages/@original`, "PATCH", {
             ...data,
             // @ts-ignore
             ...{ allowed_mentions: data.allowedMentions ? this.base.bot._formatAllowedMentions(data.allowedMentions) : this.base.bot.options.allowedMentions }
@@ -104,7 +104,7 @@ class InteractionResponse {
     }
 
     async delete() {
-        await this.base.requestREST("DELETE", `/webhooks/${this.bot_id}/${this.interaction_token}/messages/@original`);
+        await this.base.requestREST(`/webhooks/${this.bot_id}/${this.interaction_token}/messages/@original`, "DELETE");
     }
 
 }

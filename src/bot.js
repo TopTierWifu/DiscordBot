@@ -2,8 +2,7 @@ const Base = require("eris-sharder").Base;
 
 module.exports = class Bot extends Base {
     /**
-     * 
-     * @param {import("eris").Client} bot 
+     * @param {import("eris").Client} bot
      */
     constructor(bot) {
         super(bot);
@@ -22,11 +21,11 @@ module.exports = class Bot extends Base {
 
         /**
          * Typed rest request function (mainly for interaction responses)
-         * @param {"GET" | "POST" | "PUT" | "DELETE" | "PATCH"} method 
          * @param {string} route 
-         * @param {*} body 
+         * @param {"GET" | "POST" | "PUT" | "DELETE" | "PATCH"} [method] 
+         * @param {*} [body] 
          */
-        this.requestREST = async (method, route, body) => {
+        this.requestREST = async (route, method = "GET", body) => {
             // @ts-ignore
             return await this.bot.requestHandler.request(method, route, true, body);
         }
