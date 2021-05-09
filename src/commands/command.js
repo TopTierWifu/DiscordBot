@@ -24,6 +24,26 @@
  * @prop {boolean} [default_permission=true] Whether the command is enabled by default when the app is added to a guild
  */
 
+/**
+ * @typedef ApplicationCommandPermissions
+ * @prop {import("../events/interactionCreate").snowflake} id The id of the role or user
+ * @prop {ApplicationCommandPermissionType} type 1 for role, 2 for user
+ * @prop {boolean} permission True to allow, false, to disallow
+ */
+
+/**
+ * @enum {number}
+ */
+const ApplicationCommandPermissionType = {
+    Role: 1,
+    User: 2
+}
+
+/**
+ * @typedef CommandPermissions
+ * @prop {ApplicationCommandPermissions[]} permissions The permissions for the command in the guild
+ */
+
 module.exports = class Command {
     /**
      * Command constructor
@@ -31,11 +51,14 @@ module.exports = class Command {
      * @arg {Omit<ApplicationCommand, "application_id">} args.syntax
      * @arg {number} args.cooldown
      * @arg {(ctx: import("./commandHandler").ctx) => Promise<void>} args.execute
+     * @arg {ApplicationCommandPermissions[]} [args.permissions]
      */
     constructor(args) {
         this.id = args.syntax.id;
         this.name = args.syntax.name;
         this.cooldown = args.cooldown;
         this.execute = args.execute;
+        this.syntax = args.syntax;
+        this.permissions = args.permissions
     }
 }
