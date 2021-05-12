@@ -4,7 +4,10 @@
   "description": "A Discord bot",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bot": "node .",
+    "bot:debug": "node . true",
+    "cmdManager": "node . false true",
+    "cmdManager:debug": "node true true"
   },
   "repository": {
     "type": "git",

@@ -1,10 +1,11 @@
-const debug = require("../tokens/bot-auth.json").debug;
-const auth = require("../tokens/bot-auth.json");
-const botAuth = debug ? auth.testBotAuth : auth.botAuth;
-const Master = require("eris-sharder").Master;
-const commandEditor = false;
+// node . {debug?} {command editor mode?}
+const [debug, commandEditor] = process.argv.slice(2);
 
-const sharder = new Master(botAuth.token, commandEditor ? "/src/commandEditor.js" : "/src/bot.js", {
+const auth = require("../tokens/bot-auth.json");
+const botAuth = (debug === "true") ? auth.debugBotAuth : auth.botAuth;
+const Master = require("eris-sharder").Master;
+
+const sharder = new Master(botAuth.token, (commandEditor === "true") ? "/src/commandEditor.js" : "/src/bot.js", {
     stats: true,
     name: "Bot",
     allowedMentions: {
