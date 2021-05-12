@@ -8,6 +8,7 @@ const dir = require("fs").readdirSync("./src/commands/commandList").map(filename
  * @typedef {import("../util/send").InteractionResponseData} InteractionResponseData
  * @typedef {import("../util/send").InteractionResponse} InteractionResponse
  * @typedef {Eris.WebhookPayload} WebhookPayload
+ * @typedef {(sql: string, variables?: *[])=>Promise<any>} Query
  */
 
 /**
@@ -20,6 +21,7 @@ const dir = require("fs").readdirSync("./src/commands/commandList").map(filename
  * @prop {(message: WebhookPayload)=>Promise<Eris.Message<Eris.TextableChannel>>} followup
  * @prop {import("../util/get")} get
  * @prop {import("../util/format")} format
+ * @prop {Query} query
  */
 
 /**
@@ -85,6 +87,7 @@ function getContext(base, interaction) {
         /**@arg {WebhookPayload} message */
         followup: async (message) => base.send.followup(interaction, message),
         get: base.get,
-        format: base.format
+        format: base.format,
+        query: base.query
     }
 }

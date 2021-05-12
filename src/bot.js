@@ -19,6 +19,9 @@ module.exports = class Bot extends Base {
         this.commands = new Map();
         this.commandHandler = new (require("./commands/commandHandler"))(this);
 
+        this.db = new (require("./util/mySQL"));
+        this.query = this.db.query.bind(this.db);
+
         /**
          * Typed rest request function (mainly for interaction responses)
          * @param {string} route 

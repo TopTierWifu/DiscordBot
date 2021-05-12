@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/Wifus/Bot#readme",
   "dependencies": {
-    "eris-sharder": "^1.10.0"
+    "eris-sharder": "^1.10.0",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "node-fetch": "^2.6.1"
