@@ -12,6 +12,11 @@ module.exports = class Bot extends Base {
 
         //To remove the warning for messages with an unknown type (20) resulting from Interaction Responses 
         this.bot.removeAllListeners("warn");
+        /**
+         * To remove the errors:
+         * - Connection reset by peer
+         */
+        this.bot.removeAllListeners("error");
 
         this.eventHandler = new (require("./events/eventHandler"))(this);
 
