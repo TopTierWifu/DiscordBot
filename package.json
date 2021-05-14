@@ -7,7 +7,7 @@
     "bot": "node .",
     "bot:debug": "node . true",
     "cmdManager": "node . false true",
-    "cmdManager:debug": "node true true"
+    "cmdManager:debug": "node . true true"
   },
   "repository": {
     "type": "git",

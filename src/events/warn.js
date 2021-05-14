@@ -1,5 +1,4 @@
 /**
- * 
  * @param {string} message 
  * @param {number} id 
  */
