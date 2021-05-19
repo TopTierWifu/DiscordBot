@@ -1,0 +1,24 @@
+{
+    "sharder": {
+		"path": "/src/bot.js",
+		"name": "Bot",
+        "allowedMentions": {
+            "everyone": false,
+            "roles": false,
+            "repliedUser": false,
+            "user": true
+        } 
+    },
+
+    "eris": {
+        "clientOptions": {
+            "defaultImageFormat": "png",
+            "defaultImageSize": 1024,
+            "intents": 771,
+            "messageLimit": 0,
+            "restMode": true
+        }
+    },
+
+    "debug": true
+}

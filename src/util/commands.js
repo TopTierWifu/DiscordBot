@@ -5,14 +5,38 @@
  * @typedef {import("../commands/command").CommandPermissions} Permissions
  */
 
-module.exports = class SlashCommand {
+// Request
+const fetch = require("node-fetch").default;
+
+module.exports = class Commands {
     /**
-     * @param {import("../bot") | import("../commandEditor")} base 
+     * @param {import("../../../tokens/bot-auth.json")} auth
      */
-     constructor(base) {
-        /**@private */
-        this.base = base;
-        this.id = base.bot.user.id;
+    constructor(auth){
+        this.token = auth.token;
+        this.id = auth.id;
+    }
+
+    /**
+     * @param {string} route 
+     * @param {"GET" | "POST" | "PUT" | "DELETE" | "PATCH"} [method] 
+     * @param {*} [body] 
+     */
+    async request (route, method = "GET", body) {
+        return fetch(`https://discord.com/api/v8${route}`, {
+            method, 
+            body, 
+            headers: { 
+                'Content-Type': 'application/json', 
+                Authorization: `Bot ${this.token}`
+            }
+        }).then(async res => {
+            try {
+                return await res.json();
+            } catch (error) {
+                return res;
+            }
+        });
     }
 
     //Guild Endpoints
@@ -22,7 +46,7 @@ module.exports = class SlashCommand {
      * @param {Command} command
      */
     async createGuild(guildId, command) {
-        return await this.base.requestREST(
+        return await this.request(
             `/applications//${this.id}/guilds/${guildId}/commands`, 
             "POST", 
             this.commandToCommandJsonString(command)
@@ -34,7 +58,7 @@ module.exports = class SlashCommand {
      * @param {Command} command
      */
     async editGuild(guildId, command) {
-        return await this.base.requestREST(
+        return await this.request(
             `/applications/${this.id}/guilds/${guildId}/commands/${command.id}`, 
             "PATCH", 
             this.commandToCommandJsonString(command)
@@ -46,7 +70,7 @@ module.exports = class SlashCommand {
      * @param {string} guildId
      */
     async deleteGuild(commandId, guildId) {
-        return await this.base.requestREST(`/applications/${this.id}/guilds/${guildId}/commands/${commandId}`, "DELETE");
+        return await this.request(`/applications/${this.id}/guilds/${guildId}/commands/${commandId}`, "DELETE");
     }
 
     /**
@@ -54,14 +78,14 @@ module.exports = class SlashCommand {
      * @param {string} guildId
      */
     async getGuild(commandId, guildId) {
-        return await this.base.requestREST(`/applications/${this.id}/guilds/${guildId}/commands/${commandId}`);
+        return await this.request(`/applications/${this.id}/guilds/${guildId}/commands/${commandId}`);
     }
 
     /**
      * @param {string} guildId 
      */
     async getAllGuild(guildId) {
-        return await this.base.requestREST(`/applications/${this.id}/guilds/${guildId}/commands`);
+        return await this.request(`/applications/${this.id}/guilds/${guildId}/commands`);
     }
 
     /**
@@ -69,22 +93,22 @@ module.exports = class SlashCommand {
      * @param {Command} command
      */
     async getGuildPermissions(guildId, command) {
-        return await this.base.requestREST(`/applications/${this.id}/guilds/${guildId}/commands/${command.id}/permissions`);
+        return await this.request(`/applications/${this.id}/guilds/${guildId}/commands/${command.id}/permissions`);
     }
 
     /**
      * @param {string} guildId 
      */
     async getAllGuildPermissions(guildId) {
-        return await this.base.requestREST(`/applications/${this.id}/guilds/${guildId}/commands/permissions`);
+        return await this.request(`/applications/${this.id}/guilds/${guildId}/commands/permissions`);
     }
 
     /**
      * @param {string} guildId 
      * @param {Command} command
      */
-     async editGuildPermissions(guildId, command) {
-        return await this.base.requestREST(
+    async editGuildPermissions(guildId, command) {
+        return await this.request(
             `/applications/${this.id}/guilds/${guildId}/commands/${command.id}/permissions`,
             "PUT",
             this.commandToPermissionsJsonString(command)
@@ -97,7 +121,7 @@ module.exports = class SlashCommand {
      * @param {Command} command
      */
     async createGlobal(command) {
-        return await this.base.requestREST(
+        return await this.request(
             `/applications/${this.id}/commands`, 
             "POST", 
             this.commandToCommandJsonString(command)
@@ -108,7 +132,7 @@ module.exports = class SlashCommand {
      * @param {Command} command
      */
     async editGlobal(command) {
-        return await this.base.requestREST(
+        return await this.request(
             `/applications/${this.id}/commands/${command.id}`, 
             "PATCH", 
             this.commandToCommandJsonString(command)
@@ -119,18 +143,18 @@ module.exports = class SlashCommand {
      * @param {string} commandId 
      */
     async deleteGlobal(commandId){
-        return await this.base.requestREST(`/applications/${this.id}/commands/${commandId}`, "DELETE")
+        return await this.request(`/applications/${this.id}/commands/${commandId}`, "DELETE")
     }
 
     /**
      * @param {string} commandId 
      */
     async getGlobal(commandId) {
-        return await this.base.requestREST(`/applications/${this.id}/commands/${commandId}`);
+        return await this.request(`/applications/${this.id}/commands/${commandId}`);
     }
 
     async getAllGlobal() {
-        return await this.base.requestREST(`/applications/${this.id}/commands`);
+        return await this.request(`/applications/${this.id}/commands`);
     }
 
     //Util

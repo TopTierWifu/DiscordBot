@@ -1,5 +1,5 @@
 const mySQL = require("mysql");
-const auth = require("../../../tokens/bot-auth.json").mysql;
+const auth = require("../../../tokens/mysql-auth.json");
 
 module.exports = class MySQLManager{
 	constructor(){

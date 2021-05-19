@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "bot": "node .",
-    "bot:debug": "node . true",
-    "cmdManager": "node . false true",
-    "cmdManager:debug": "node . true true"
+    "register": "node ./register.js"
   },
   "repository": {
     "type": "git",

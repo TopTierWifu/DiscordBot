@@ -1,35 +1,23 @@
-// node . {debug?} {command editor mode?}
-const [debug, commandEditor] = process.argv.slice(2);
+// Config file
+const config = require("./src/config.json");
 
-const auth = require("../tokens/bot-auth.json");
-const botAuth = (debug === "true") ? auth.debugBotAuth : auth.botAuth;
-const Master = require("eris-sharder").Master;
+// Tokens
+const debug = config.debug;
 
-const sharder = new Master(botAuth.token, (commandEditor === "true") ? "/src/commandEditor.js" : "/src/bot.js", {
-    stats: true,
-    name: "Bot",
-    allowedMentions: {
-        everyone: false,
-        roles: false,
-        repliedUser: false,
-        user: true
-    },
-    clientOptions: {
-        defaultImageFormat: "png",
-        defaultImageSize: 1024,
-        intents: 771,
-        messageLimit: 0,
-        restMode: true
-    }
-});
+const auth = debug ? require("../tokens/debug-bot-auth.json") : require("../tokens//bot-auth.json");
 
-const testGuildID = "604719438805205004";
+// Eris-Sharder
+const Sharder = require("eris-sharder").Master;
 
-module.exports = class SlashCommands {
-    /**@param {import("./src/commandEditor")} base */
-    constructor(base) { this.command = base.slashCommand; }
-
-    async execute() {
-
-    }
+// Start Bot
+try {
+    const sharder = new Sharder(auth.token, config.sharder.path, {
+        stats: true,
+        name: config.sharder.name,
+        allowedMentions: config.sharder.allowedMentions,
+        clientOptions: config.eris.clientOptions
+    });
+} catch (e) {
+    console.error("Failed to start eris sharder");
+    console.error(e);
 }
