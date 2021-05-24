@@ -1,16 +1,17 @@
-/**
- * @typedef {import("../commands/command").ApplicationCommand} ApplicationCommand
- * @typedef {Omit<ApplicationCommand, "application_id" | "id">} CommandJSON
- * @typedef {import("../commands/command")} Command
- * @typedef {import("../commands/command").CommandPermissions} Permissions
- */
-
 // Request
 const fetch = require("node-fetch").default;
 
+/**
+ * @typedef {Omit<import("../typings/command").ApplicationCommand, "application_id" | "id">} CommandJSON
+ * @typedef {import("../typings/command").Command} Command
+ * @typedef {import("../typings/command").CommandPermissions} Permissions
+ * @typedef {import("../typings/bot").Auth} Auth
+ * @typedef {import("../typings/bot").HTTPMethods} HTTPMethods
+ */
+
 module.exports = class Commands {
     /**
-     * @param {import("../../../tokens/bot-auth.json")} auth
+     * @param {Auth} auth
      */
     constructor(auth){
         this.token = auth.token;
@@ -19,7 +20,7 @@ module.exports = class Commands {
 
     /**
      * @param {string} route 
-     * @param {"GET" | "POST" | "PUT" | "DELETE" | "PATCH"} [method] 
+     * @param {HTTPMethods} [method] 
      * @param {*} [body] 
      */
     async request (route, method = "GET", body) {

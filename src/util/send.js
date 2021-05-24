@@ -1,23 +1,14 @@
-const Eris = require("eris");
-
 /**
- * @typedef {Omit<Eris.Embed, "type">} Embed
- * @typedef {import("../commands/commandHandler").Base} Base
- * @typedef {import("../commands/commandHandler").Interaction} Interaction
- * @typedef {Eris.WebhookPayload} WebhookPayload
- */
-
-/**
- * @typedef {object} InteractionResponseData
- * @prop {string} [content]
- * @prop {Embed[]} [embeds]
- * @prop {Eris.AllowedMentions} [allowed_mentions]
- * @prop {boolean} [ephemeral] Removed flags field and replaced it with ephemeral for now. Set flags to 64 if true
+ * @typedef {import("../typings/bot").Main} Main
+ * @typedef {import("../typings/send").InteractionResponseData} InteractionResponseData
+ * @typedef {import("../typings/send").EditWebhookOptions} EditWebhookOptions
+ * @typedef {import("../typings/eris").WebhookPayload} WebhookPayload
+ * @typedef {import("../typings/interaction").Interaction} Interaction
  */
 
 class Send {
     /**
-     * @param {import("../bot")} base 
+     * @param {Main} base 
      */
     constructor(base) {
         /**@private */
@@ -59,12 +50,9 @@ class Send {
     }
 }
 
-/**
- * @class Response
- */
 class InteractionResponse {
     /**
-     * @arg {Base} base 
+     * @arg {Main} base 
      * @arg {string} interaction_token 
      */
     constructor(base, interaction_token) {
@@ -75,21 +63,6 @@ class InteractionResponse {
         /**@private */
         this.interaction_token = interaction_token;
     }
-
-    /**
-     * @typedef {object} EditWebhookFile 
-     * @prop {Buffer} options.file.file A buffer containing file data
-     * @prop {String} options.file.name What to name the file 
-     */
-
-    /**
-     * @typedef {object} EditWebhookOptions Webhook message edit options
-     * @prop {Eris.AllowedMentions} [options.allowedMentions] A list of mentions to allow (overrides default)
-     * @prop {String} [options.content] A content string
-     * @prop {Embed[]} [options.embeds] An array of Discord embeds
-     * @prop {EditWebhookFile | Array<EditWebhookFile>} [options.file] A file object (or an Array of them)
-     * 
-     */
 
     /**
      * @param {EditWebhookOptions} data 

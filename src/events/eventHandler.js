@@ -1,8 +1,12 @@
 const dir = require("fs").readdirSync("./src/events").map(filename => filename.slice(0, -3));
 
+/**
+ * @typedef {import("../typings/bot").Main} Main
+ */
+
 module.exports = class EventHander {
     /**
-     * @param {import("../bot")} base 
+     * @param {Main} base 
      */
     constructor(base) {
         let filename = __filename.slice(__dirname.length + 1, -3);

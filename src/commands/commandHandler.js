@@ -1,27 +1,12 @@
-const Eris = require("eris");
-const Command = require("../commands/command");
+const Command = require("./command");
 const dir = require("fs").readdirSync("./src/commands/commandList").map(filename => filename.slice(0, -3));
 
 /**
- * @typedef {import("../bot")} Base
- * @typedef {import("../events/interactionCreate").Interaction} Interaction
- * @typedef {import("../util/send").InteractionResponseData} InteractionResponseData
- * @typedef {import("../util/send").InteractionResponse} InteractionResponse
- * @typedef {Eris.WebhookPayload} WebhookPayload
- * @typedef {(sql: string, variables?: *[])=>Promise<any>} Query
- */
-
-/**
- * @typedef ctx
- * @prop {Eris.Client} bot
- * @prop {Interaction} interaction
- * @prop {Eris.Guild} guild
- * @prop {Eris.Member} member
- * @prop {(response: InteractionResponseData | String)=>Promise<InteractionResponse>} respond
- * @prop {(message: WebhookPayload)=>Promise<Eris.Message<Eris.TextableChannel>>} followup
- * @prop {import("../util/get")} get
- * @prop {import("../util/format")} format
- * @prop {Query} query
+ * @typedef {import("../typings/bot").Main} Base
+ * @typedef {import("../typings/interaction").Interaction} Interaction
+ * @typedef {import("../typings/send").InteractionResponseData} InteractionResponseData
+ * @typedef {import("../typings/eris").WebhookPayload} WebhookPayload
+ * @typedef {import("../typings/command").Context} Context
  */
 
 /**
@@ -67,7 +52,7 @@ module.exports = class CommandHandler {
 /**
  * @arg {Base} base 
  * @arg {Interaction} interaction 
- * @returns {ctx}
+ * @returns {Context}
  */
 function getContext(base, interaction) {
     const { guild_id, member: { user: { id } } } = interaction;
@@ -88,6 +73,7 @@ function getContext(base, interaction) {
         followup: async (message) => base.send.followup(interaction, message),
         get: base.get,
         format: base.format,
-        query: base.query
+        query: base.query,
+        items: base.items
     }
 }

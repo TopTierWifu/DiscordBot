@@ -1,17 +1,20 @@
-const Eris = require("eris");
+/**
+ * @typedef {import("../typings/eris").Client} Client
+ * @typedef {import("../typings/eris").Member} Member
+ */
 
 module.exports = class Get {
     /**
-     * @param {import("../bot")} base 
+     * @param {Client} bot 
      */
-    constructor(base) {
+    constructor(bot) {
         /**@private */
-        this.bot = base.bot;
+        this.bot = bot;
     }
 
     /**
      * Returns a decimal color code (hex code in base 10)
-     * @param {Eris.Member} member 
+     * @param {Member} member 
      */
     memberColor(member) {
         let color, pos = -1;

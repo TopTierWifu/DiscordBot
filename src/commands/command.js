@@ -1,47 +1,7 @@
 /**
- * @typedef ApplicationCommandOption
- * @prop {import("../events/interactionCreate").ApplicationCommandOptionType} type Value of ApplicationCommandOptionType
- * @prop {string} name 1-32 character name matching ^[\w-]{1,32}$
- * @prop {string} description 1-100 character description
- * @prop {boolean} [required] If the parameter is required or optional--default false
- * @prop {ApplicationCommandOptionChoice} [choices] Choices for string and int types for the user to pick from
- * @prop {ApplicationCommandOption[]} [options] If the option is a subcommand or subcommand group type, this nested options will be the parameters
- */
-
-/**
- * @typedef ApplicationCommandOptionChoice
- * @prop {string} name 1-100 character choice name
- * @prop {string | number} value Value of the choice, up to 100 characters if string
- */
-
-/**
- * @typedef ApplicationCommand
- * @prop {import("../events/interactionCreate").snowflake} id Unique id of the command
- * @prop {import("../events/interactionCreate").snowflake} application_id Unique id of the parent application
- * @prop {string} name 1-32 character name matching ^[\w-]{1,32}$
- * @prop {string} description 1-100 character description
- * @prop {ApplicationCommandOption[]} [options] The parameters for the command
- * @prop {boolean} [default_permission=true] Whether the command is enabled by default when the app is added to a guild
- */
-
-/**
- * @typedef ApplicationCommandPermissions
- * @prop {import("../events/interactionCreate").snowflake} id The id of the role or user
- * @prop {ApplicationCommandPermissionType} type 1 for role, 2 for user
- * @prop {boolean} permission True to allow, false, to disallow
- */
-
-/**
- * @enum {number}
- */
-const ApplicationCommandPermissionType = {
-    Role: 1,
-    User: 2
-}
-
-/**
- * @typedef CommandPermissions
- * @prop {ApplicationCommandPermissions[]} permissions The permissions for the command in the guild
+ * @typedef {import("../typings/command").ApplicationCommand} ApplicationCommand
+ * @typedef {import("../typings/command").ApplicationCommandPermissions} ApplicationCommandPermissions
+ * @typedef {import("../typings/command").Context} Context
  */
 
 module.exports = class Command {
@@ -50,7 +10,7 @@ module.exports = class Command {
      * @arg {object} args
      * @arg {Omit<ApplicationCommand, "application_id">} args.syntax
      * @arg {number} args.cooldown
-     * @arg {(ctx: import("./commandHandler").ctx) => Promise<void>} args.execute
+     * @arg {(ctx: Context) => Promise<void>} args.execute
      * @arg {ApplicationCommandPermissions[]} [args.permissions]
      */
     constructor(args) {
