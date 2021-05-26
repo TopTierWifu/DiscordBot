@@ -37,15 +37,16 @@ async function getNumberProvider(numP) {
     } else {
         switch(numP.type){
             case "binomial": 
-                let sum = 0;
+                const rand = await MATH.random();
+                let cumulativeSum = 0;
 
                 for (let i = 0; i <= numP.n; i++) {
-                    if(await MATH.random() <= numP.p) {
-                        sum++;
+                    cumulativeSum += MATH.binomial(i, numP.n, numP.p);
+                    if(rand <= cumulativeSum) {
+                        rolls = i;
+                        break;
                     }
                 }
-
-                rolls = sum;
             break;
             case "uniform": 
                 rolls = await MATH.random(numP.min, numP.max);
@@ -158,6 +159,21 @@ const x = {
     //     let res = await getNumberProvider({type: "binomial", n: 100, p: 0.6667}); 
     //     buckets[res] ? buckets[res]++ : buckets[res] = 1;
     // }
+
+    const rand = await MATH.random();
+    let cumulativeSum = 0;
+    let rolls = 0;
+    let num = 10;
+
+    for (let i = 0; i <= num; i++) {
+        console.log(MATH.binomial(i, num, .5));
+        cumulativeSum += MATH.binomial(i, num, .5);
+        if(rand < cumulativeSum) {
+            rolls = i;
+        }
+    }
+
+    console.log(cumulativeSum);
     console.log(`${JSON.stringify(await getResult(x), null, 3)} in ${Date.now()-start}ms`);
 
     // binomial(6, 10, .5)
