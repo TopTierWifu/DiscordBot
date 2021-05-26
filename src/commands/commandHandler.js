@@ -9,13 +9,8 @@ const dir = require("fs").readdirSync("./src/commands/commandList").map(filename
  * @typedef {import("../typings/command").Context} Context
  */
 
-/**
- * @class CommandHandler
- */
 module.exports = class CommandHandler {
-    /**
-     * @arg {Base} base 
-     */
+    /**@arg {Base} base */
     constructor(base) {
         this.base = base;
 
@@ -28,9 +23,7 @@ module.exports = class CommandHandler {
         }
     }
 
-    /**
-     * @arg {Interaction} interaction 
-     */
+    /**@arg {Interaction} interaction */
     async executeCommand(interaction) {
         const { data: { id } } = interaction;
         const command = this.base.commands.get(id);

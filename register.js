@@ -1,13 +1,11 @@
-// Config file
-const config = require("./src/config.json");
-
 // Tokens
-const debug = config.debug;
+const debug = require("./src/config.json").debug;
 
 const auth = debug ? require("../tokens/debug-bot-auth.json") : require("../tokens//bot-auth.json");
 
 // Command "client"
-const slashCommands = new (require("./src/util/commands"))(auth);
+const slashCommands = require("./src/util/commands");
+slashCommands.init(auth);
 
 const testGuildID = "604719438805205004";
 

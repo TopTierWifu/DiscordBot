@@ -6,51 +6,47 @@
  * @typedef {import("../typings/interaction").Interaction} Interaction
  */
 
-class Send {
-    /**
-     * @param {Main} base 
-     */
-    constructor(base) {
-        /**@private */
-        this.base = base;
-    }
+/**@type {Main} */
+let BASE;
 
-    /**
-     * @param {Interaction} interaction 
-     */
-    async thinking(interaction) {
-        await this.base.requestREST(`/interactions/${interaction.id}/${interaction.token}/callback`, "POST", {
-            type: 5
-        });
-    }
-
-    /**
-     * @param {Interaction} interaction
-     * @param {InteractionResponseData | string} response 
-     */
-    async respond(interaction, response) {
-        if (typeof response !== "object") {
-            response = {
-                content: "" + response
-            }
-        }
-
-        return new InteractionResponse(this.base, interaction.token).edit(response);
-    }
-
-    /**
-     * @param {Interaction} interaction 
-     * @param {WebhookPayload} message 
-     */
-    async followup(interaction, message) {
-        return await this.base.bot.executeWebhook(this.base.bot.user.id, interaction.token, {
-            ...message,
-            wait: true
-        });
-    }
+/**@arg {Main} base */
+exports.init = (base) => {
+    BASE = base;
 }
 
-class InteractionResponse {
+/**@arg {Interaction} interaction */
+exports.thinking = async (interaction) => {
+    await BASE.requestREST(`/interactions/${interaction.id}/${interaction.token}/callback`, "POST", {
+        type: 5
+    });
+}
+
+/**
+ * @arg {Interaction} interaction
+ * @arg {InteractionResponseData | string} response 
+ */
+exports.respond = async (interaction, response) => {
+    if (typeof response !== "object") {
+        response = {
+            content: "" + response
+        }
+    }
+
+    return new exports.InteractionResponse(BASE, interaction.token).edit(response);
+}
+
+/**
+ * @arg {Interaction} interaction 
+ * @arg {WebhookPayload} message 
+ */
+exports.followup = async (interaction, message) => {
+    return await BASE.bot.executeWebhook(BASE.bot.user.id, interaction.token, {
+        ...message,
+        wait: true
+    });
+}
+
+exports.InteractionResponse = class {
     /**
      * @arg {Main} base 
      * @arg {string} interaction_token 
@@ -64,9 +60,7 @@ class InteractionResponse {
         this.interaction_token = interaction_token;
     }
 
-    /**
-     * @param {EditWebhookOptions} data 
-     */
+    /**@arg {EditWebhookOptions} data */
     async edit(data) {
         await this.base.requestREST(`/webhooks/${this.bot_id}/${this.interaction_token}/messages/@original`, "PATCH", {
             ...data,
@@ -80,9 +74,4 @@ class InteractionResponse {
         await this.base.requestREST(`/webhooks/${this.bot_id}/${this.interaction_token}/messages/@original`, "DELETE");
     }
 
-}
-
-module.exports = {
-    Send,
-    InteractionResponse
 }

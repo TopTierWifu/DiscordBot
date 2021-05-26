@@ -9,181 +9,161 @@ const fetch = require("node-fetch").default;
  * @typedef {import("../typings/bot").HTTPMethods} HTTPMethods
  */
 
-module.exports = class Commands {
-    /**
-     * @param {Auth} auth
-     */
-    constructor(auth){
-        this.token = auth.token;
-        this.id = auth.id;
-    }
+/**@type {Auth} */
+let AUTH;
 
-    /**
-     * @param {string} route 
-     * @param {HTTPMethods} [method] 
-     * @param {*} [body] 
-     */
-    async request (route, method = "GET", body) {
-        return fetch(`https://discord.com/api/v8${route}`, {
-            method, 
-            body, 
-            headers: { 
-                'Content-Type': 'application/json', 
-                Authorization: `Bot ${this.token}`
-            }
-        }).then(async res => {
-            try {
-                return await res.json();
-            } catch (error) {
-                return res;
-            }
-        });
-    }
+/**@arg {Auth} auth */
+exports.init = (auth) => {
+    AUTH = auth;
+}
 
-    //Guild Endpoints
-
-    /**
-     * @param {string} guildId
-     * @param {Command} command
-     */
-    async createGuild(guildId, command) {
-        return await this.request(
-            `/applications//${this.id}/guilds/${guildId}/commands`, 
-            "POST", 
-            this.commandToCommandJsonString(command)
-        );
-    }
-
-    /**
-     * @param {string} guildId
-     * @param {Command} command
-     */
-    async editGuild(guildId, command) {
-        return await this.request(
-            `/applications/${this.id}/guilds/${guildId}/commands/${command.id}`, 
-            "PATCH", 
-            this.commandToCommandJsonString(command)
-        );
-    }
-
-    /**
-     * @param {string} commandId 
-     * @param {string} guildId
-     */
-    async deleteGuild(commandId, guildId) {
-        return await this.request(`/applications/${this.id}/guilds/${guildId}/commands/${commandId}`, "DELETE");
-    }
-
-    /**
-     * @param {string} commandId 
-     * @param {string} guildId
-     */
-    async getGuild(commandId, guildId) {
-        return await this.request(`/applications/${this.id}/guilds/${guildId}/commands/${commandId}`);
-    }
-
-    /**
-     * @param {string} guildId 
-     */
-    async getAllGuild(guildId) {
-        return await this.request(`/applications/${this.id}/guilds/${guildId}/commands`);
-    }
-
-    /**
-     * @param {string} guildId 
-     * @param {Command} command
-     */
-    async getGuildPermissions(guildId, command) {
-        return await this.request(`/applications/${this.id}/guilds/${guildId}/commands/${command.id}/permissions`);
-    }
-
-    /**
-     * @param {string} guildId 
-     */
-    async getAllGuildPermissions(guildId) {
-        return await this.request(`/applications/${this.id}/guilds/${guildId}/commands/permissions`);
-    }
-
-    /**
-     * @param {string} guildId 
-     * @param {Command} command
-     */
-    async editGuildPermissions(guildId, command) {
-        return await this.request(
-            `/applications/${this.id}/guilds/${guildId}/commands/${command.id}/permissions`,
-            "PUT",
-            this.commandToPermissionsJsonString(command)
-        );
-    }
-
-    //Global Endpoints
-
-    /**
-     * @param {Command} command
-     */
-    async createGlobal(command) {
-        return await this.request(
-            `/applications/${this.id}/commands`, 
-            "POST", 
-            this.commandToCommandJsonString(command)
-        );
-    }
-
-    /**
-     * @param {Command} command
-     */
-    async editGlobal(command) {
-        return await this.request(
-            `/applications/${this.id}/commands/${command.id}`, 
-            "PATCH", 
-            this.commandToCommandJsonString(command)
-        );
-    }
-
-    /**
-     * @param {string} commandId 
-     */
-    async deleteGlobal(commandId){
-        return await this.request(`/applications/${this.id}/commands/${commandId}`, "DELETE")
-    }
-
-    /**
-     * @param {string} commandId 
-     */
-    async getGlobal(commandId) {
-        return await this.request(`/applications/${this.id}/commands/${commandId}`);
-    }
-
-    async getAllGlobal() {
-        return await this.request(`/applications/${this.id}/commands`);
-    }
-
-    //Util
-
-    /**
-     * @param {Command} command 
-     * @returns {string}
-     */
-    commandToCommandJsonString(command) {
-        /**@type {CommandJSON} */
-        const commandJson = {
-            name: command.name,
-            description: command.syntax.description,
-            options: command.syntax.options,
-            default_permission: command.syntax.default_permission
+/**
+ * @arg {string} route 
+ * @arg {HTTPMethods} [method] 
+ * @arg {*} [body] 
+ */
+async function request(route, method = "GET", body) {
+    return fetch(`https://discord.com/api/v8${route}`, {
+        method,
+        body,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bot ${AUTH.token}`
         }
-        return JSON.stringify(commandJson);
-    }
-
-    /**
-     * @param {Command} command 
-     * @returns {string}
-     */
-    commandToPermissionsJsonString(command) {
-        /**@type {Permissions} */
-        const commandJson = {
-            permissions: command.permissions
+    }).then(async res => {
+        try {
+            return await res.json();
+        } catch (error) {
+            return res;
         }
-        return JSON.stringify(commandJson);
+    });
+}
+
+//Guild Endpoints
+
+/**
+ * @arg {string} guildId
+ * @arg {Command} command
+ */
+exports.createGuild = async (guildId, command) => {
+    return await request(
+        `/applications/${AUTH.id}/guilds/${guildId}/commands`,
+        "POST",
+        commandToCommandJsonString(command)
+    );
+}
+
+/**
+ * @arg {string} guildId
+ * @arg {Command} command
+ */
+exports.editGuild = async (guildId, command) => {
+    return await request(
+        `/applications/${AUTH.id}/guilds/${guildId}/commands/${command.id}`,
+        "PATCH",
+        commandToCommandJsonString(command)
+    );
+}
+
+/**
+ * @arg {string} commandId 
+ * @arg {string} guildId
+ */
+exports.deleteGuild = async (commandId, guildId) => {
+    return await request(`/applications/${AUTH.id}/guilds/${guildId}/commands/${commandId}`, "DELETE");
+}
+
+/**
+ * @arg {string} commandId 
+ * @arg {string} guildId
+ */
+exports.getGuild = async (commandId, guildId) => {
+    return await request(`/applications/${AUTH.id}/guilds/${guildId}/commands/${commandId}`);
+}
+
+/**@arg {string} guildId */
+exports.getAllGuild = async (guildId) => {
+    return await request(`/applications/${AUTH.id}/guilds/${guildId}/commands`);
+}
+
+/**
+ * @arg {string} guildId 
+ * @arg {Command} command
+ */
+exports.getGuildPermissions = async (guildId, command) => {
+    return await request(`/applications/${AUTH.id}/guilds/${guildId}/commands/${command.id}/permissions`);
+}
+
+/**@arg {string} guildId */
+exports.getAllGuildPermissions = async (guildId) => {
+    return await request(`/applications/${AUTH.id}/guilds/${guildId}/commands/permissions`);
+}
+
+/**
+ * @arg {string} guildId 
+ * @arg {Command} command
+ */
+exports.editGuildPermissions = async (guildId, command) => {
+    return await request(
+        `/applications/${AUTH.id}/guilds/${guildId}/commands/${command.id}/permissions`,
+        "PUT",
+        commandToPermissionsJsonString(command)
+    );
+}
+
+//Global Endpoints
+
+/**@arg {Command} command*/
+exports.createGlobal = async (command) => {
+    return await request(
+        `/applications/${AUTH.id}/commands`,
+        "POST",
+        commandToCommandJsonString(command)
+    );
+}
+
+/**@arg {Command} command*/
+exports.editGlobal = async (command) => {
+    return await request(
+        `/applications/${AUTH.id}/commands/${command.id}`,
+        "PATCH",
+        commandToCommandJsonString(command)
+    );
+}
+
+/**@arg {string} commandId */
+exports.deleteGlobal = async (commandId) => {
+    return await request(`/applications/${AUTH.id}/commands/${commandId}`, "DELETE")
+}
+
+/**@arg {string} commandId */
+exports.getGlobal = async (commandId) => {
+    return await request(`/applications/${AUTH.id}/commands/${commandId}`);
+}
+
+exports.getAllGlobal = async () => {
+    return await request(`/applications/${AUTH.id}/commands`);
+}
+
+//Util
+
+/**@arg {Command} command */
+function commandToCommandJsonString(command) {
+    /**@type {CommandJSON} */
+    const commandJson = {
+        name: command.name,
+        description: command.syntax.description,
+        options: command.syntax.options,
+        default_permission: command.syntax.default_permission
     }
+    return JSON.stringify(commandJson);
+}
+
+/**@arg {Command} command */
+function commandToPermissionsJsonString(command) {
+    /**@type {Permissions} */
+    const commandJson = {
+        permissions: command.permissions
+    }
+    return JSON.stringify(commandJson);
 }
