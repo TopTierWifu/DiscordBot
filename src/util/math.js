@@ -5,10 +5,10 @@ const csprng = require("random-number-csprng");
  * @arg {number} [max] 
  */
 exports.random = async (min, max) => {
-    if (min && max) {
-        return await csprng(min, max);
-    } else {
+    if (min == undefined || max == undefined) {
         return await csprng(0, 1000000) / 1000000;
+    } else {
+        return await csprng(min, max);        
     }
 }
 
