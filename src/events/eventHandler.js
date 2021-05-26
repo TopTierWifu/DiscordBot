@@ -5,9 +5,7 @@ const dir = require("fs").readdirSync("./src/events").map(filename => filename.s
  */
 
 module.exports = class EventHander {
-    /**
-     * @param {Main} base 
-     */
+    /**@arg {Main} base */
     constructor(base) {
         let filename = __filename.slice(__dirname.length + 1, -3);
         for (let listnener of dir) {

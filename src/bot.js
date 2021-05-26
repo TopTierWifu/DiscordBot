@@ -7,9 +7,7 @@ const Base = require("eris-sharder").Base;
  */
 
 module.exports = class Bot extends Base {
-    /**
-     * @param {Client} bot
-     */
+    /**@arg {Client} bot*/
     constructor(bot) {
         super(bot);
 
@@ -27,14 +25,13 @@ module.exports = class Bot extends Base {
         this.commands = new Map();
         this.commandHandler = new (require("./commands/commandHandler"))(this);
 
-        this.db = new (require("./util/mySQL"));
-        this.query = this.db.query.bind(this.db);
+        this.query = require("./util/mySQL").query;
 
         /**
          * Typed rest request function (mainly for interaction responses)
-         * @param {string} route 
-         * @param {HTTPMethods} [method] 
-         * @param {*} [body] 
+         * @arg {string} route 
+         * @arg {HTTPMethods} [method] 
+         * @arg {*} [body] 
          */
         this.requestREST = async (route, method = "GET", body) => {
             // @ts-ignore
@@ -42,12 +39,19 @@ module.exports = class Bot extends Base {
         }
 
         //Game items
+
         this.items = require("../../tokens/items.json");
 
         //Util classes
-        this.get = new (require("./util/get"))(this.bot);
-        this.format = new (require("./util/format"));
-        this.send = new (require("./util/send").Send)(this);
+
+        this.get = require("./util/get");
+        this.get.init(this.bot);
+
+        this.format = require("./util/format");
+
+        this.send = require("./util/send");
+        this.send.init(this);
+
     }
 
     launch() {

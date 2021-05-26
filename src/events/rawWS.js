@@ -8,7 +8,7 @@ const interactionHandler = require("./interactionCreate");
 /**
  * Since Eris isn't handling interactions at the moment, will have to make do with raw packets
  * @arg {Packet} packet
- * @param {number} id 
+ * @arg {number} id 
  * @this {Main}
  */
 exports.handle = function (packet, id) {

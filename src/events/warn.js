@@ -1,6 +1,6 @@
 /**
- * @param {string} message 
- * @param {number} id 
+ * @arg {string} message 
+ * @arg {number} id 
  */
 exports.handle = (message, id) => {
     if (message.startsWith("Unhandled MESSAGE_CREATE type")) { return; }

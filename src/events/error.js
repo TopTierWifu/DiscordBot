@@ -1,6 +1,6 @@
 /**
- * @param {Error} error 
- * @param {number} id 
+ * @arg {Error} error 
+ * @arg {number} id 
  */
  exports.handle = (error, id) => {
     if (error.message.startsWith("Connection reset by peer")) { 
