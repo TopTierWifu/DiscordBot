@@ -21,3 +21,5 @@ try {
     console.error("Failed to start eris sharder");
     console.error(e);
 }
+
+const test = true;
