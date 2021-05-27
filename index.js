@@ -4,7 +4,7 @@ const config = require("./src/config.json");
 // Tokens
 const debug = config.debug;
 
-const auth = debug ? require("../tokens/debug-bot-auth.json") : require("../tokens//bot-auth.json");
+const auth = debug ? require("../tokens/debug-bot-auth.json") : require("../tokens/bot-auth.json");
 
 // Eris-Sharder
 const Sharder = require("eris-sharder").Master;
